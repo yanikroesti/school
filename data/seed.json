@@ -1,0 +1,34 @@
+{
+  "_comment": "Startdaten, solange Supabase noch nicht verbunden ist. Sobald der Bot läuft, kommen Prüfungen und Hausaufgaben live aus Supabase und diese Datei wird nur noch für die wiederkehrenden Termine gebraucht.",
+
+  "recurring": [
+    {
+      "id": "nin-kurztest",
+      "kind": "kurztest",
+      "teacher": "waefler",
+      "subject": "abt",
+      "rrule": "weekly:5",
+      "title": { "de": "NIN-Kurztest", "en": "NIN short test" },
+      "detail": { "de": "5 Fragen · 5 Minuten · alle Kurzteste zusammen = 1 Note",
+                  "en": "5 questions · 5 minutes · all short tests together = 1 grade" },
+      "remindDaysBefore": [1]
+    }
+  ],
+
+  "tests": [
+    {
+      "id": "abu-kk-2026-08-17",
+      "kind": "test",
+      "teacher": "laedrach",
+      "subject": "abu",
+      "date": "2026-08-17",
+      "title": { "de": "ABU-Test Krankenkasse", "en": "General education test — health insurance" },
+      "detail": { "de": "G03 Risiko und Sicherheit · danach Sach- und Haftpflicht",
+                  "en": "G03 Risk and safety · followed by property and liability insurance" },
+      "unconfirmed": true,
+      "source": "ABU-Unterrichtsplanungen/2. Lehrjahr/3. Semester/ST02 17.08.26"
+    }
+  ],
+
+  "homework": []
+}

@@ -1,0 +1,22 @@
+{
+  "abt":   { "code": "ABT",   "color": "#f2a03d", "ink": "#3a2408",
+             "name":  { "de": "ABT", "en": "ABT" },
+             "full":  { "de": "❓ Fachname noch offen", "en": "❓ full name pending" },
+             "topics": ["NIN 2025", "Apparatekunde"] },
+  "htog":  { "code": "HTOG",  "color": "#5b9bd5", "ink": "#0b2338",
+             "name":  { "de": "HTOG", "en": "HTOG" },
+             "full":  { "de": "❓ Fachname noch offen", "en": "❓ full name pending" },
+             "topics": ["Elektrotechnik", "Zeichnen", "NIN", "Arbeitssicherheit und Chemie"] },
+  "atd":   { "code": "ATD",   "color": "#4fbf87", "ink": "#062d1c",
+             "name":  { "de": "ATD", "en": "ATD" },
+             "full":  { "de": "❓ Fachname noch offen", "en": "❓ full name pending" },
+             "topics": ["Elektrotechnik", "Physik", "Technische Dokumentation", "Telekommunikation", "Apparatekunde"] },
+  "abu":   { "code": "ABU",   "color": "#a97bd6", "ink": "#25113a",
+             "name":  { "de": "ABU", "en": "General Education" },
+             "full":  { "de": "Allgemeinbildender Unterricht", "en": "General education" },
+             "topics": ["G01–G11", "SK-Kompetenzen"] },
+  "sport": { "code": "Sport", "color": "#f2645a", "ink": "#3d0f0b",
+             "name":  { "de": "Sport", "en": "Sport" },
+             "full":  { "de": "Sport", "en": "Physical education" },
+             "topics": [] }
+}

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="de-CH" data-l="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-de="Kontrollzentrum — Schule" data-en="Control Centre — School">Kontrollzentrum — Schule</title>
+<meta name="description" content="Stundenplan, Prüfungen, Hausaufgaben und Material — Elektroinstallateur EFZ, ELI 25a, BZI Interlaken.">
+<meta name="theme-color" content="#f7f5f1">
+<script>(function(){try{var l=localStorage.getItem('schule-lang');if(l==='en'||l==='de'){document.documentElement.setAttribute('data-l',l);document.documentElement.setAttribute('lang',l==='en'?'en':'de-CH');}var t=localStorage.getItem('schule-theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/core.css">
+<style>
+/* ---------- Hero ---------- */
+.hero { padding: clamp(2rem, 6vw, 3.5rem) 0 0; }
+.hero-top { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1rem 2rem; margin-bottom: 1.75rem; }
+.hero h1 { font-size: clamp(2rem, 6vw, 3.4rem); letter-spacing: -.04em; }
+.hero h1 span { display: block; color: var(--muted); font-weight: 600; font-size: .42em; letter-spacing: -.01em; margin-top: .5rem; }
+.kw {
+  margin-left: auto; text-align: right; font-family: var(--f-mono);
+  font-size: .74rem; color: var(--muted); line-height: 1.5;
+}
+.kw b { display: block; font-size: 1.6rem; color: var(--ink); font-weight: 700; letter-spacing: -.02em; }
+.kw .badge {
+  display: inline-block; margin-top: .3rem; padding: .16rem .5rem; border-radius: 999px;
+  font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  border: 1px solid var(--line-2);
+}
+
+/* ---------- Nächste Lektion ---------- */
+.next {
+  position: relative; overflow: hidden;
+  padding: clamp(1.4rem, 4vw, 2.2rem);
+  display: grid; gap: 1.25rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  border-left: 4px solid var(--c, var(--line-2));
+}
+.next::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(80% 130% at 0% 0%, color-mix(in srgb, var(--c, transparent) 9%, transparent), transparent 62%);
+}
+.next .lbl { margin-bottom: .55rem; }
+.next .subj { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-bottom: .45rem; }
+.next h2 { font-size: clamp(1.35rem, 3.6vw, 2rem); letter-spacing: -.03em; }
+.next .meta { color: var(--muted); font-size: .88rem; margin-top: .4rem; display: flex; flex-wrap: wrap; gap: .2rem .9rem; }
+.next .meta b { color: var(--ink-2); font-weight: 600; }
+.next .cd { text-align: right; }
+.next .cd .t { font-family: var(--f-mono); font-size: clamp(1.5rem, 4vw, 2.1rem); font-weight: 700; letter-spacing: -.03em; white-space: nowrap; }
+.next .cd .d { font-size: .78rem; color: var(--muted); margin-top: .15rem; }
+.next.live .cd .t { color: var(--ok); }
+
+/* ---------- Woche ---------- */
+.week { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.daycol { padding: 1.15rem 1.15rem 1.3rem; }
+.daycol > header { display: flex; align-items: baseline; gap: .55rem; margin-bottom: .9rem; padding-bottom: .7rem; border-bottom: 1px solid var(--line); }
+.daycol > header h3 { font-size: 1.02rem; }
+.daycol > header .dt { font-family: var(--f-mono); font-size: .7rem; color: var(--faint); margin-left: auto; }
+.lesson {
+  display: grid; grid-template-columns: 4.6rem 1fr; gap: .1rem .8rem;
+  padding: .62rem 0; border-bottom: 1px dashed var(--line);
+  position: relative;
+}
+.lesson:last-child { border-bottom: 0; }
+.lesson .tm { font-family: var(--f-mono); font-size: .72rem; color: var(--muted); padding-top: .12rem; font-variant-numeric: tabular-nums; }
+.lesson .bd { min-width: 0; }
+.lesson .tt { display: flex; align-items: center; gap: .45rem; flex-wrap: wrap; }
+.lesson .who { font-weight: 600; font-size: .92rem; }
+.lesson .tp { font-size: .8rem; color: var(--muted); grid-column: 2; }
+.lesson .rm { font-family: var(--f-mono); font-size: .66rem; color: var(--faint); }
+.lesson.now { background: color-mix(in srgb, var(--ok) 8%, transparent); border-radius: var(--r-s); padding-left: .5rem; padding-right: .5rem; margin: 0 -.5rem; }
+.lesson.now::before { content: ""; position: absolute; left: -.5rem; top: .6rem; bottom: .6rem; width: 3px; border-radius: 2px; background: var(--ok); }
+
+/* ---------- Prüfungen / Aufgaben ---------- */
+.stack { display: grid; gap: .7rem; }
+.row {
+  display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: .9rem;
+  align-items: center; padding: .95rem 1.1rem;
+  border-left: 3px solid var(--c, var(--line-2));
+}
+.row .ttl { font-weight: 600; font-size: .96rem; }
+.row .sub { font-size: .8rem; color: var(--muted); margin-top: .1rem; }
+.row .cnt { font-family: var(--f-mono); font-size: .8rem; text-align: right; white-space: nowrap; color: var(--muted); }
+.row .cnt b { display: block; font-size: 1.15rem; color: var(--ink); font-weight: 700; }
+.row.soon .cnt b { color: var(--alert); }
+.row.warn .cnt b { color: var(--warn); }
+.dot { width: 9px; height: 9px; border-radius: 999px; background: var(--c); flex: none; }
+.tag-unconf {
+  font-family: var(--f-mono); font-size: .58rem; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--warn); border: 1px solid color-mix(in srgb, var(--warn) 40%, transparent);
+  padding: .08rem .35rem; border-radius: 999px; margin-left: .4rem; white-space: nowrap;
+}
+.empty { padding: 1.6rem 1.1rem; color: var(--muted); font-size: .9rem; text-align: center; }
+
+/* ---------- Lehrpersonen ---------- */
+.teachers { display: grid; grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); gap: 1rem; }
+.tcard {
+  display: block; text-decoration: none; padding: 1.2rem 1.2rem 1.3rem;
+  position: relative; overflow: hidden;
+}
+.tcard::before {
+  content: ""; position: absolute; inset: 0 auto 0 0; width: 3px;
+  background: linear-gradient(180deg, var(--c1), var(--c2, var(--c1)));
+}
+.tcard .day { font-family: var(--f-mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); }
+.tcard h3 { font-size: 1.1rem; margin: .35rem 0 .5rem; letter-spacing: -.02em; }
+.tcard .chips { display: flex; gap: .3rem; flex-wrap: wrap; margin-bottom: .6rem; }
+.tcard p { font-size: .84rem; color: var(--muted); margin: 0; line-height: 1.5; }
+.tcard .go { position: absolute; right: 1rem; top: 1.15rem; color: var(--faint); transition: transform .25s var(--ease), color .25s; }
+.tcard:hover .go { transform: translate(3px, -3px); color: var(--ink); }
+.tcard .exam {
+  display: inline-block; margin-top: .7rem; font-family: var(--f-mono); font-size: .6rem;
+  letter-spacing: .07em; text-transform: uppercase; color: var(--s-abt);
+  border: 1px solid color-mix(in srgb, var(--s-abt) 40%, transparent);
+  padding: .12rem .4rem; border-radius: 999px;
+}
+
+/* ---------- Schnellzugriff ---------- */
+.quick { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: .8rem; }
+.qcard { display: flex; align-items: center; gap: .75rem; padding: 1rem 1.1rem; text-decoration: none; }
+.qcard svg { width: 19px; height: 19px; color: var(--muted); flex: none; }
+.qcard b { font-weight: 600; font-size: .92rem; display: block; }
+.qcard span { font-size: .76rem; color: var(--muted); }
+
+@media (max-width: 720px) {
+  .week { grid-template-columns: 1fr; }
+  .next { grid-template-columns: 1fr; }
+  .next .cd { text-align: left; }
+  .kw { margin-left: 0; text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="./">schule<i>/ ELI 25a</i></a>
+    <nav class="nav">
+      <a href="./" aria-current="page"><span lang="de">Übersicht</span><span lang="en">Overview</span></a>
+      <a href="plan.html"><span lang="de">Plan</span><span lang="en">Plan</span></a>
+      <a href="noten.html"><span lang="de">Noten</span><span lang="en">Grades</span></a>
+      <a href="material.html"><span lang="de">Material</span><span lang="en">Material</span></a>
+    </nav>
+    <div class="tools">
+      <div class="langswitch" role="group" aria-label="Sprache / Language">
+        <button type="button" data-set="de" aria-pressed="true">DE</button>
+        <button type="button" data-set="en" aria-pressed="false">EN</button>
+      </div>
+      <button class="iconbtn" type="button" data-theme-toggle
+              data-de-label="Hell/Dunkel umschalten" data-en-label="Toggle light/dark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+          <path d="M12 3v1.5M12 19.5V21M4.2 4.2l1.1 1.1M18.7 18.7l1.1 1.1M3 12h1.5M19.5 12H21M4.2 19.8l1.1-1.1M18.7 5.3l1.1-1.1"/>
+          <circle cx="12" cy="12" r="3.8"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="hero-top">
+      <h1>
+        <span lang="de">Kontrollzentrum</span><span lang="en">Control Centre</span>
+        <span id="today"></span>
+      </h1>
+      <div class="kw">
+        <span lang="de">Kalenderwoche</span><span lang="en">Calendar week</span>
+        <b id="kw-num">–</b>
+        <span class="badge" id="kw-kind">–</span>
+      </div>
+    </div>
+    <article class="card next" id="next-card">
+      <div>
+        <div class="eyebrow lbl"><span lang="de">Als Nächstes</span><span lang="en">Up next</span></div>
+        <div class="subj" id="next-chips"></div>
+        <h2 id="next-title">…</h2>
+        <div class="meta" id="next-meta"></div>
+      </div>
+      <div class="cd">
+        <div class="t" id="next-cd">–</div>
+        <div class="d" id="next-when"></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="sect">
+    <div class="sect-h">
+      <h2><span lang="de">Prüfungen</span><span lang="en">Exams</span></h2>
+      <span class="n" id="tests-n"></span>
+      <span class="rule"></span>
+    </div>
+    <div class="stack" id="tests"></div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-h">
+      <h2><span lang="de">Hausaufgaben</span><span lang="en">Homework</span></h2>
+      <span class="n" id="hw-n"></span>
+      <span class="rule"></span>
+    </div>
+    <div class="stack" id="homework"></div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-h">
+      <h2><span lang="de">Die Woche</span><span lang="en">The week</span></h2>
+      <span class="rule"></span>
+      <div class="wk-toggle" role="group" aria-label="Woche">
+        <button type="button" data-week="even" aria-pressed="false">
+          <span lang="de">Gerade</span><span lang="en">Even</span>
+        </button>
+        <button type="button" data-week="odd" aria-pressed="false">
+          <span lang="de">Ungerade</span><span lang="en">Odd</span>
+        </button>
+      </div>
+    </div>
+    <div class="week" id="week"></div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-h">
+      <h2><span lang="de">Lehrpersonen</span><span lang="en">Teachers</span></h2>
+      <span class="n">5</span>
+      <span class="rule"></span>
+    </div>
+    <div class="teachers" id="teachers"></div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-h">
+      <h2><span lang="de">Schnellzugriff</span><span lang="en">Quick access</span></h2>
+      <span class="rule"></span>
+    </div>
+    <div class="quick">
+      <a class="card hoverable qcard rv" href="lehrer/waefler.html#gesetzespyramide">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3 3 20h18L12 3Z"/><path d="M7.5 13h9M9.7 8.5h4.6"/></svg>
+        <span><b>Gesetzespyramide</b><span lang="de">EleG · NIV · NIN</span><span lang="en">Swiss electrical law hierarchy</span></span>
+      </a>
+      <a class="card hoverable qcard rv" href="lehrer/waefler.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        <span><b>NIN 2025</b><span lang="de">SN 411000 · Kurztest jede Woche</span><span lang="en">SN 411000 · weekly short test</span></span>
+      </a>
+      <a class="card hoverable qcard rv" href="lehrer/laedrach.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17M3.5 12h17"/></svg>
+        <span><b>ABU G01–G11</b><span lang="de">Themenbereiche und Stand</span><span lang="en">Modules and progress</span></span>
+      </a>
+      <a class="card hoverable qcard rv" href="https://dump.yanikroesti.ch" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 16 16 8M9.5 8H16v6.5"/><rect x="3.5" y="3.5" width="17" height="17" rx="4"/></svg>
+        <span><b>dump/</b><span lang="de">der Rest der Projekte</span><span lang="en">everything else</span></span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="col">
+      <h4><span lang="de">Schule</span><span lang="en">School</span></h4>
+      <ul>
+        <li><a href="plan.html"><span lang="de">Prüfungen &amp; Aufgaben</span><span lang="en">Exams &amp; homework</span></a></li>
+        <li><a href="noten.html"><span lang="de">Noten</span><span lang="en">Grades</span></a></li>
+        <li><a href="material.html"><span lang="de">Material</span><span lang="en">Material</span></a></li>
+      </ul>
+    </div>
+    <div class="col">
+      <h4><span lang="de">Montag</span><span lang="en">Monday</span></h4>
+      <ul>
+        <li><a href="lehrer/moser.html">Beni Moser</a></li>
+        <li><a href="lehrer/laedrach.html">Bruno Lädrach</a></li>
+      </ul>
+    </div>
+    <div class="col">
+      <h4><span lang="de">Freitag</span><span lang="en">Friday</span></h4>
+      <ul>
+        <li><a href="lehrer/waefler.html">Stefan Wäfler</a></li>
+        <li><a href="lehrer/berisha.html">Armlind Berisha</a></li>
+        <li><a href="lehrer/aeschlimann.html">Simon Aeschlimann</a></li>
+      </ul>
+    </div>
+    <div class="col">
+      <h4>Satelliten</h4>
+      <ul>
+        <li><a href="https://dump.yanikroesti.ch" target="_blank" rel="noopener">dump.yanikroesti.ch ↗</a></li>
+        <li><a href="https://note.yanikroesti.com" target="_blank" rel="noopener">note.yanikroesti.com ↗</a></li>
+      </ul>
+    </div>
+    <div class="colophon">
+      <span lang="de">Elektroinstallateur EFZ · ELI 25a · BZI Interlaken · 2. Lehrjahr, 3. Semester.
+        Stundenplan-Quelle ist <b>Stundenplan.md</b> im Vault.</span>
+      <span lang="en">Electrical installer EFZ · class ELI 25a · BZI Interlaken · 2nd year, 3rd semester.
+        The timetable source of truth is <b>Stundenplan.md</b> in the vault.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/app.js"></script>
+<script>
+(function () {
+  'use strict';
+  var S = window.Schule;
+  var seed = null;
+
+  function lang() { return document.documentElement.getAttribute('data-l') || 'de'; }
+  function tx(o) { if (!o) return ''; return o[lang()] || o.de || o.en || ''; }
+  function el(tag, cls, html) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (html != null) n.innerHTML = html;
+    return n;
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  var render = {};
+
+  /* ---------- Kopf ---------- */
+  render.head = function () {
+    var now = new Date();
+    var kw = S.isoWeek(now);
+    var kind = S.weekKind(now);
+    document.getElementById('kw-num').textContent = kw;
+    var badge = document.getElementById('kw-kind');
+    badge.innerHTML = kind === 'even'
+      ? '<span lang="de">gerade · kein Sport</span><span lang="en">even · no sport</span>'
+      : '<span lang="de">ungerade · mit Sport</span><span lang="en">odd · with sport</span>';
+    document.getElementById('today').textContent =
+      S.dayName(now, lang()) + ', ' + S.fmtDate(now, lang());
+  };
+
+  /* ---------- Nächste Lektion ---------- */
+  render.next = function () {
+    var D = S.data();
+    var n = S.nextLesson();
+    var card = document.getElementById('next-card');
+    if (!n) {
+      document.getElementById('next-title').textContent =
+        lang() === 'en' ? 'No lesson in the next three weeks' : 'Keine Lektion in den nächsten drei Wochen';
+      document.getElementById('next-cd').textContent = '–';
+      return;
+    }
+    var l = n.lesson;
+    var sub = D.subjects[l.subject];
+    var t = D.teacherById[l.teacher];
+
+    card.style.setProperty('--c', sub.color);
+    card.classList.toggle('live', n.running);
+
+    document.getElementById('next-chips').innerHTML =
+      '<span class="chip s-' + l.subject + '">' + esc(sub.code) + '</span>' +
+      '<span class="rm mono" style="font-size:.7rem;color:var(--faint)">' + esc(l.room) + '</span>';
+    document.getElementById('next-title').textContent = t.name;
+    document.getElementById('next-meta').innerHTML =
+      '<span><b>' + esc(l.start) + '–' + esc(l.end) + '</b></span>' +
+      '<span>' + esc(S.dayName(n.date, lang())) + ', ' + esc(S.fmtDate(n.date, lang())) + '</span>' +
+      '<span>' + esc(tx(l.topic)) + '</span>';
+
+    function tick() {
+      document.getElementById('next-cd').textContent = S.until(n.startsAt, lang(), n.running);
+      document.getElementById('next-when').textContent = n.running
+        ? (lang() === 'en' ? 'until ' : 'bis ') + l.end
+        : (lang() === 'en' ? 'starts ' : 'beginnt ') + l.start;
+    }
+    tick();
+    clearInterval(render._cd);
+    render._cd = setInterval(tick, 30000);
+  };
+
+  /* ---------- Woche ---------- */
+  var forcedWeek = null;
+
+  render.week = function () {
+    var D = S.data();
+    var now = new Date();
+    var kind = forcedWeek || S.weekKind(now);
+    var host = document.getElementById('week');
+    host.innerHTML = '';
+
+    document.querySelectorAll('.wk-toggle button').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-week') === kind ? 'true' : 'false');
+    });
+
+    // Montag dieser (oder der gewählten) Woche finden
+    var monday = new Date(now);
+    monday.setDate(monday.getDate() - ((now.getDay() + 6) % 7));
+    if (forcedWeek && S.weekKind(monday) !== forcedWeek) monday.setDate(monday.getDate() + 7);
+
+    [1, 5].forEach(function (dayNo) {
+      var d = new Date(monday);
+      d.setDate(d.getDate() + (dayNo - 1));
+      var ls = S.lessonsFor(d).filter(function (l) { return l.week === 'all' || l.week === kind; });
+
+      var col = el('article', 'card daycol rv');
+      var h = el('header');
+      h.innerHTML = '<h3>' + esc(S.dayName(d, lang())) + '</h3>' +
+                    '<span class="dt">' + esc(S.fmtDate(d, lang())) + '</span>';
+      col.appendChild(h);
+
+      ls.forEach(function (l) {
+        var sub = D.subjects[l.subject];
+        var t = D.teacherById[l.teacher];
+        var running = (function () {
+          var today = new Date();
+          return today.toDateString() === d.toDateString() &&
+                 S.at(d, l.start) <= today && today < S.at(d, l.end);
+        })();
+        var row = el('div', 'lesson' + (running ? ' now' : ''));
+        row.innerHTML =
+          '<div class="tm">' + esc(l.start) + '<br>' + esc(l.end) + '</div>' +
+          '<div class="bd">' +
+            '<div class="tt">' +
+              '<span class="chip s-' + l.subject + '">' + esc(sub.code) + '</span>' +
+              '<span class="who">' + esc(t.name) + '</span>' +
+              '<span class="rm">' + esc(l.room) + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="tp">' + esc(tx(l.topic)) + '</div>';
+        col.appendChild(row);
+      });
+
+      host.appendChild(col);
+    });
+    S.reveal('#week .rv');
+  };
+
+  /* ---------- Prüfungen ---------- */
+  function nextWeekday(dayNo) {
+    var d = new Date();
+    d.setHours(0, 0, 0, 0);
+    var delta = (dayNo - d.getDay() + 7) % 7;
+    if (delta === 0) delta = 0;
+    d.setDate(d.getDate() + delta);
+    return d;
+  }
+
+  render.tests = function () {
+    var D = S.data();
+    var host = document.getElementById('tests');
+    host.innerHTML = '';
+    var items = [];
+
+    (seed.tests || []).forEach(function (t) {
+      items.push({ date: t.date, days: S.daysUntil(t.date), t: t, recurring: false });
+    });
+
+    (seed.recurring || []).forEach(function (r) {
+      var m = /^weekly:(\d)$/.exec(r.rrule || '');
+      if (!m) return;
+      var d = nextWeekday(+m[1]);
+      var iso = d.getFullYear() + '-' + S.pad(d.getMonth() + 1) + '-' + S.pad(d.getDate());
+      items.push({ date: iso, days: S.daysUntil(iso), t: r, recurring: true });
+    });
+
+    items.sort(function (a, b) { return a.days - b.days; });
+    items = items.filter(function (i) { return i.days >= 0; });
+
+    document.getElementById('tests-n').textContent = items.length;
+
+    if (!items.length) {
+      host.appendChild(el('div', 'card empty',
+        '<span lang="de">Keine Prüfung eingetragen.</span><span lang="en">No exams recorded.</span>'));
+      return;
+    }
+
+    items.forEach(function (it) {
+      var t = it.t;
+      var sub = D.subjects[t.subject];
+      var teacher = D.teacherById[t.teacher];
+      var cls = 'card hoverable row rv' + (it.days <= 2 ? ' soon' : it.days <= 7 ? ' warn' : '');
+      var row = el('article', cls);
+      row.style.setProperty('--c', sub.color);
+      row.innerHTML =
+        '<span class="dot"></span>' +
+        '<div>' +
+          '<div class="ttl">' + esc(tx(t.title)) +
+            (t.unconfirmed ? '<span class="tag-unconf"><span lang="de">unbestätigt</span><span lang="en">unconfirmed</span></span>' : '') +
+            (it.recurring ? '<span class="tag-unconf" style="color:var(--muted);border-color:var(--line-2)"><span lang="de">wöchentlich</span><span lang="en">weekly</span></span>' : '') +
+          '</div>' +
+          '<div class="sub">' + esc(teacher.name) + ' · ' + esc(sub.code) +
+            (t.detail ? ' · ' + esc(tx(t.detail)) : '') + '</div>' +
+        '</div>' +
+        '<div class="cnt"><b>' + (it.days === 0
+            ? (lang() === 'en' ? 'today' : 'heute')
+            : it.days + ' ' + (lang() === 'en' ? (it.days === 1 ? 'day' : 'days') : (it.days === 1 ? 'Tag' : 'Tage'))) +
+          '</b>' + esc(it.date.split('-').reverse().join('.')) + '</div>';
+      host.appendChild(row);
+    });
+    S.reveal('#tests .rv');
+  };
+
+  /* ---------- Hausaufgaben ---------- */
+  render.homework = function () {
+    var host = document.getElementById('homework');
+    host.innerHTML = '';
+    var hw = seed.homework || [];
+    document.getElementById('hw-n').textContent = hw.length;
+    if (!hw.length) {
+      host.appendChild(el('div', 'card empty',
+        '<span lang="de">Nichts offen. Schreib dem Bot, sobald etwas aufgegeben wird.</span>' +
+        '<span lang="en">Nothing open. Message the bot when something is set.</span>'));
+    }
+  };
+
+  /* ---------- Lehrpersonen ---------- */
+  render.teachers = function () {
+    var D = S.data();
+    var host = document.getElementById('teachers');
+    host.innerHTML = '';
+    D.teachers.forEach(function (t, i) {
+      var c1 = D.subjects[t.subjects[0]].color;
+      var c2 = D.subjects[t.subjects[t.subjects.length - 1]].color;
+      var a = el('a', 'card hoverable tcard rv');
+      a.href = 'lehrer/' + t.id + '.html';
+      a.style.setProperty('--c1', c1);
+      a.style.setProperty('--c2', c2);
+      a.style.setProperty('--d', (i * 55) + 'ms');
+      a.innerHTML =
+        '<span class="go"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>' +
+        '<div class="day">' + (t.day === 1
+            ? '<span lang="de">Montag</span><span lang="en">Monday</span>'
+            : '<span lang="de">Freitag</span><span lang="en">Friday</span>') +
+          ' · ' + esc(t.room) + '</div>' +
+        '<h3>' + esc(t.name) + '</h3>' +
+        '<div class="chips">' + t.subjects.map(function (s) {
+            return '<span class="chip s-' + s + '">' + esc(D.subjects[s].code) + '</span>';
+          }).join('') + '</div>' +
+        '<p>' + esc(tx(t.blurb)) + '</p>' +
+        (t.exams ? '<span class="exam"><span lang="de">alle Prüfungen</span><span lang="en">all exams</span></span>' : '');
+      host.appendChild(a);
+    });
+    S.reveal('#teachers .rv');
+  };
+
+  function renderAll() {
+    render.head(); render.next(); render.week();
+    render.tests(); render.homework(); render.teachers();
+  }
+
+  Promise.all([S.load(), fetch('data/seed.json').then(function (r) { return r.json(); })])
+    .then(function (parts) {
+      seed = parts[1];
+      renderAll();
+      S.reveal();
+      document.querySelectorAll('.wk-toggle button').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var w = this.getAttribute('data-week');
+          forcedWeek = (forcedWeek === w) ? null : w;
+          render.week();
+        });
+      });
+      document.addEventListener('langchange', renderAll);
+    })
+    .catch(function (e) {
+      console.error('Daten konnten nicht geladen werden:', e);
+      document.getElementById('next-title').textContent = 'Daten konnten nicht geladen werden';
+    });
+})();
+</script>
+</body>
+</html>

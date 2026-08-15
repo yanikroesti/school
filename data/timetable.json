@@ -1,0 +1,38 @@
+{
+  "class": "ELI 25a",
+  "classCode": "ELI2025.3a",
+  "school": "BZI Interlaken",
+  "schoolYear": "26/27",
+  "semester": 3,
+  "apprenticeshipYear": 2,
+  "source": "Stundenplan.md — vom 15.08.2026, korrigiert von Yanik",
+  "weekRule": {
+    "type": "kw-parity",
+    "note": { "de": "Gerade Kalenderwoche = langer ABU ohne Sport. Ungerade = ABU kurz + Sport.",
+              "en": "Even calendar week = long general-education block, no sport. Odd = short block plus sport." },
+    "verifiedOn": "2026-08-17"
+  },
+  "lessons": [
+    { "day": 1, "start": "07:50", "end": "09:20", "subject": "htog", "teacher": "moser", "room": "2.15", "week": "all",
+      "topic": { "de": "Elektrotechnik / Zeichnen", "en": "Electrical engineering / drawing" } },
+    { "day": 1, "start": "09:20", "end": "11:50", "subject": "atd", "teacher": "moser", "room": "2.15", "week": "all",
+      "topic": { "de": "Elektrotechnik / Physik / Zeichnen", "en": "Electrical engineering / physics / drawing" } },
+    { "day": 1, "start": "12:50", "end": "16:10", "subject": "abu", "teacher": "laedrach", "room": "1.10", "week": "even",
+      "topic": { "de": "Allgemeinbildung", "en": "General education" } },
+    { "day": 1, "start": "12:50", "end": "14:30", "subject": "abu", "teacher": "laedrach", "room": "1.10", "week": "odd",
+      "topic": { "de": "Allgemeinbildung", "en": "General education" } },
+    { "day": 1, "start": "14:40", "end": "16:10", "subject": "sport", "teacher": "laedrach", "room": "U.1.2", "week": "odd",
+      "topic": { "de": "Sport", "en": "Sport" } },
+
+    { "day": 5, "start": "07:50", "end": "09:20", "subject": "abt", "teacher": "waefler", "room": "2.12", "week": "all",
+      "topic": { "de": "❓ noch offen", "en": "❓ pending" } },
+    { "day": 5, "start": "09:40", "end": "11:10", "subject": "htog", "teacher": "berisha", "room": "2.12", "week": "all",
+      "topic": { "de": "NIN", "en": "NIN" } },
+    { "day": 5, "start": "11:15", "end": "12:00", "subject": "atd", "teacher": "aeschlimann", "room": "2.12", "week": "all",
+      "topic": { "de": "Telekommunikation", "en": "Telecommunications" } },
+    { "day": 5, "start": "12:45", "end": "13:30", "subject": "atd", "teacher": "aeschlimann", "room": "2.12", "week": "all",
+      "topic": { "de": "Apparatekunde", "en": "Equipment studies" } },
+    { "day": 5, "start": "13:40", "end": "15:10", "subject": "htog", "teacher": "berisha", "room": "2.12", "week": "all",
+      "topic": { "de": "Arbeitssicherheit / Chemie", "en": "Workplace safety / chemistry" } }
+  ]
+}

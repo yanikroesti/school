@@ -1,0 +1,26 @@
+[
+  { "id": "moser", "name": "Beni Moser", "short": "moseb", "day": 1,
+    "subjects": ["htog", "atd"], "room": "2.15",
+    "blurb": { "de": "Elektrotechnik, Physik und Zeichnen — der ganze Montagvormittag.",
+               "en": "Electrical engineering, physics and drawing — the whole Monday morning." } },
+
+  { "id": "laedrach", "name": "Bruno Lädrach", "short": "laedb", "day": 1,
+    "subjects": ["abu", "sport"], "room": "1.10 / U.1.2",
+    "blurb": { "de": "Allgemeinbildung am Montagnachmittag. In ungeraden Wochen kürzer, dafür Sport.",
+               "en": "General education on Monday afternoon. Shorter in odd weeks, with sport instead." } },
+
+  { "id": "waefler", "name": "Stefan Wäfler", "short": "waes", "day": 5,
+    "subjects": ["abt"], "room": "2.12", "exams": true,
+    "blurb": { "de": "NIN 2025 und Apparatekunde. Hier laufen alle Prüfungen.",
+               "en": "NIN 2025 and equipment studies. All exams run here." } },
+
+  { "id": "berisha", "name": "Armlind Berisha", "short": "beria", "day": 5,
+    "subjects": ["htog"], "room": "2.12",
+    "blurb": { "de": "NIN am Vormittag, Arbeitssicherheit und Chemie am Nachmittag.",
+               "en": "NIN in the morning, workplace safety and chemistry in the afternoon." } },
+
+  { "id": "aeschlimann", "name": "Simon Aeschlimann", "short": "aescs", "day": 5,
+    "subjects": ["atd"], "room": "2.12",
+    "blurb": { "de": "Telekommunikation und Apparatekunde, je 45 Minuten um den Mittag.",
+               "en": "Telecoms and equipment studies, 45 minutes either side of lunch." } }
+]
