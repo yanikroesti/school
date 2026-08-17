@@ -1,0 +1,44 @@
+{
+  "_source": "ferienplan.pdf (Vers. 0.0, BZI) — Ferienwochen KW 14-16 · 27-32 · 39-41 · 52-01",
+  "schoolYear": "26/27",
+
+  "semesterEnd": {
+    "3": { "date": "2027-01-29", "note": { "de": "Ende 3. Semester (1. Semester SJ 26/27), Freitag KW 4",
+                                            "en": "End of 3rd semester, Friday of week 4" } },
+    "4": { "date": "2027-07-02", "note": { "de": "Ende 4. Semester (2. Semester SJ 26/27)",
+                                            "en": "End of 4th semester" } }
+  },
+
+  "holidays": [
+    { "id": "herbst26",   "from": "2026-09-19", "to": "2026-10-11", "firstSchoolDay": "2026-10-12",
+      "name": { "de": "Herbstferien", "en": "Autumn holidays" } },
+    { "id": "winter26",   "from": "2026-12-19", "to": "2027-01-10", "firstSchoolDay": "2027-01-11",
+      "name": { "de": "Winterferien", "en": "Winter holidays" } },
+    { "id": "fruehling27","from": "2027-04-03", "to": "2027-04-25", "firstSchoolDay": "2027-04-26",
+      "name": { "de": "Frühlingsferien", "en": "Spring holidays" } },
+    { "id": "sommer27",   "from": "2027-07-03", "to": "2027-08-15", "firstSchoolDay": "2027-08-16",
+      "name": { "de": "Sommerferien", "en": "Summer holidays" } }
+  ],
+
+  "closures": [
+    { "date": "2027-03-26", "weekday": "Fr", "affects": true,
+      "name": { "de": "Karfreitag", "en": "Good Friday" } },
+    { "date": "2027-03-29", "weekday": "Mo", "affects": true,
+      "name": { "de": "Ostermontag", "en": "Easter Monday" } },
+    { "date": "2027-05-06", "weekday": "Do", "affects": false,
+      "name": { "de": "Auffahrt", "en": "Ascension Day" } },
+    { "date": "2027-05-07", "weekday": "Fr", "affects": true,
+      "name": { "de": "Freitag nach Auffahrt", "en": "Friday after Ascension" } },
+    { "date": "2027-05-17", "weekday": "Mo", "affects": true,
+      "name": { "de": "Pfingstmontag", "en": "Whit Monday" } }
+  ],
+
+  "partial": [
+    { "date": "2027-03-25", "weekday": "Do", "from": "16:00", "affects": false,
+      "name": { "de": "Gründonnerstag — schulfrei ab 16:00", "en": "Maundy Thursday — free from 16:00" } },
+    { "date": "2027-05-05", "weekday": "Mi", "from": "16:00", "affects": false,
+      "name": { "de": "Tag vor Auffahrt — schulfrei ab 16:00", "en": "Day before Ascension — free from 16:00" } }
+  ],
+
+  "_note": "affects = fällt auf einen Schultag der ELI 25a (Montag oder Freitag). Weil die Ferien immer ganze Kalenderwochen umfassen, verschiebt sich die Woche Gerade/Ungerade nicht."
+}

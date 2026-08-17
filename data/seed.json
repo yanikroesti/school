@@ -22,11 +22,11 @@
       "teacher": "laedrach",
       "subject": "abu",
       "date": "2026-08-17",
-      "title": { "de": "ABU-Test Krankenkasse", "en": "General education test — health insurance" },
-      "detail": { "de": "G03 Risiko und Sicherheit · danach Sach- und Haftpflicht",
-                  "en": "G03 Risk and safety · followed by property and liability insurance" },
-      "unconfirmed": true,
-      "source": "ABU-Unterrichtsplanungen/2. Lehrjahr/3. Semester/ST02 17.08.26"
+      "title": { "de": "Test Krankenkasse und Unfallversicherung",
+                 "en": "Test — health and accident insurance" },
+      "detail": { "de": "40 Minuten · 3. Block der Lektion · G03 Risiko und Sicherheit",
+                  "en": "40 minutes · third block of the lesson · G03 Risk and safety" },
+      "source": "ABU-Unterrichtsplanung ST02, 17.08.2026 — bestätigt"
     }
   ],
 

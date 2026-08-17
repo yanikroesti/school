@@ -30,14 +30,32 @@
     loading = Promise.all([
       fetch(b + 'data/timetable.json').then(function (r) { return r.json(); }),
       fetch(b + 'data/teachers.json').then(function (r) { return r.json(); }),
-      fetch(b + 'data/subjects.json').then(function (r) { return r.json(); })
+      fetch(b + 'data/subjects.json').then(function (r) { return r.json(); }),
+      fetch(b + 'data/calendar.json').then(function (r) { return r.json(); })
     ]).then(function (parts) {
-      DATA = { timetable: parts[0], teachers: parts[1], subjects: parts[2] };
+      DATA = { timetable: parts[0], teachers: parts[1], subjects: parts[2], calendar: parts[3] };
       DATA.teacherById = {};
       DATA.teachers.forEach(function (t) { DATA.teacherById[t.id] = t; });
       return DATA;
     });
     return loading;
+  }
+
+  /* ---------------- Ferien und Feiertage ---------------- */
+
+  function iso(d) {
+    return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+  }
+
+  // Gibt den Grund zurück, warum an diesem Tag keine Schule ist — oder null.
+  function freeDay(date) {
+    if (!DATA || !DATA.calendar) return null;
+    var s = iso(date);
+    var h = (DATA.calendar.holidays || []).filter(function (x) { return s >= x.from && s <= x.to; })[0];
+    if (h) return { type: 'holiday', name: h.name, until: h.to, firstSchoolDay: h.firstSchoolDay };
+    var c = (DATA.calendar.closures || []).filter(function (x) { return x.date === s; })[0];
+    if (c) return { type: 'closure', name: c.name };
+    return null;
   }
 
   /* ---------------- Kalenderwoche ---------------- */
@@ -63,8 +81,9 @@
     return x;
   }
 
-  function lessonsFor(date) {
+  function lessonsFor(date, ignoreFree) {
     if (!DATA) return [];
+    if (!ignoreFree && freeDay(date)) return [];   // Ferien und Feiertage
     var kind = weekKind(date);
     var jsDay = date.getDay();
     return DATA.timetable.lessons
@@ -73,11 +92,11 @@
       .sort(function (a, b) { return a.start.localeCompare(b.start); });
   }
 
-  // Nächste Lektion ab jetzt. Sucht bis zu 21 Tage voraus (Ferien überspringen).
+  // Nächste Lektion ab jetzt. 70 Tage Vorlauf — die Sommerferien dauern sechs Wochen.
   function nextLesson(from) {
     if (!DATA) return null;
     var now = from || new Date();
-    for (var i = 0; i < 21; i++) {
+    for (var i = 0; i < 70; i++) {
       var d = new Date(now);
       d.setDate(d.getDate() + i);
       var ls = lessonsFor(d);
@@ -153,8 +172,10 @@
     load: load,
     data: function () { return DATA; },
     base: base,
+    iso: iso,
     isoWeek: isoWeek,
     weekKind: weekKind,
+    freeDay: freeDay,
     lessonsFor: lessonsFor,
     nextLesson: nextLesson,
     at: at,
