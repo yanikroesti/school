@@ -247,6 +247,32 @@ button { font: inherit; color: inherit; }
 }
 .colophon b { color: var(--ink-2); font-weight: 600; }
 
+/* ---------- Logo-Leiste ----------
+   Die gelieferten Logos sind gemischt: bzi.svg ist weiss, Electrosuisse und
+   Etavis sind dunkel, Suva liegt dazwischen. brightness(0) macht jedes davon
+   zu einer flachen Silhouette (Transparenz bleibt), invert(1) dreht sie im
+   Dunkelmodus. Damit stimmt der Kontrast in beiden Themes — und die Leiste
+   wirkt einheitlich statt zusammengewürfelt.
+   Eine einzelne Marke in Originalfarbe: Klasse "keep-color" ergänzen.        */
+.logos { width: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem 2.5rem; margin-top: 2rem; }
+.logos > * { line-height: 0; display: block; }
+.logos img {
+  height: 24px; width: auto; display: block;
+  filter: brightness(0); opacity: .5;
+  transition: opacity .22s var(--ease), filter .22s;
+}
+.logos a:hover img { opacity: .9; }
+.logos .keep-color img { filter: none; opacity: .85; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .logos img { filter: brightness(0) invert(1); }
+  :root:not([data-theme="light"]) .logos .keep-color img { filter: none; }
+}
+:root[data-theme="dark"] .logos img { filter: brightness(0) invert(1); }
+:root[data-theme="dark"] .logos .keep-color img { filter: none; }
+
+@media (pointer: coarse) { .logos { gap: 1.25rem 1.75rem; } .logos img { height: 21px; } }
+
 /* ---------- Schmale Schirme: Navigation umbrechen ---------- */
 @media (max-width: 660px) {
   .topbar .wrap {

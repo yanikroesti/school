@@ -1,18 +1,38 @@
-# Logos — was ich brauche und wohin
+# Logos
 
-Leg die Dateien **direkt in diesen Ordner** (`logos/`) mit **exakt dem Dateinamen** aus der
-Tabelle. Dann finden die Seiten sie automatisch — ich muss nichts mehr anpassen.
+## ✅ Geliefert am 15.08.2026 — alle vier da, alles eingebaut
 
-## Gebraucht
+| Datei | Format | Wo eingebaut |
+|---|---|---|
+| `bzi.svg` | SVG, weisse Flächen | Fusszeile |
+| `etavis.png` | PNG RGBA, 2156×449 | Fusszeile |
+| `ElectroSuisse.png` | PNG RGBA, 1024×580 | Fusszeile |
+| `suva.png` | PNG RGBA, 5000×1254 | Fusszeile |
 
-| Datei | Wofür | Wo es erscheint | Format | Grösse |
-|---|---|---|---|---|
-| `bzi.svg` | BZI Interlaken | Kopf jeder Seite, Fusszeile | **SVG** bevorzugt, sonst PNG mit transparentem Hintergrund | mind. 200 px breit |
-| `etavis.svg` | Etavis, dein Lehrbetrieb | Fusszeile, Startseite | SVG / PNG transparent | mind. 200 px breit |
-| `electrosuisse.svg` | Electrosuisse — Herausgeberin der NIN | Wäfler-Seite, [[NIN 2025]] | SVG / PNG transparent | mind. 200 px breit |
-| `suva.svg` | Suva | Berisha-Seite (Arbeitssicherheit) | SVG / PNG transparent | mind. 200 px breit |
+Alle mit transparentem Hintergrund — genau richtig.
 
-## Optional, falls du drankommst
+### Wie sie dargestellt werden
+
+Die vier passen farblich nicht zusammen: **bzi.svg ist weiss**, Etavis und Electrosuisse
+sind **dunkel**, Suva liegt dazwischen. Damit wäre in jedem Theme mindestens eines
+unsichtbar gewesen — weiss auf hell, dunkel auf dunkel.
+
+Lösung in `assets/core.css`: `filter: brightness(0)` macht jedes Logo zu einer flachen
+Silhouette (die Transparenz bleibt erhalten), im Dunkelmodus kommt `invert(1)` dazu.
+So stimmt der Kontrast überall, und die Leiste wirkt einheitlich statt zusammengewürfelt.
+
+**Willst du eine Marke in Originalfarbe** (z. B. das rote Suva), setz im HTML die Klasse
+`keep-color` auf den umschliessenden Link:
+
+```html
+<a class="keep-color" href="https://www.suva.ch">…</a>
+```
+
+Sag Bescheid, wenn dir monochrom nicht gefällt — ist eine Zeile.
+
+---
+
+## Optional, falls du noch drankommst
 
 | Datei | Wofür |
 |---|---|
