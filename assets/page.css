@@ -1,0 +1,160 @@
+/* ============================================================
+   Unterseiten: Lehrpersonen, Plan, Noten, Material
+   ============================================================ */
+
+/* ---------- Kopf einer Lehrerseite ---------- */
+.thero { padding: clamp(2rem, 6vw, 3.25rem) 0 .5rem; max-width: 62ch; }
+.thero h1 { font-size: clamp(2rem, 6vw, 3.2rem); letter-spacing: -.04em; margin: .5rem 0 .85rem; }
+.thero .chips { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; margin-bottom: 1.1rem; }
+.thero .lead { font-size: clamp(1rem, 2.2vw, 1.12rem); color: var(--ink-2); line-height: 1.62; }
+.exam-badge {
+  font-family: var(--f-mono); font-size: .6rem; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--s-abt); border: 1px solid color-mix(in srgb, var(--s-abt) 40%, transparent);
+  padding: .18rem .5rem; border-radius: 999px;
+}
+
+/* ---------- Tabellen ---------- */
+.tablecard { overflow-x: auto; }
+.ttable { font-size: .92rem; }
+.ttable td, .ttable th { padding: .72rem 1rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.ttable tr:last-child td { border-bottom: 0; }
+.ttable th {
+  font-family: var(--f-mono); font-size: .64rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); font-weight: 700;
+}
+.ttable .nowrap { white-space: nowrap; }
+.ttable .muted { color: var(--muted); }
+.ttable tr.hl { background: color-mix(in srgb, var(--s-abt) 9%, transparent); }
+.wk {
+  font-family: var(--f-mono); font-size: .58rem; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted); border: 1px solid var(--line-2); padding: .08rem .35rem; border-radius: 999px;
+  margin-left: .35rem; white-space: nowrap;
+}
+.tnote { padding: .9rem 1rem 1rem; margin: 0; font-size: .82rem; color: var(--muted); border-top: 1px solid var(--line); }
+
+/* ---------- Themenkarten ---------- */
+.topics { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1rem; }
+.topic { padding: 1.3rem 1.35rem 1.45rem; border-top: 3px solid var(--c); }
+.topic .thead { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; margin-bottom: .6rem; }
+.topic h3 { font-size: 1.14rem; letter-spacing: -.02em; margin-bottom: .5rem; }
+.topic p { font-size: .89rem; color: var(--muted); margin: 0 0 .8rem; line-height: 1.55; }
+.bul { margin: 0; padding-left: 1.05rem; display: grid; gap: .3rem; }
+.bul li { font-size: .85rem; color: var(--ink-2); }
+
+/* Lernziele */
+.goals { margin-top: 1rem; padding: .95rem 1rem 1rem; background: var(--surface-2); border-radius: var(--r); border: 1px solid var(--line); }
+.goals h4 { font-family: var(--f-mono); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 0 .6rem; font-weight: 700; }
+.goals ul { margin: 0; padding: 0; list-style: none; display: grid; gap: .48rem; }
+.goals li { font-size: .85rem; color: var(--ink-2); line-height: 1.5; padding-left: 1.5rem; position: relative; }
+.goals li::before {
+  content: ""; position: absolute; left: 0; top: .28em;
+  width: 13px; height: 13px; border-radius: 3px;
+  border: 1.5px solid var(--line-2); background: var(--surface);
+}
+
+/* ---------- Offene Punkte ---------- */
+.openbox { padding: 1.15rem 1.3rem 1.25rem; border-left: 3px solid var(--warn); }
+.openbox p { margin: .5rem 0 0; font-size: .88rem; color: var(--muted); line-height: 1.6; }
+.openbox b { color: var(--ink-2); }
+
+/* ---------- Gesetzespyramide ---------- */
+.pyr-wrap { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 0; overflow: hidden; }
+.pyr-svg { padding: 1.5rem 1.25rem 1rem; }
+.pyr-svg svg { width: 100%; height: auto; display: block; }
+.pyr-hint { text-align: center; font-size: .72rem; color: var(--faint); margin: .4rem 0 0; font-family: var(--f-mono); }
+
+.tier path {
+  fill: color-mix(in srgb, var(--s-abt) 22%, var(--surface));
+  stroke: var(--line-2); stroke-width: 1.2;
+  transition: fill .25s var(--ease), transform .25s var(--ease);
+  cursor: pointer;
+}
+.tier:hover path { fill: color-mix(in srgb, var(--s-abt) 38%, var(--surface)); }
+.tier.on path { fill: var(--s-abt); stroke: color-mix(in srgb, var(--s-abt) 70%, #000); }
+.tier:focus { outline: none; }
+.tier:focus-visible path { stroke: var(--ink); stroke-width: 2.4; }
+.tier .tl { font-family: var(--f-display); font-size: 15px; font-weight: 700; fill: var(--ink); text-anchor: middle; pointer-events: none; }
+.tier .ts { font-family: var(--f-mono); font-size: 10px; fill: var(--ink-2); text-anchor: middle; pointer-events: none; letter-spacing: .04em; }
+.tier.on .tl, .tier.on .ts { fill: #2a1a05; }
+.axis { font-family: var(--f-mono); font-size: 9.5px; fill: var(--faint); letter-spacing: .1em; text-transform: uppercase; }
+
+.pyr-detail { border-left: 1px solid var(--line); background: var(--surface-2); padding: 1.5rem 1.4rem; }
+.pyr-card h3 { font-size: 1.08rem; margin: .35rem 0 .55rem; letter-spacing: -.02em; }
+.pyr-card p { font-size: .87rem; color: var(--muted); line-height: 1.6; margin: 0; }
+.pyr-items { list-style: none; margin: .9rem 0 0; padding: 0; display: grid; gap: .6rem; }
+.pyr-items li { font-size: .8rem; color: var(--ink-2); padding: .5rem .65rem; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-s); line-height: 1.45; }
+.pyr-items .mono { color: var(--muted); font-size: .72rem; }
+
+.merksatz {
+  margin: 1.1rem 0 1.5rem; padding: 1rem 1.25rem; font-size: 1rem; color: var(--ink-2);
+  border-left: 3px solid var(--s-abt); background: color-mix(in srgb, var(--s-abt) 7%, transparent);
+  border-radius: 0 var(--r) var(--r) 0;
+}
+.merksatz b { color: var(--ink); }
+
+/* ---------- ABU-Modulrad ---------- */
+.rad-wrap { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 1.5rem; padding: 1.5rem; align-items: center; }
+.rad svg { width: 100%; height: auto; display: block; }
+.seg { fill: none; stroke-width: 17; stroke-linecap: butt; transition: stroke .25s, stroke-width .2s; cursor: default; }
+.seg.done { stroke: var(--s-abu); }
+.seg.cur  { stroke: var(--s-abt); stroke-width: 22; }
+.seg.todo { stroke: var(--line-2); }
+.seg:hover { stroke-width: 22; }
+.seg-l { font-family: var(--f-mono); font-size: 8px; fill: var(--surface); text-anchor: middle; font-weight: 700; pointer-events: none; }
+.rad-c1 { font-family: var(--f-display); font-size: 30px; font-weight: 800; fill: var(--ink); text-anchor: middle; letter-spacing: -.03em; }
+.rad-c2 { font-family: var(--f-mono); font-size: 9px; fill: var(--muted); text-anchor: middle; letter-spacing: .12em; text-transform: uppercase; }
+
+.rad-legend { list-style: none; margin: 0; padding: 0; display: grid; gap: .18rem; }
+.rad-legend li { display: flex; align-items: center; gap: .6rem; font-size: .85rem; padding: .3rem .5rem; border-radius: var(--r-s); }
+.rad-legend .k { font-size: .7rem; color: var(--muted); min-width: 2.4rem; font-weight: 700; }
+.rad-legend .v { color: var(--ink-2); }
+.rad-legend .done { opacity: .55; }
+.rad-legend .done .tick { color: var(--s-abu); margin-left: auto; font-weight: 700; }
+.rad-legend .cur { background: color-mix(in srgb, var(--s-abt) 12%, transparent); }
+.rad-legend .cur .v { color: var(--ink); font-weight: 600; }
+.rad-legend .badge {
+  margin-left: auto; font-family: var(--f-mono); font-size: .58rem; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--s-abt);
+  border: 1px solid color-mix(in srgb, var(--s-abt) 40%, transparent);
+  padding: .1rem .38rem; border-radius: 999px;
+}
+.rad-legend .todo .v { color: var(--faint); }
+
+@media (max-width: 860px) {
+  .pyr-wrap { grid-template-columns: 1fr; }
+  .pyr-detail { border-left: 0; border-top: 1px solid var(--line); }
+  .rad-wrap { grid-template-columns: 1fr; }
+  .rad { max-width: 240px; margin: 0 auto; }
+}
+
+/* ---------- Lernpakete ---------- */
+.lp { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.lpcard {
+  display: block; text-decoration: none; padding: 1.15rem 1.2rem 1.25rem;
+  position: relative; overflow: hidden; border-top: 3px solid var(--c);
+}
+.lpcard .lphead { display: flex; align-items: center; gap: .4rem; margin-bottom: .55rem; flex-wrap: wrap; }
+.lpcard h3 { font-size: 1.05rem; letter-spacing: -.02em; margin-bottom: .35rem; }
+.lpcard p { font-size: .84rem; color: var(--muted); margin: 0 0 .8rem; line-height: 1.5; }
+.lptabs { display: flex; flex-wrap: wrap; gap: .28rem; }
+.lptabs span {
+  font-family: var(--f-mono); font-size: .58rem; letter-spacing: .04em;
+  color: var(--muted); border: 1px solid var(--line); background: var(--surface-2);
+  padding: .13rem .4rem; border-radius: var(--r-s);
+}
+.lpcard .go { position: absolute; right: 1rem; top: 1.1rem; color: var(--faint); transition: transform .25s var(--ease), color .25s; }
+.lpcard:hover .go { transform: translate(3px,-3px); color: var(--ink); }
+.lp-state {
+  font-family: var(--f-mono); font-size: .57rem; letter-spacing: .07em; text-transform: uppercase;
+  padding: .1rem .4rem; border-radius: 999px; white-space: nowrap;
+}
+.lp-aktiv   { color: var(--ok);    border: 1px solid color-mix(in srgb, var(--ok) 42%, transparent); }
+.lp-archiv  { color: var(--faint); border: 1px solid var(--line-2); }
+.lp-geplant { color: var(--warn);  border: 1px solid color-mix(in srgb, var(--warn) 42%, transparent); }
+.lpcard.archiv { opacity: .62; }
+.lpcard.archiv:hover { opacity: 1; }
+.lpcard.geplant { border-top-style: dashed; cursor: default; }
+.lpcard.geplant .blocked {
+  font-size: .8rem; color: var(--muted); line-height: 1.55; margin: .7rem 0 0;
+  padding-top: .7rem; border-top: 1px solid var(--line);
+}

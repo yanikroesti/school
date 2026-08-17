@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="de-CH" data-l="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-de="Noten — Schule" data-en="Grades — School">Noten — Schule</title>
+<meta name="description" content="Notenrechner für ABT: Kurzteste, NIN- und Apparatekunde-Grossteste.">
+<meta name="theme-color" content="#f7f5f1">
+<script>(function(){try{var l=localStorage.getItem('schule-lang');if(l==='en'||l==='de'){document.documentElement.setAttribute('data-l',l);document.documentElement.setAttribute('lang',l==='en'?'en':'de-CH');}var t=localStorage.getItem('schule-theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/core.css">
+<link rel="stylesheet" href="assets/page.css">
+<style>
+.gblock { padding: 1.35rem 1.4rem 1.5rem; border-top: 3px solid var(--c); }
+.gblock > header { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; margin-bottom: .3rem; }
+.gblock h3 { font-size: 1.08rem; letter-spacing: -.02em; }
+.gblock .rule-txt { font-size: .8rem; color: var(--muted); margin: 0 0 1rem; }
+.slots { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+.slot { position: relative; }
+.slot input {
+  width: 62px; height: 52px; text-align: center;
+  font-family: var(--f-mono); font-size: 1.1rem; font-weight: 700;
+  border: 1.5px solid var(--line-2); border-radius: var(--r);
+  background: var(--surface-2); color: var(--ink);
+  transition: border-color .2s, background .2s;
+}
+.slot input:focus { outline: none; border-color: var(--c); background: var(--surface); }
+.slot input:not(:placeholder-shown) { border-color: var(--c); background: color-mix(in srgb, var(--c) 10%, var(--surface)); }
+.slot .lbl { display: block; text-align: center; font-family: var(--f-mono); font-size: .58rem; color: var(--faint); margin-top: .25rem; letter-spacing: .05em; }
+.addbtn {
+  width: 62px; height: 52px; border: 1.5px dashed var(--line-2); border-radius: var(--r);
+  background: transparent; cursor: pointer; color: var(--muted); font-size: 1.3rem; line-height: 1;
+  transition: border-color .2s, color .2s;
+}
+.addbtn:hover { border-color: var(--ink); color: var(--ink); }
+.gres { display: flex; align-items: baseline; gap: .6rem; padding-top: .9rem; border-top: 1px solid var(--line); }
+.gres .num { font-family: var(--f-mono); font-size: 2rem; font-weight: 700; letter-spacing: -.03em; }
+.gres .of { font-size: .82rem; color: var(--muted); }
+.gres .pill {
+  margin-left: auto; font-family: var(--f-mono); font-size: .64rem; letter-spacing: .06em;
+  text-transform: uppercase; padding: .2rem .55rem; border-radius: 999px; border: 1px solid var(--line-2); color: var(--muted);
+}
+.g-good { color: var(--ok); } .g-mid { color: var(--warn); } .g-bad { color: var(--alert); }
+.total { padding: 1.5rem 1.6rem 1.7rem; }
+.total .big { font-family: var(--f-mono); font-size: clamp(2.6rem,9vw,4rem); font-weight: 700; letter-spacing: -.04em; line-height: 1; }
+.total .sub { color: var(--muted); font-size: .88rem; margin-top: .5rem; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 1rem; }
+.hint { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+</style>
+</head>
+<body>
+<main class="wrap" id="app">
+
+  <section class="thero">
+    <div class="eyebrow"><span lang="de">Notenrechner</span><span lang="en">Grade calculator</span></div>
+    <h1><span lang="de">Noten</span><span lang="en">Grades</span></h1>
+    <p class="lead">
+      <span lang="de">Nur ABT bei Stefan Wäfler ist rechenbar — dort kenne ich die Regeln.
+        Trage die Noten ein, der Rest rechnet sich. Alles bleibt lokal in diesem Browser.</span>
+      <span lang="en">Only Stefan Wäfler's ABT can be calculated — those rules are known.
+        Enter your grades and the rest follows. Everything stays local in this browser.</span>
+    </p>
+  </section>
+
+  <section class="sect">
+    <div class="sect-h">
+      <h2>ABT — Stefan Wäfler</h2><span class="rule"></span>
+      <button class="wk-toggle" type="button" id="reset" style="border-radius:999px;padding:.4rem .9rem;font-family:var(--f-mono);font-size:.64rem;text-transform:uppercase;letter-spacing:.05em;background:transparent;cursor:pointer;color:var(--muted)">
+        <span lang="de">Zurücksetzen</span><span lang="en">Reset</span>
+      </button>
+    </div>
+    <div class="grid2" id="blocks"></div>
+  </section>
+
+  <section class="sect">
+    <div class="card total rv" id="total"></div>
+  </section>
+
+  <section class="sect">
+    <div class="sect-h">
+      <h2><span lang="de">Die übrigen Fächer</span><span lang="en">The other subjects</span></h2>
+      <span class="rule"></span>
+    </div>
+    <div class="card openbox rv">
+      <div class="eyebrow"><span lang="de">Regeln fehlen noch</span><span lang="en">Rules still missing</span></div>
+      <p class="hint">
+        <span lang="de">Für <b>HTOG</b>, <b>ATD</b> und <b>ABU</b> weiss ich nicht, wie die Note zustande kommt:
+          wie viele Prüfungen pro Semester, ob alle gleich zählen, ob es eine Erfahrungsnote gibt,
+          ob Hausaufgaben oder Präsentationen einfliessen. Sobald du das von den Lehrpersonen weisst,
+          trag es in <b>Stundenplan.md</b> ein — dann rechnet diese Seite auch dafür.
+          Bis dahin wäre jede Zahl hier geraten, und geraten ist schlimmer als leer.</span>
+        <span lang="en">For HTOG, ATD and ABU the grading rules are unknown. Until you have them from the
+          teachers, any number here would be a guess — and a guess is worse than a blank.</span>
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/app.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+(function () {
+  'use strict';
+  var KEY = 'schule-noten';
+  var S = window.Schule;
+
+  var BLOCKS = [
+    { id: 'kurz',   c: 'var(--s-abt)', slots: 6, grow: true,
+      title: { de: 'Kurzteste', en: 'Short tests' },
+      rule:  { de: 'Jede Woche, 5 Fragen in 5 Minuten. Alle zusammen ergeben eine einzige Note — der Durchschnitt.',
+               en: 'Weekly, 5 questions in 5 minutes. All of them together make one single grade — the average.' },
+      weight: 1 },
+    { id: 'nin',    c: 'var(--s-abt)', slots: 4,
+      title: { de: 'NIN Grossteste', en: 'NIN major tests' },
+      rule:  { de: 'Vier pro Jahr, jeder zählt als eigene Note.', en: 'Four per year, each counts as its own grade.' },
+      weight: 4 },
+    { id: 'apparate', c: 'var(--s-abt)', slots: 4,
+      title: { de: 'Apparatekunde Grossteste', en: 'Equipment major tests' },
+      rule:  { de: 'Vier pro Jahr, jeder zählt als eigene Note.', en: 'Four per year, each counts as its own grade.' },
+      weight: 4 }
+  ];
+
+  var state = load();
+  function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  function lang() { return document.documentElement.getAttribute('data-l') || 'de'; }
+  function tx(o) { return o[lang()] || o.de; }
+
+  function vals(id) { return (state[id] || []).map(Number).filter(function (v) { return v >= 1 && v <= 6; }); }
+  function avg(a) { return a.length ? a.reduce(function (x, y) { return x + y; }, 0) / a.length : null; }
+  function cls(g) { return g == null ? '' : g >= 4.75 ? 'g-good' : g >= 4 ? '' : g >= 3.5 ? 'g-mid' : 'g-bad'; }
+  function r1(n) { return (Math.round(n * 100) / 100).toFixed(2); }
+  function half(n) { return (Math.round(n * 2) / 2).toFixed(1); }   // Zeugnisnote auf halbe
+
+  function render() {
+    document.getElementById('blocks').innerHTML = BLOCKS.map(function (b) {
+      var v = state[b.id] || [];
+      var n = Math.max(b.slots, v.length);
+      var inputs = '';
+      for (var i = 0; i < n; i++) {
+        inputs += '<div class="slot"><input type="number" min="1" max="6" step="0.1" ' +
+          'inputmode="decimal" placeholder="–" data-b="' + b.id + '" data-i="' + i + '" ' +
+          'value="' + (v[i] != null ? v[i] : '') + '" ' +
+          'aria-label="' + tx(b.title) + ' ' + (i + 1) + '">' +
+          '<span class="lbl">' + (i + 1) + '</span></div>';
+      }
+      if (b.grow) inputs += '<div class="slot"><button class="addbtn" data-add="' + b.id + '" ' +
+        'aria-label="' + (lang() === 'en' ? 'add test' : 'Test hinzufügen') + '">+</button></div>';
+      var a = avg(vals(b.id));
+      return '<article class="card gblock rv" style="--c:' + b.c + '">' +
+        '<header><h3>' + tx(b.title) + '</h3>' +
+          '<span class="chip s-abt">ABT</span></header>' +
+        '<p class="rule-txt">' + tx(b.rule) + '</p>' +
+        '<div class="slots">' + inputs + '</div>' +
+        '<div class="gres"><span class="num ' + cls(a) + '">' + (a == null ? '–' : r1(a)) + '</span>' +
+          '<span class="of">' + (a == null
+            ? (lang() === 'en' ? 'nothing entered yet' : 'noch nichts eingetragen')
+            : vals(b.id).length + ' ' + (lang() === 'en' ? 'entered' : 'eingetragen')) + '</span>' +
+          '<span class="pill">' + (b.weight === 1
+            ? (lang() === 'en' ? '1 grade' : '1 Note')
+            : b.weight + (lang() === 'en' ? ' grades' : ' Noten')) + '</span>' +
+        '</div></article>';
+    }).join('');
+
+    // Gesamt: Kurzteste = 1 Note, jeder Grosstest = 1 Note
+    var noten = [];
+    var k = avg(vals('kurz')); if (k != null) noten.push(k);
+    vals('nin').forEach(function (g) { noten.push(g); });
+    vals('apparate').forEach(function (g) { noten.push(g); });
+    var g = avg(noten);
+    var offen = (4 - vals('nin').length) + (4 - vals('apparate').length);
+
+    var needed = '';
+    if (g != null && offen > 0) {
+      // Was braucht es im Schnitt in den restlichen Prüfungen für eine 4.5?
+      var ziel = 4.5;
+      var brauche = (ziel * (noten.length + offen) - noten.reduce(function (a, b) { return a + b; }, 0)) / offen;
+      needed = brauche > 6
+        ? '<span lang="de">Eine 4.5 im Zeugnis ist rechnerisch nicht mehr erreichbar.</span>' +
+          '<span lang="en">A 4.5 is no longer mathematically reachable.</span>'
+        : brauche < 1
+          ? '<span lang="de">Die 4.5 steht bereits fest, egal was noch kommt.</span>' +
+            '<span lang="en">The 4.5 is already safe whatever comes.</span>'
+          : '<span lang="de">Für eine <b>4.5</b> brauchst du in den restlichen ' + offen +
+              ' Prüfungen im Schnitt <b>' + r1(brauche) + '</b>.</span>' +
+            '<span lang="en">For a <b>4.5</b> you need an average of <b>' + r1(brauche) +
+              '</b> across the remaining ' + offen + ' tests.</span>';
+    }
+
+    document.getElementById('total').innerHTML =
+      '<div class="eyebrow"><span lang="de">Stand ABT</span><span lang="en">ABT so far</span></div>' +
+      '<div class="big ' + cls(g) + '">' + (g == null ? '–' : r1(g)) + '</div>' +
+      '<div class="sub">' + (g == null
+        ? '<span lang="de">Trag deine erste Note ein.</span><span lang="en">Enter your first grade.</span>'
+        : '<span lang="de">Zeugnisnote gerundet: <b>' + half(g) + '</b> · ' + noten.length +
+            ' von 9 Noten stehen · ' + offen + ' Prüfungen offen</span>' +
+          '<span lang="en">Rounded: <b>' + half(g) + '</b> · ' + noten.length +
+            ' of 9 grades in · ' + offen + ' tests to go</span>') + '</div>' +
+      (needed ? '<div class="sub">' + needed + '</div>' : '');
+
+    S.reveal();
+  }
+
+  document.addEventListener('input', function (e) {
+    var i = e.target;
+    if (!i.matches('input[data-b]')) return;
+    var b = i.getAttribute('data-b'), idx = +i.getAttribute('data-i');
+    state[b] = state[b] || [];
+    state[b][idx] = i.value === '' ? null : i.value;
+    save();
+    // nur das Ergebnis neu rechnen, damit der Fokus im Feld bleibt
+    var keep = document.activeElement;
+    var sel = keep && keep.matches('input[data-b]') ? [keep.getAttribute('data-b'), keep.getAttribute('data-i')] : null;
+    render();
+    if (sel) {
+      var back = document.querySelector('input[data-b="' + sel[0] + '"][data-i="' + sel[1] + '"]');
+      if (back) { back.focus(); back.setSelectionRange(back.value.length, back.value.length); }
+    }
+  });
+
+  document.addEventListener('click', function (e) {
+    var add = e.target.closest('[data-add]');
+    if (add) { var b = add.getAttribute('data-add'); state[b] = state[b] || []; state[b].push(null); save(); render(); return; }
+    if (e.target.closest('#reset')) {
+      if (confirm(lang() === 'en' ? 'Clear all grades?' : 'Alle Noten löschen?')) { state = {}; save(); render(); }
+    }
+  });
+
+  S.load().then(function () {
+    Shell.mount('noten', S.data().teachers);
+    render();
+    document.addEventListener('langchange', render);
+  });
+})();
+</script>
+</body>
+</html>

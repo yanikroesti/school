@@ -1,0 +1,56 @@
+{
+  "_comment": "Lernpakete liegen auf dump.yanikroesti.ch/artifacts/. Hier stehen nur die Verweise. status: aktiv = vor der Prüfung, archiv = danach.",
+  "base": "https://dump.yanikroesti.ch/artifacts/",
+
+  "pakete": [
+    {
+      "id": "krankenkasse-unfall",
+      "file": "krankenkasse_unfall_lernpaket.html",
+      "subject": "abu",
+      "teacher": "laedrach",
+      "status": "aktiv",
+      "forTest": "abu-kk-2026-08-17",
+      "archiveAfter": "2026-08-17",
+      "title": { "de": "Krankenkasse & Unfallversicherung", "en": "Health & accident insurance" },
+      "detail": { "de": "G03 Risiko und Sicherheit · zum Test vom 17.08.",
+                  "en": "G03 Risk and safety · for the 17 Aug test" },
+      "tabs": ["Theorie", "Rechner", "Begriffe", "Karteikarten", "Quiz", "Lernplan"]
+    },
+    {
+      "id": "kaufvertrag",
+      "file": "kaufvertrag_lernpaket.html",
+      "subject": "abu",
+      "teacher": "laedrach",
+      "status": "archiv",
+      "title": { "de": "Kaufvertrag", "en": "Purchase contract" },
+      "detail": { "de": "G02 Geld und Kauf · 2. Semester", "en": "G02 Money and purchasing · 2nd semester" },
+      "tabs": ["Theorie", "Begriffe", "Karteikarten", "Quiz", "Lernplan"]
+    },
+    {
+      "id": "geld-und-kauf",
+      "file": "geld_und_kauf_lernpaket.html",
+      "subject": "abu",
+      "teacher": "laedrach",
+      "status": "archiv",
+      "title": { "de": "Geld und Kauf", "en": "Money and purchasing" },
+      "detail": { "de": "G02 · Vertragsrecht, Banken, Lohn, Budget, Zahlungsverkehr",
+                  "en": "G02 · contract law, banks, salary, budget, payments" },
+      "tabs": ["Theorie", "Begriffe", "Karteikarten", "Quiz", "Lernplan"]
+    },
+    {
+      "id": "nin",
+      "file": null,
+      "subject": "abt",
+      "teacher": "waefler",
+      "status": "geplant",
+      "title": { "de": "NIN 2025", "en": "NIN 2025" },
+      "detail": { "de": "Für den wöchentlichen Kurztest. Wartet auf die Lernziele.",
+                  "en": "For the weekly short test. Waiting for the learning objectives." },
+      "tabs": ["Theorie", "Rechner", "Begriffe", "Karteikarten", "Quiz", "Lernplan"],
+      "blocked": {
+        "de": "Gesetzespyramide und die Eckdaten zur NIN 2025 sind belegt und können rein. Der eigentliche Prüfungsstoff — Schutzmassnahmen, Leitungsdimensionierung, Grenzwerte — steht in deiner NIN-Ausgabe, nicht im Internet. Schick mir die Lernziele, dann baue ich es.",
+        "en": "The legal hierarchy and NIN 2025 facts are sourced. The actual exam material lives in your NIN copy, not online. Send the objectives and I will build it."
+      }
+    }
+  ]
+}

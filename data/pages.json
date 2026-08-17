@@ -1,0 +1,180 @@
+{
+  "_comment": "Inhalt der Lehrerseiten. Themen, Prüfungen, Lernziele. Ergänzt data/teachers.json.",
+
+  "moser": {
+    "intro": {
+      "de": "Der ganze Montagvormittag am Stück: erst HTOG, dann ohne Pause weiter in ATD. Elektrotechnik zieht sich durch beide, dazu Physik und Zeichnen.",
+      "en": "The entire Monday morning in one block: HTOG first, then straight into ATD. Electrical engineering runs through both, plus physics and drawing."
+    },
+    "topics": [
+      { "id": "elektrotechnik", "subject": "htog",
+        "title": { "de": "Elektrotechnik", "en": "Electrical engineering" },
+        "desc": { "de": "Ohm, Kirchhoff, Reihen-, Parallel- und gemischte Schaltungen, Spannungsteiler.",
+                  "en": "Ohm, Kirchhoff, series, parallel and mixed circuits, voltage dividers." },
+        "bullets": ["Ersatzwiderstand von innen nach aussen auflösen",
+                    "Unbelasteter und belasteter Spannungsteiler",
+                    "Querstromverhältnis q = 2 … 10", "Potenziometer"] },
+      { "id": "physik", "subject": "atd",
+        "title": { "de": "Physik", "en": "Physics" },
+        "desc": { "de": "Wärmeenergie, Drehmoment, Hebelgesetz, Messen elektrischer Grössen.",
+                  "en": "Thermal energy, torque, lever law, measuring electrical quantities." },
+        "bullets": ["Wärmemenge berechnen", "Drehmoment und Hebelgesetz",
+                    "Messbereichserweiterung"] },
+      { "id": "zeichnen", "subject": "atd",
+        "title": { "de": "Zeichnen / Technische Dokumentation", "en": "Drawing / technical documentation" },
+        "desc": { "de": "Schemata und Symbole, Schwachstromanlagen.",
+                  "en": "Diagrams and symbols, low-current installations." },
+        "bullets": ["Schwachstromanlagen zeichnen", "Symbole und Betriebsmittelkennzeichen"] }
+    ],
+    "open": { "de": "Prüfungsrhythmus und Notenregeln bei Moser sind noch offen.",
+              "en": "Exam cadence and grading rules for Moser are still unknown." }
+  },
+
+  "laedrach": {
+    "intro": {
+      "de": "Allgemeinbildung am Montagnachmittag. In geraden Kalenderwochen der lange Block ohne Sport, in ungeraden kürzer und danach Sport in der Halle U.1.2.",
+      "en": "General education on Monday afternoon. Long block without sport in even calendar weeks, shorter plus sport in odd ones."
+    },
+    "abuModules": [
+      { "id": "G01", "de": "Berufliche Grundbildung", "en": "Vocational basics", "done": true },
+      { "id": "G02", "de": "Geld und Kauf", "en": "Money and purchasing", "done": true },
+      { "id": "G03", "de": "Risiko und Sicherheit", "en": "Risk and safety", "current": true },
+      { "id": "G04", "de": "Demokratie und Mitgestaltung", "en": "Democracy and participation" },
+      { "id": "G05", "de": "Kunst und Kultur", "en": "Art and culture" },
+      { "id": "G06", "de": "Schweiz in Europa und der Welt", "en": "Switzerland in Europe and the world" },
+      { "id": "G07", "de": "Markt und Konsum", "en": "Market and consumption" },
+      { "id": "G08", "de": "Globale Herausforderungen", "en": "Global challenges" },
+      { "id": "G09", "de": "Wohnen und Zusammenleben", "en": "Housing and living together" },
+      { "id": "G10", "de": "Arbeit und Zukunft", "en": "Work and the future" },
+      { "id": "G11", "de": "Aktualitäten", "en": "Current affairs" }
+    ],
+    "topics": [
+      { "id": "kk-unfall", "subject": "abu",
+        "title": { "de": "Krankenkasse und Unfallversicherung", "en": "Health and accident insurance" },
+        "desc": { "de": "G03 · Grund- und Zusatzversicherung, Franchise, UVG gegen KVG, Kausalzusammenhang.",
+                  "en": "G03 · basic and supplementary cover, deductible, UVG vs KVG, causality." },
+        "bullets": ["Richtige Franchisenhöhe wählen", "Unterschiede UVG / KVG",
+                    "Kausalzusammenhang Unfall oder Krankheit", "Leistungseinstellung"] },
+      { "id": "sach-haft", "subject": "abu",
+        "title": { "de": "Sach- und Haftpflichtversicherungen", "en": "Property and liability insurance" },
+        "desc": { "de": "G03 · ab 17.08. Sachversicherungen (LM S. 68) gegenüber Haftpflicht (LM S. 65–67).",
+                  "en": "G03 · from 17 Aug: property cover vs liability cover." },
+        "bullets": ["Bonus-Malus", "Regress", "Folgen eines Ereignisses"] },
+      { "id": "rechtschreibung", "subject": "abu",
+        "title": { "de": "Gross- und Kleinschreibung", "en": "Capitalisation" },
+        "desc": { "de": "SK Rechtschreibung · Theorie im HbKo S. 120, dazu Arbeitsblätter.",
+                  "en": "Language competence · theory in the handbook p. 120 plus worksheets." },
+        "bullets": ["Grundregeln kennen und korrekt anwenden"] },
+      { "id": "projektarbeit", "subject": "abu",
+        "title": { "de": "Projektarbeit «Ein soziales Risiko in der Schweiz»", "en": "Project work: a social risk in Switzerland" },
+        "desc": { "de": "G03 · kurzes Dossier, wird auch präsentiert. Einführung am 17.08.",
+                  "en": "G03 · short dossier, presented as well. Introduced 17 Aug." },
+        "bullets": ["Ein soziales Risiko vertieft bearbeiten", "Dossier schreiben", "Präsentieren"] }
+    ],
+    "open": { "de": "Notenregeln ABU noch offen. Semesterarbeit «Risiko und Sicherheit in der Schweiz» kommt ab 24.08.",
+              "en": "Grading rules for general education still unknown. Semester project starts 24 Aug." }
+  },
+
+  "waefler": {
+    "intro": {
+      "de": "Eine Lektion am Freitagmorgen — aber die mit dem meisten Gewicht. Hier laufen alle Prüfungen zu NIN und Apparatekunde, auch wenn der Stoff bei Berisha und Aeschlimann zusätzlich vorkommt.",
+      "en": "One lesson on Friday morning, but the one that carries the most weight. All NIN and equipment exams run here."
+    },
+    "pyramide": true,
+    "topics": [
+      { "id": "nin", "subject": "abt",
+        "title": { "de": "NIN 2025", "en": "NIN 2025" },
+        "desc": { "de": "Niederspannungs-Installations-Norm SN 411000:2025, in Kraft seit 1. Januar 2025. Herausgeberin ist Electrosuisse.",
+                  "en": "Low-voltage installation standard SN 411000:2025, in force since 1 January 2025, published by Electrosuisse." },
+        "bullets": ["Gilt bis 1000 V AC / 1500 V DC",
+                    "Neu 2025: Kapitel zu Prosumern und DC-Anwendungen",
+                    "Achtung: zur Ausgabe 2025 existiert ein Corrigendum (Dez. 2025)",
+                    "Alte Lerndokus verweisen auf NIN 2020 — Werte gegenprüfen"] },
+      { "id": "apparatekunde", "subject": "abt",
+        "title": { "de": "Apparatekunde", "en": "Equipment studies" },
+        "desc": { "de": "Wird am Freitag zusätzlich bei Simon Aeschlimann behandelt, geprüft aber hier.",
+                  "en": "Also covered by Simon Aeschlimann on Friday, but examined here." },
+        "bullets": [] },
+      { "id": "werkstoffkunde", "subject": "abt",
+        "title": { "de": "Werkstoffkunde", "en": "Materials science" },
+        "desc": { "de": "Das ist der Inhalt der Freitagslektion 07:50–09:20.",
+                  "en": "This is what the Friday 07:50–09:20 lesson covers." },
+        "bullets": [] }
+    ],
+    "rules": [
+      { "what": { "de": "NIN-Kurztest", "en": "NIN short test" },
+        "when": { "de": "jede Woche · 5 Fragen · 5 Minuten", "en": "every week · 5 questions · 5 minutes" },
+        "counts": { "de": "alle zusammen = 1 Note", "en": "all together = 1 grade" }, "highlight": true },
+      { "what": { "de": "NIN Grosstest", "en": "NIN major test" },
+        "when": { "de": "4× pro Jahr", "en": "4× per year" },
+        "counts": { "de": "je 1 Note", "en": "1 grade each" } },
+      { "what": { "de": "Apparatekunde Grosstest", "en": "Equipment major test" },
+        "when": { "de": "4× pro Jahr", "en": "4× per year" },
+        "counts": { "de": "je 1 Note", "en": "1 grade each" } }
+    ],
+    "open": { "de": "Ausgeschriebener Fachname für ABT nicht auffindbar — im offiziellen Lehrplan und bei mehreren Berufsfachschulen gesucht, ohne Treffer. Ob Werkstoffkunde eigene Prüfungen hat, ist offen.",
+              "en": "Could not find what ABT stands for. Whether materials science has its own exams is unknown." }
+  },
+
+  "berisha": {
+    "intro": {
+      "de": "Zwei Lektionen am Freitag, mit dem ganzen Mittag dazwischen: am Vormittag NIN, am Nachmittag Arbeitssicherheit und Chemie.",
+      "en": "Two Friday lessons with lunch in between: NIN in the morning, workplace safety and chemistry in the afternoon."
+    },
+    "topics": [
+      { "id": "nin-anwendung", "subject": "htog",
+        "title": { "de": "NIN", "en": "NIN" },
+        "desc": { "de": "Derselbe Stoff wie bei Stefan Wäfler, aus der HTOG-Sicht. Geprüft wird bei Wäfler.",
+                  "en": "Same material as with Stefan Wäfler, from the HTOG angle. Examined by Wäfler." },
+        "bullets": [] },
+      { "id": "arbeitssicherheit", "subject": "htog",
+        "title": { "de": "Arbeitssicherheit und Chemie", "en": "Workplace safety and chemistry" },
+        "desc": { "de": "Freitag 13:40–15:10.", "en": "Friday 13:40–15:10." },
+        "bullets": ["PSA", "5 Sicherheitsregeln", "Gefahrstoffe"],
+        "unverified": true }
+    ],
+    "open": { "de": "Themen und Prüfungsregeln bei Berisha noch offen — die Stichworte oben sind erwartet, nicht bestätigt. Werkstoffkunde gehört nicht hierher, sondern zu Stefan Wäfler.",
+              "en": "Topics and grading still unknown — the keywords above are expected, not confirmed." }
+  },
+
+  "aeschlimann": {
+    "intro": {
+      "de": "Zweimal 45 Minuten am Freitag, direkt vor und nach dem Mittag. Telekommunikation vor der Pause, Apparatekunde danach.",
+      "en": "Two 45-minute lessons on Friday, just before and after lunch."
+    },
+    "topics": [
+      { "id": "telekommunikation", "subject": "atd",
+        "title": { "de": "Telekommunikation", "en": "Telecommunications" },
+        "desc": { "de": "Freitag 11:15–12:00. Anknüpfung an Schwachstromanlagen bei Beni Moser.",
+                  "en": "Friday 11:15–12:00. Connects to low-current installations with Beni Moser." },
+        "bullets": [],
+        "goals": {
+          "title": { "de": "Lernziele zur Prüfung — ich kann …", "en": "Exam objectives — I can …" },
+          "items": [
+            { "de": "die Zusammenhänge zwischen Energiesystem und Signalsystem erklären",
+              "en": "explain how the energy system and the signal system relate" },
+            { "de": "das Signalsystem anhand einer Telefonverbindung erklären",
+              "en": "explain the signal system using a telephone connection" },
+            { "de": "die verschiedenen Signalarten nennen, ihre Merkmale angeben und passende Beispiele nennen",
+              "en": "name the signal types, state their characteristics and give examples" },
+            { "de": "die verschiedenen Übertragungsmedien der Telekommunikationstechnik erklären",
+              "en": "explain the transmission media used in telecommunications" },
+            { "de": "passende Praxisbeispiele für die verschiedenen Übertragungsmedien nennen",
+              "en": "give practical examples for each transmission medium" },
+            { "de": "die Abkürzungen WAN und LAN erklären und den Zusammenhang im IT-System beschreiben",
+              "en": "explain WAN and LAN and describe how they fit together in an IT system" },
+            { "de": "verschiedene Beispiele von Systemkopplungen skizzieren",
+              "en": "sketch examples of system couplings" },
+            { "de": "die Zusammenhänge in der heutigen Internettelefonie erklären",
+              "en": "explain how today's internet telephony works" }
+          ]
+        } },
+      { "id": "apparatekunde-atd", "subject": "atd",
+        "title": { "de": "Apparatekunde", "en": "Equipment studies" },
+        "desc": { "de": "Freitag 12:45–13:30. Geprüft wird bei Stefan Wäfler.",
+                  "en": "Friday 12:45–13:30. Examined by Stefan Wäfler." },
+        "bullets": [] }
+    ],
+    "open": { "de": "Notenregeln ATD noch offen.", "en": "Grading rules for ATD still unknown." }
+  }
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="de-CH" data-l="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-de="Material — Schule" data-en="Material — School">Material — Schule</title>
+<meta name="description" content="Wo das Schulmaterial liegt — nach Fach sortiert. ELI 25a, BZI Interlaken.">
+<meta name="theme-color" content="#f7f5f1">
+<script>(function(){try{var l=localStorage.getItem('schule-lang');if(l==='en'||l==='de'){document.documentElement.setAttribute('data-l',l);document.documentElement.setAttribute('lang',l==='en'?'en':'de-CH');}var t=localStorage.getItem('schule-theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/core.css">
+<link rel="stylesheet" href="assets/page.css">
+<style>
+.topic code { font-family: var(--f-mono); font-size: .76rem; background: var(--surface-2);
+  border: 1px solid var(--line); padding: .12rem .4rem; border-radius: var(--r-s); color: var(--ink-2); }
+.count { font-family: var(--f-mono); font-size: .62rem; color: var(--faint); margin-left: auto; }
+.topic .thead { justify-content: flex-start; }
+</style>
+</head>
+<body>
+<main class="wrap" id="app">
+
+  <section class="thero">
+    <div class="eyebrow"><span lang="de">Wo was liegt</span><span lang="en">Where things live</span></div>
+    <h1><span lang="de">Material</span><span lang="en">Material</span></h1>
+    <p class="lead">
+      <span lang="de">Die Dateien selbst liegen im Obsidian-Vault unter
+        <code>Career/Apprenticeship/Fächer/</code> — knapp 300 Stück, nach Fach sortiert.
+        Diese Seite sagt dir, wo du suchen musst.</span>
+      <span lang="en">The files themselves live in the Obsidian vault under
+        <code>Career/Apprenticeship/Fächer/</code> — nearly 300 of them, sorted by subject.
+        This page tells you where to look.</span>
+    </p>
+  </section>
+
+  <section class="sect">
+    <div class="sect-h">
+      <h2><span lang="de">Nach Fach</span><span lang="en">By subject</span></h2>
+      <span class="n">5</span><span class="rule"></span>
+    </div>
+    <div class="topics" id="mat"></div>
+  </section>
+
+  <section class="sect">
+    <div class="card openbox rv">
+      <div class="eyebrow"><span lang="de">Warum nicht direkt hier</span><span lang="en">Why not served here</span></div>
+      <p>
+        <span lang="de">Das Material sind Word-, PowerPoint- und PDF-Dateien der Schule — darunter
+          sämtliche Lösungen. Die gehören nicht auf eine öffentliche Seite. Wenn du einzelne
+          Sachen online brauchst, leg sie in <code>material/</code> im Repo ab, dann verlinke ich sie hier.</span>
+        <span lang="en">The material consists of the school's Word, PowerPoint and PDF files, including
+          all the solutions. Those do not belong on a public page. If you need individual items online,
+          drop them into <code>material/</code> in the repo and I will link them here.</span>
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/app.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+(function () {
+  'use strict';
+  var S = window.Schule;
+  function lang() { return document.documentElement.getAttribute('data-l') || 'de'; }
+  function tx(o) { return o[lang()] || o.de; }
+
+  var M = [
+    { s: 'abt', path: 'Fächer/ABT/', n: 3,
+      t: { de: 'ABT — Stefan Wäfler', en: 'ABT — Stefan Wäfler' },
+      items: ['NIN 2025/', 'Apparatekunde/', 'Werkstoffkunde/', 'Gesetzespyramide.md'] },
+    { s: 'htog', path: 'Fächer/HTOG/', n: 2,
+      t: { de: 'HTOG — Moser und Berisha', en: 'HTOG — Moser and Berisha' },
+      items: ['Elektrotechnik und Zeichnen/', 'Arbeitssicherheit und Chemie/'] },
+    { s: 'atd', path: 'Fächer/ATD/', n: 4,
+      t: { de: 'ATD — Moser und Aeschlimann', en: 'ATD — Moser and Aeschlimann' },
+      items: ['Elektrotechnik und Physik/', 'Technische Dokumentation/', 'Telekommunikation/'] },
+    { s: 'abu', path: 'Fächer/ABU/', n: 277,
+      t: { de: 'ABU — Bruno Lädrach', en: 'General education — Bruno Lädrach' },
+      items: ['G01 … G11 — die elf Themenbereiche', 'SK_ — vier Kompetenzbereiche',
+              'ABU-Unterrichtsplanungen/ — Lektion für Lektion, datiert'] },
+    { s: 'sport', path: 'Fächer/Sport/', n: 14,
+      t: { de: 'Sport — Bruno Lädrach', en: 'Sport — Bruno Lädrach' },
+      items: ['Unihockey/', 'Disk-Golf/', 'Jonglieren/', 'Schneesporttag/'] }
+  ];
+
+  function render() {
+    var D = S.data();
+    document.getElementById('mat').innerHTML = M.map(function (m, i) {
+      return '<article class="card topic rv" style="--c:' + D.subjects[m.s].color + ';--d:' + (i * 60) + 'ms">' +
+        '<div class="thead"><span class="chip s-' + m.s + '">' + D.subjects[m.s].code + '</span>' +
+          '<span class="count">' + m.n + (lang() === 'en' ? ' files' : ' Dateien') + '</span></div>' +
+        '<h3>' + tx(m.t) + '</h3>' +
+        '<p><code>' + m.path + '</code></p>' +
+        '<ul class="bul">' + m.items.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' +
+      '</article>';
+    }).join('');
+    S.reveal();
+  }
+
+  S.load().then(function () {
+    Shell.mount('material', S.data().teachers);
+    render();
+    document.addEventListener('langchange', render);
+  });
+})();
+</script>
+</body>
+</html>

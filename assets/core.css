@@ -202,6 +202,27 @@ button { font: inherit; color: inherit; }
 }
 .card.hoverable:hover { box-shadow: var(--shadow); transform: translateY(-2px); border-color: var(--line-2); }
 
+/* Zeilen-Liste (Prüfungen, Aufgaben) — von Startseite und Lehrerseiten genutzt */
+.stack { display: grid; gap: .7rem; }
+.row {
+  display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: .9rem;
+  align-items: center; padding: .95rem 1.1rem;
+  border-left: 3px solid var(--c, var(--line-2));
+}
+.row .ttl { font-weight: 600; font-size: .96rem; }
+.row .sub { font-size: .8rem; color: var(--muted); margin-top: .1rem; }
+.row .cnt { font-family: var(--f-mono); font-size: .8rem; text-align: right; white-space: nowrap; color: var(--muted); }
+.row .cnt b { display: block; font-size: 1.15rem; color: var(--ink); font-weight: 700; }
+.row.soon .cnt b { color: var(--alert); }
+.row.warn .cnt b { color: var(--warn); }
+.dot { width: 9px; height: 9px; border-radius: 999px; background: var(--c); flex: none; }
+.tag-unconf {
+  font-family: var(--f-mono); font-size: .58rem; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--warn); border: 1px solid color-mix(in srgb, var(--warn) 40%, transparent);
+  padding: .08rem .35rem; border-radius: 999px; margin-left: .4rem; white-space: nowrap;
+}
+.empty { padding: 1.6rem 1.1rem; color: var(--muted); font-size: .9rem; text-align: center; }
+
 .sect { margin: clamp(2.5rem, 6vw, 4.5rem) 0; }
 .sect-h { display: flex; align-items: baseline; gap: .75rem; margin-bottom: 1.25rem; }
 .sect-h h2 { font-size: clamp(1.15rem, 2.6vw, 1.5rem); }
