@@ -7,3 +7,6 @@ Thumbs.db
 *Zeugnis*
 *zeugnis*
 noten*.json
+
+# private Noten — gehören nicht in ein öffentliches Repo
+data/noten-local.json
