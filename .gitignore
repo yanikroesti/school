@@ -3,13 +3,15 @@ node_modules/
 Thumbs.db
 *.log
 
-# Nie einchecken
+# Zeugnis-Scans und -PDFs bleiben draussen: darauf stehen voller Name,
+# Geburtsdatum und Lernendennummer. Das ist etwas anderes als acht Zahlen.
 *Zeugnis*
 *zeugnis*
-noten*.json
+*.pdf
 
-# private Noten — gehören nicht in ein öffentliches Repo
-data/noten-local.json
+# data/noten-local.json ist bewusst NICHT ignoriert — Yanik hat am
+# 20.08.2026 entschieden, die Noten mitzuliefern. Sie sind damit
+# oeffentlich; der PIN verbirgt sie nur vor fremdem Zugriff aufs Geraet.
 
 # Werkzeug-Zwischenstand des anti-ui-slop-Skills, kein Projektinhalt
 .uizze/

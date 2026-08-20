@@ -69,10 +69,13 @@ half-rounding, and the BZI holiday calendar.
   The anon key may read tests and homework and may flip `homework.done` and nothing
   else; `reflections` is closed to anon entirely because daily journal entries are
   personal. Verified against the live keys, not just configured.
-- **The site is public. Grades are not.** Grades live only in `localStorage`,
-  `data/noten-local.json` is gitignored, and a client-side PIN gate stands in front of
-  them. The PIN stops someone holding his unlocked phone; it is not claimed to stop
-  anyone with devtools, and the code says so.
+- **The site is public, and as of 2026-08-20 so are the grades.** Yanik decided to ship
+  `data/noten-local.json` (semesters 1 and 2) rather than keep it gitignored, after being
+  told plainly that this publishes them and that git history retains them. The client-side
+  PIN remains, but it only hides the grades from someone holding his unlocked device — it
+  cannot protect a file the server hands out. Anything typed in later still lives only in
+  `localStorage`. **Zeugnis scans and PDFs stay gitignored**: those carry his full name,
+  date of birth and learner number, which is a different category from eight numbers.
 - Swiss semester-Zeugnis structure: Allgemeinbildung (Gesellschaft · Sprache und
   Kommunikation) and Berufskenntnisse (Technologische Grundlagen · Technische
   Dokumentation), plus Sport and Absenzen. Sub-grades average and half-round to the
