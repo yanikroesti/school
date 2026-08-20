@@ -1,13 +1,16 @@
 /* =========================================================
-   Kopf- und Fusszeile für alle Seiten ausser der Startseite.
-   Spart es, dieselben 80 Zeilen auf jeder Seite zu pflegen.
-   Aufruf:  Shell.mount('lehrer')  — Argument markiert den aktiven Navi-Punkt.
+   Kopf- und Fusszeile.
+   Spart es, dieselben achtzig Zeilen auf jeder Seite zu pflegen.
+
+     Shell.mount('plan', teachers)   Kopf- und Fusszeile
+     Shell.mountFooter(teachers)     nur die Fusszeile
+                                     (die Startseite hat ihren
+                                      eigenen Kopf im Markup)
    ========================================================= */
 (function (global) {
   'use strict';
 
   function up() {
-    // Wie viele Ebenen zurück zum Wurzelverzeichnis?
     var segs = location.pathname.replace(/\/[^/]*$/, '/').split('/').filter(Boolean);
     return segs.length ? '../'.repeat(segs.length) : './';
   }
@@ -20,17 +23,23 @@
   ];
 
   var LOGOS = [
-    { file: 'bzi.svg',           alt: 'BZI — Bildungszentrum Interlaken', href: 'https://bzi.ch',                 w: 134, de: 'Bildungszentrum Interlaken', en: 'Interlaken education centre' },
-    { file: 'etavis.png',        alt: 'Etavis',                           href: 'https://www.etavis.ch',          w: 115, de: 'Etavis — Lehrbetrieb', en: 'Etavis — training company' },
-    { file: 'ElectroSuisse.png', alt: 'Electrosuisse',                    href: 'https://www.electrosuisse.ch',   w: 42,  de: 'Electrosuisse — Herausgeberin der NIN', en: 'Electrosuisse — publisher of the NIN' },
-    { file: 'suva.png',          alt: 'Suva',                             href: 'https://www.suva.ch',            w: 96,  de: 'Suva — Arbeitssicherheit', en: 'Suva — workplace safety' }
+    { file: 'bzi.svg',           alt: 'BZI — Bildungszentrum Interlaken', href: 'https://bzi.ch',               w: 134, de: 'Bildungszentrum Interlaken', en: 'Interlaken education centre' },
+    { file: 'etavis.png',        alt: 'Etavis',                           href: 'https://www.etavis.ch',        w: 115, de: 'Etavis — Lehrbetrieb', en: 'Etavis — training company' },
+    { file: 'ElectroSuisse.png', alt: 'Electrosuisse',                    href: 'https://www.electrosuisse.ch', w: 42,  de: 'Electrosuisse — Herausgeberin der NIN', en: 'Electrosuisse — publisher of the NIN' },
+    { file: 'suva.png',          alt: 'Suva',                             href: 'https://www.suva.ch',          w: 96,  de: 'Suva — Arbeitssicherheit', en: 'Suva — workplace safety' }
   ];
+
+  // Das Zeichen ist ein Stueck Hutschiene mit zwei Klemmen darauf.
+  var MARK =
+    '<svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+    'stroke-width="2" stroke-linecap="square" aria-hidden="true">' +
+    '<path d="M2 12h20M6 12V6h5v6M15 12V8h4v4"/></svg>';
 
   function topbar(active) {
     var b = up();
     return '' +
     '<header class="topbar"><div class="wrap">' +
-      '<a class="brand" href="' + b + '">schule<i>/ ELI 25a</i></a>' +
+      '<a class="brand" href="' + b + '">' + MARK + 'schule<i>ELI 25a</i></a>' +
       '<nav class="nav">' +
         NAV.map(function (n) {
           return '<a href="' + b + n.href + '"' + (n.key === active ? ' aria-current="page"' : '') + '>' +
@@ -44,9 +53,10 @@
         '</div>' +
         '<button class="iconbtn" type="button" data-theme-toggle ' +
           'data-de-label="Hell/Dunkel umschalten" data-en-label="Toggle light/dark">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">' +
-          '<path d="M12 3v1.5M12 19.5V21M4.2 4.2l1.1 1.1M18.7 18.7l1.1 1.1M3 12h1.5M19.5 12H21M4.2 19.8l1.1-1.1M18.7 5.3l1.1-1.1"/>' +
-          '<circle cx="12" cy="12" r="3.8"/></svg>' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" ' +
+          'stroke-linecap="round" aria-hidden="true">' +
+          '<path d="M12 3.5v1.6M12 18.9v1.6M5 5l1.15 1.15M17.85 17.85 19 19M3.5 12h1.6M18.9 12h1.6' +
+          'M5 19l1.15-1.15M17.85 6.15 19 5"/><circle cx="12" cy="12" r="3.6"/></svg>' +
         '</button>' +
       '</div>' +
     '</div></header>';
@@ -78,7 +88,8 @@
       '<div class="logos">' + LOGOS.map(function (l) {
         return '<a href="' + l.href + '" target="_blank" rel="noopener" ' +
                'data-de-title="' + l.de + '" data-en-title="' + l.en + '">' +
-               '<img src="' + b + 'logos/' + l.file + '" alt="' + l.alt + '" loading="lazy" width="' + l.w + '" height="24"></a>';
+               '<img src="' + b + 'logos/' + l.file + '" alt="' + l.alt + '" loading="lazy" ' +
+               'width="' + l.w + '" height="22"></a>';
       }).join('') + '</div>' +
       '<div class="colophon">' +
         '<span lang="de">Elektroinstallateur EFZ · ELI 25a · BZI Interlaken · 2. Lehrjahr, 3. Semester. ' +
@@ -89,11 +100,27 @@
     '</div></footer>';
   }
 
+  function place(html) {
+    var host = document.getElementById('foot-host');
+    if (host) host.outerHTML = html;
+    else document.body.insertAdjacentHTML('beforeend', html);
+  }
+
+  // Nach dem Einhaengen die Sprachschicht nachziehen, damit aria-pressed,
+  // Titel und Beschriftungen der frischen Knoepfe stimmen.
+  function synced(fn) {
+    return function () {
+      fn.apply(null, arguments);
+      if (global.SchuleLang && global.SchuleLang.sync) global.SchuleLang.sync();
+    };
+  }
+
   global.Shell = {
     up: up,
-    mount: function (active, teachers) {
+    mount: synced(function (active, teachers) {
       document.body.insertAdjacentHTML('afterbegin', topbar(active));
-      document.body.insertAdjacentHTML('beforeend', footer(teachers));
-    }
+      place(footer(teachers));
+    }),
+    mountFooter: synced(function (teachers) { place(footer(teachers)); })
   };
 })(window);

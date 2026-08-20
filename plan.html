@@ -5,89 +5,104 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title data-de="Plan — Schule" data-en="Plan — School">Plan — Schule</title>
 <meta name="description" content="Prüfungen, Hausaufgaben und Ferien — ELI 25a, BZI Interlaken.">
-<meta name="theme-color" content="#f7f5f1">
+<meta name="theme-color" content="#e8eaee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#10131a" media="(prefers-color-scheme: dark)">
 <script>(function(){try{var l=localStorage.getItem('schule-lang');if(l==='en'||l==='de'){document.documentElement.setAttribute('data-l',l);document.documentElement.setAttribute('lang',l==='en'?'en':'de-CH');}var t=localStorage.getItem('schule-theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Azeret+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/core.css">
 <link rel="stylesheet" href="assets/page.css">
-<style>
-.wkgroup { margin-bottom: 1.7rem; }
-.wkhead { display: flex; align-items: baseline; gap: .6rem; margin-bottom: .65rem; }
-.wkhead h3 { font-size: .95rem; }
-.wkhead .kwtag {
-  font-family: var(--f-mono); font-size: .6rem; letter-spacing: .07em; text-transform: uppercase;
-  color: var(--muted); border: 1px solid var(--line-2); padding: .1rem .45rem; border-radius: 999px; white-space: nowrap;
-}
-.wkhead .rule { flex: 1; height: 1px; background: var(--line); }
-.free { padding: .9rem 1.1rem; border-left: 3px solid var(--s-abu); font-size: .88rem; color: var(--muted); }
-.free b { color: var(--ink-2); }
-</style>
 </head>
 <body>
+<!--
+  DIRECTION CONTRACT — schule.yanikroesti.ch
+  THESIS: Der Schultag ist eine Hutschiene. Jede Lektion ist eine Reihenklemme
+    darauf, gleiches Rastermass, beschriftetes Markierungsschild, Farbe als
+    Funktion. Verweigert das Kartenraster, das jedes Schul-Dashboard ausliefert.
+  OWN-WORLD: Kuehler Gehaeusegrau-Grund, verzinkte Schienenlinie, flache
+    Objekte mit 2-3px Radien und ohne Schlagschatten. Fuenf gesaettigte
+    Klemmenfarben (ABT orange, HTOG blau, ATD gruen, ABU violett, Sport rot)
+    auf beschrifteten Fuessen. Archivo durchgehend; Azeret Mono nur fuer Messwerte.
+  STORY: Yanik oeffnet muede, sieht die naechste Klemme und ihren Countdown,
+    weiss was er schuldet, und geht wieder.
+  FIRST VIEWPORT: Flache Kopfleiste mit Haarlinie; Schienenkopf mit Tag, Datum
+    und Kalenderwoche; darunter die naechste Lektion als eine doppelt hohe
+    Klemme auf eigener Schiene — Farbfuss links, Zeit auf dem Markierungsschild,
+    Countdown rechts als Messwert.
+  FORM: Klemmenleiste, Kandidat 6 von 7, seed 755b7433.
+  RAISED — Fahrplan: eine Zeile beherrscht die Tafel. Schweizer Raster: eine
+    Familie, enge Stufen, Ruhe. Messgeraet: Countdown und Noten sind Messwerte
+    mit Einheit und sichtbarer 4.0-Grenze.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the
+    finish review, the verdict, and DESIGN.md
+-->
 <main class="wrap" id="app">
 
-  <section class="thero">
-    <div class="eyebrow"><span lang="de">Prüfungen und Aufgaben</span><span lang="en">Exams and homework</span></div>
-    <h1><span lang="de">Plan</span><span lang="en">Plan</span></h1>
+  <header class="phead">
+    <div class="top">
+      <h1><span lang="de">Plan</span><span lang="en">Plan</span></h1>
+      <p class="meta" id="phead-meta"></p>
+    </div>
     <p class="lead">
       <span lang="de">Alles was ansteht, nach Kalenderwoche sortiert. Neue Prüfungen und
         Hausaufgaben kommen später über den Telegram-Bot dazu — einfach hinschreiben, keine Befehle.</span>
       <span lang="en">Everything coming up, grouped by calendar week. New exams and homework will
         arrive through the Telegram bot — just write them, no commands needed.</span>
     </p>
-  </section>
+  </header>
 
-  <section class="sect">
+  <section class="sect" aria-labelledby="wk-h">
     <div class="sect-h">
-      <h2><span lang="de">Die nächsten Wochen</span><span lang="en">The weeks ahead</span></h2>
-      <span class="n" id="cnt"></span><span class="rule"></span>
+      <h2 id="wk-h"><span lang="de">Die nächsten Wochen</span><span lang="en">The weeks ahead</span></h2>
+      <span class="count" id="cnt"></span><span class="spacer"></span>
     </div>
     <div id="weeks"></div>
   </section>
 
-  <section class="sect">
+  <section class="sect" aria-labelledby="hw-h">
     <div class="sect-h">
-      <h2><span lang="de">Hausaufgaben</span><span lang="en">Homework</span></h2>
-      <span class="n" id="hwn"></span><span class="rule"></span>
+      <h2 id="hw-h"><span lang="de">Hausaufgaben</span><span lang="en">Homework</span></h2>
+      <span class="count" id="hwn"></span><span class="spacer"></span>
     </div>
-    <div class="stack" id="hw"></div>
+    <div class="rail" id="hw"></div>
   </section>
 
-  <section class="sect">
+  <section class="sect" aria-labelledby="free-h">
     <div class="sect-h">
-      <h2><span lang="de">Ferien und freie Tage</span><span lang="en">Holidays and days off</span></h2>
-      <span class="rule"></span>
+      <h2 id="free-h"><span lang="de">Ferien und freie Tage</span><span lang="en">Holidays and days off</span></h2>
+      <span class="count" id="freen"></span><span class="spacer"></span>
     </div>
     <div class="stack" id="free"></div>
   </section>
 
 </main>
 
+<div id="foot-host"></div>
+
 <script src="assets/i18n.js"></script>
 <script src="assets/app.js"></script>
+<script src="assets/rail.js"></script>
 <script src="assets/shell.js"></script>
 <script>
 (function () {
   'use strict';
-  var S = window.Schule, seed;
+  var S = window.Schule, R = window.Rail, seed;
 
   function lang() { return document.documentElement.getAttribute('data-l') || 'de'; }
-  function tx(o) { return o ? (o[lang()] || o.de) : ''; }
+  function tx(o) { return o ? (o[lang()] || o.de || o.en || '') : ''; }
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
     });
   }
   function de(d) { return d.split('-').reverse().join('.'); }
-  function days(n) { return n + ' ' + (lang() === 'en' ? (n === 1 ? 'day' : 'days') : (n === 1 ? 'Tag' : 'Tage')); }
 
-  // Wiederkehrende Termine für die nächsten Wochen ausrollen, Ferien überspringen
+  // Wiederkehrende Termine für die nächsten Wochen ausrollen, Ferien überspringen.
   function upcoming(weeks) {
     var out = [], now = new Date(); now.setHours(0, 0, 0, 0);
     (seed.tests || []).forEach(function (t) {
-      if (S.daysUntil(t.date) >= 0) out.push({ date: t.date, t: t });
+      if (S.daysUntil(t.date) >= 0) out.push(t);
     });
     (seed.recurring || []).forEach(function (r) {
       var m = /^weekly:(\d)$/.exec(r.rrule || '');
@@ -97,7 +112,12 @@
       for (var i = 0; i < weeks; i++) {
         var x = new Date(first);
         x.setDate(x.getDate() + i * 7);
-        if (!S.freeDay(x)) out.push({ date: S.iso(x), t: r, weekly: true });
+        if (S.freeDay(x)) continue;
+        var o = {};
+        for (var k in r) o[k] = r[k];
+        o.date = S.iso(x);
+        o.recurring = true;
+        out.push(o);
       }
     });
     return out.sort(function (a, b) { return a.date < b.date ? -1 : 1; });
@@ -107,7 +127,10 @@
     var D = S.data();
     var items = upcoming(8);
     document.getElementById('cnt').textContent = items.length;
+    document.getElementById('phead-meta').innerHTML =
+      '<span>KW ' + S.isoWeek(new Date()) + '</span><span>' + S.fmtDate(new Date(), lang()) + '</span>';
 
+    // Nach Kalenderwoche gruppieren — so denkt der Stundenplan auch.
     var groups = {};
     items.forEach(function (it) {
       var kw = S.isoWeek(new Date(it.date + 'T00:00:00'));
@@ -117,55 +140,42 @@
     var keys = Object.keys(groups).sort(function (a, b) { return a - b; });
     document.getElementById('weeks').innerHTML = keys.length ? keys.map(function (kw) {
       var even = kw % 2 === 0;
-      var rows = groups[kw].map(function (it) {
-        var t = it.t, sub = D.subjects[t.subject], te = D.teacherById[t.teacher];
-        var d = S.daysUntil(it.date);
-        var cl = 'card hoverable row rv' + (d <= 2 ? ' soon' : d <= 7 ? ' warn' : '');
-        return '<article class="' + cl + '" style="--c:' + sub.color + '">' +
-          '<span class="dot"></span><div>' +
-            '<div class="ttl">' + esc(tx(t.title)) +
-              (it.weekly ? '<span class="tag-unconf" style="color:var(--muted);border-color:var(--line-2)">' +
-                           '<span lang="de">wöchentlich</span><span lang="en">weekly</span></span>' : '') +
-            '</div>' +
-            '<div class="sub">' + esc(te.name) + ' · ' + esc(sub.code) +
-              (t.detail ? ' · ' + esc(tx(t.detail)) : '') + '</div>' +
-          '</div>' +
-          '<div class="cnt"><b>' + (d === 0 ? (lang() === 'en' ? 'today' : 'heute') : days(d)) + '</b>' +
-            esc(de(it.date)) + '</div>' +
-        '</article>';
-      }).join('');
       return '<div class="wkgroup"><div class="wkhead">' +
-        '<h3><span lang="de">Kalenderwoche ' + kw + '</span><span lang="en">Calendar week ' + kw + '</span></h3>' +
+        '<h3><span lang="de">Kalenderwoche ' + kw + '</span>' +
+          '<span lang="en">Calendar week ' + kw + '</span></h3>' +
         '<span class="kwtag">' + (even
           ? (lang() === 'en' ? 'even · no sport' : 'gerade · kein Sport')
           : (lang() === 'en' ? 'odd · with sport' : 'ungerade · mit Sport')) + '</span>' +
-        '<span class="rule"></span></div><div class="stack">' + rows + '</div></div>';
+        '<span class="rule"></span></div>' +
+        '<div class="rail">' +
+          groups[kw].map(function (t) { return R.entry(t, 'test', lang()); }).join('') +
+        '</div></div>';
     }).join('')
-      : '<div class="card empty"><span lang="de">Nichts eingetragen.</span><span lang="en">Nothing recorded.</span></div>';
+      : '<div class="rail">' + R.bare({ kind: 'no-tests' }, lang()) + '</div>';
 
     var hw = seed.homework || [];
     document.getElementById('hwn').textContent = hw.length;
-    document.getElementById('hw').innerHTML = hw.length ? '' :
-      '<div class="card empty">' +
-      '<span lang="de">Nichts offen. Schreib dem Bot, sobald etwas aufgegeben wird.</span>' +
-      '<span lang="en">Nothing open. Message the bot when something is set.</span></div>';
+    document.getElementById('hw').innerHTML = hw.length
+      ? hw.map(function (h) { return R.entry(h, 'homework', lang()); }).join('')
+      : R.bare({ kind: 'no-homework' }, lang());
 
     var cal = D.calendar, today = S.iso(new Date()), list = [];
     (cal.holidays || []).forEach(function (h) {
       if (h.to >= today) list.push({ d: h.from, e: h.to, n: h.name, first: h.firstSchoolDay });
     });
     (cal.closures || []).forEach(function (c) {
-      if (c.affects && c.date >= today) list.push({ d: c.date, n: c.name });
+      if (c.date >= today) list.push({ d: c.date, n: c.name });
     });
     list.sort(function (a, b) { return a.d < b.d ? -1 : 1; });
-    document.getElementById('free').innerHTML = list.map(function (f) {
-      return '<div class="card free rv"><b>' + esc(tx(f.n)) + '</b> · ' + esc(de(f.d)) +
-        (f.e ? ' – ' + esc(de(f.e)) : '') +
+    document.getElementById('freen').textContent = list.length;
+    document.getElementById('free').innerHTML = list.length ? list.map(function (f) {
+      return '<div class="free"><b>' + esc(tx(f.n)) + '</b> ' +
+        '<span class="data">' + esc(de(f.d)) + (f.e ? ' – ' + esc(de(f.e)) : '') + '</span>' +
         (f.first ? ' · <span lang="de">wieder Schule am </span><span lang="en">back at school </span>' +
-                   esc(de(f.first)) : '') + '</div>';
-    }).join('');
-
-    S.reveal();
+                   '<span class="data">' + esc(de(f.first)) + '</span>' : '') + '</div>';
+    }).join('')
+      : '<div class="free"><b><span lang="de">Nichts eingetragen</span>' +
+        '<span lang="en">Nothing recorded</span></b></div>';
   }
 
   Promise.all([S.load(), fetch('data/seed.json').then(function (r) { return r.json(); })])
@@ -175,7 +185,15 @@
       render();
       document.addEventListener('langchange', render);
     })
-    .catch(function (e) { console.error(e); });
+    .catch(function (e) {
+      console.error(e);
+      try { Shell.mount('plan', []); } catch (x) {}
+      document.getElementById('weeks').innerHTML =
+        '<div class="err"><b><span lang="de">Daten nicht geladen</span>' +
+        '<span lang="en">Data did not load</span></b>' +
+        '<span lang="de">Die Seite konnte ihre Daten nicht lesen. Neu laden hilft meistens.</span>' +
+        '<span lang="en">The page could not read its data. A reload usually fixes it.</span></div>';
+    });
 })();
 </script>
 </body>

@@ -10,3 +10,6 @@ noten*.json
 
 # private Noten — gehören nicht in ein öffentliches Repo
 data/noten-local.json
+
+# Werkzeug-Zwischenstand des anti-ui-slop-Skills, kein Projektinhalt
+.uizze/

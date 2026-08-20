@@ -61,9 +61,9 @@
     '<section class="sect" id="gesetzespyramide">' +
       '<div class="sect-h">' +
         '<h2><span lang="de">Gesetzespyramide</span><span lang="en">Legal hierarchy</span></h2>' +
-        '<span class="rule"></span>' +
+        '<span class="spacer"></span>' +
       '</div>' +
-      '<div class="pyr-wrap card rv">' +
+      '<div class="panel pyr-wrap">' +
         '<div class="pyr-svg">' +
           '<svg viewBox="0 0 640 316" role="img" aria-labelledby="pyr-t">' +
             '<title id="pyr-t">Gesetzespyramide: Verfassung, Gesetz, Verordnung, Norm</title>' +
@@ -79,29 +79,29 @@
         '</div>' +
         '<div class="pyr-detail" id="pyr-detail"></div>' +
       '</div>' +
-      '<p class="merksatz rv">' +
+      '<p class="merksatz">' +
         '<span lang="de">Das <b>Gesetz</b> sagt <i>dass</i>, die <b>Verordnung</b> sagt <i>wer und wann</i>, die <b>Norm</b> sagt <i>wie</i>.</span>' +
         '<span lang="en">The <b>Act</b> says <i>that</i>, the <b>ordinance</b> says <i>who and when</i>, the <b>standard</b> says <i>how</i>.</span>' +
       '</p>' +
-      '<div class="card openbox rv">' +
-        '<div class="eyebrow"><span lang="de">Gegen Quellen geprüft — und was offen ist</span>' +
+      '<div class="panel openbox">' +
+        '<div class="ph"><span lang="de">Gegen Quellen geprüft — und was offen ist</span>' +
           '<span lang="en">Checked against sources — and what is open</span></div>' +
-        '<p><span lang="de">SR-Nummern und die Bezeichnung SN 411000 stammen aus Fedlex, Wikipedia und eit.swiss, nicht aus dem Gedächtnis. ' +
+        '<div class="pb"><p><span lang="de">SR-Nummern und die Bezeichnung SN 411000 stammen aus Fedlex, Wikipedia und eit.swiss, nicht aus dem Gedächtnis. ' +
           '<b>Nicht belegt</b> ist, ob eine Stufe <i>Werkvorschriften der Netzbetreiber</i> unterhalb der Norm dazugehört — ' +
           'eit.swiss spricht nur von den «anerkannten Regeln der Technik». Auch offen: ob Wäfler die Bundesverfassung mitzeichnet ' +
           'oder erst beim EleG anfängt. Sag es mir, dann trage ich es nach.</span>' +
         '<span lang="en">SR numbers and the SN 411000 designation come from Fedlex, Wikipedia and eit.swiss. It is <b>not</b> established ' +
-          'whether network operators’ works rules form a level below the standard.</span></p>' +
+          'whether network operators’ works rules form a level below the standard.</span></p></div>' +
       '</div>' +
     '</section>';
   }
 
   function detailHTML(t) {
     var items = t.items ? '<ul class="pyr-items">' + t.items.map(function (i) {
-      return '<li><b>' + esc(i.n) + '</b> <span class="mono">' + esc(i.sr) + '</span><br>' + esc(tx(i)) + '</li>';
+      return '<li><b>' + esc(i.n) + '</b> <span class="data">' + esc(i.sr) + '</span><br>' + esc(tx(i)) + '</li>';
     }).join('') + '</ul>' : '';
     return '<div class="pyr-card">' +
-      '<div class="eyebrow">' + esc(tx(t.label)) + ' · <span class="mono">' + esc(t.sr) + '</span></div>' +
+      '<div class="kind">' + esc(tx(t.label)) + ' · ' + esc(t.sr) + '</div>' +
       '<h3>' + esc(tx(t.title)) + '</h3>' +
       '<p>' + esc(tx(t.text)) + '</p>' + items +
     '</div>';

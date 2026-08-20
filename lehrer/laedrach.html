@@ -5,19 +5,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title data-de="Bruno Lädrach — Schule" data-en="Bruno Lädrach — School">Bruno Lädrach — Schule</title>
 <meta name="description" content="Bruno Lädrach — Lektionen, Themen und Prüfungen. ELI 25a, BZI Interlaken.">
-<meta name="theme-color" content="#f7f5f1">
+<meta name="theme-color" content="#e8eaee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#10131a" media="(prefers-color-scheme: dark)">
 <script>(function(){try{var l=localStorage.getItem('schule-lang');if(l==='en'||l==='de'){document.documentElement.setAttribute('data-l',l);document.documentElement.setAttribute('lang',l==='en'?'en':'de-CH');}var t=localStorage.getItem('schule-theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Azeret+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/core.css">
 <link rel="stylesheet" href="../assets/page.css">
 </head>
 <body>
+<!--
+  DIRECTION CONTRACT — schule.yanikroesti.ch
+  THESIS: Der Schultag ist eine Hutschiene. Jede Lektion ist eine Reihenklemme
+    darauf, gleiches Rastermass, beschriftetes Markierungsschild, Farbe als
+    Funktion. Verweigert das Kartenraster, das jedes Schul-Dashboard ausliefert.
+  OWN-WORLD: Kuehler Gehaeusegrau-Grund, verzinkte Schienenlinie, flache
+    Objekte mit 2-3px Radien und ohne Schlagschatten. Fuenf gesaettigte
+    Klemmenfarben (ABT orange, HTOG blau, ATD gruen, ABU violett, Sport rot)
+    auf beschrifteten Fuessen. Archivo durchgehend; Azeret Mono nur fuer Messwerte.
+  STORY: Yanik oeffnet muede, sieht die naechste Klemme und ihren Countdown,
+    weiss was er schuldet, und geht wieder.
+  FIRST VIEWPORT: Flache Kopfleiste mit Haarlinie; Schienenkopf mit Tag, Datum
+    und Kalenderwoche; darunter die naechste Lektion als eine doppelt hohe
+    Klemme auf eigener Schiene — Farbfuss links, Zeit auf dem Markierungsschild,
+    Countdown rechts als Messwert.
+  FORM: Klemmenleiste, Kandidat 6 von 7, seed 755b7433.
+  RAISED — Fahrplan: eine Zeile beherrscht die Tafel. Schweizer Raster: eine
+    Familie, enge Stufen, Ruhe. Messgeraet: Countdown und Noten sind Messwerte
+    mit Einheit und sichtbarer 4.0-Grenze.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the
+    finish review, the verdict, and DESIGN.md
+-->
 <main class="wrap" id="app"></main>
 
 <script src="../assets/i18n.js"></script>
 <script src="../assets/app.js"></script>
+<script src="../assets/rail.js"></script>
 <script src="../assets/shell.js"></script>
 <script src="../assets/pyramide.js"></script>
 <script src="../assets/aburad.js"></script>

@@ -32,32 +32,39 @@
 
     var segs = mods.map(function (m, i) {
       var cls = m.done ? 'done' : m.current ? 'cur' : 'todo';
-      return '<path class="seg ' + cls + '" d="' + arc(i, n) + '" data-mod="' + esc(m.id) + '" ' +
-             'tabindex="0" role="button" aria-label="' + esc(m.id + ' ' + tx(m)) + '"><title>' +
-             esc(m.id + ' — ' + tx(m)) + '</title></path>';
+      // Kein role="button"/tabindex: es gibt keinen Klick-Handler, und elf
+      // tote Tabulator-Halte, die beim Ueberfahren reagieren, versprechen
+      // eine Bedienung, die es nicht gibt. Die Legende darunter ist die Liste.
+      return '<path class="arc ' + cls + '" d="' + arc(i, n) + '" data-mod="' + esc(m.id) + '">' +
+             '<title>' + esc(m.id + ' — ' + tx(m)) + '</title></path>';
     }).join('');
 
     var labels = mods.map(function (m, i) {
       var step = 360 / n, mid = i * step + step / 2;
       var p = pt(CX, CY, R, mid);
-      return '<text class="seg-l" x="' + p[0].toFixed(1) + '" y="' + (p[1] + 3).toFixed(1) + '">' +
+      // Die Zustandsklasse mit an die Zahl: auf dem hellgrauen todo-Segment
+      // trug die helle Schrift nur 1.66:1, also praktisch unsichtbar.
+      var lcls = m.done ? 'done' : m.current ? 'cur' : 'todo';
+      return '<text class="arc-l ' + lcls + '" x="' + p[0].toFixed(1) + '" y="' + (p[1] + 3).toFixed(1) + '">' +
              esc(m.id.replace('G', '')) + '</text>';
     }).join('');
 
     var legend = mods.map(function (m) {
       var cls = m.done ? 'done' : m.current ? 'cur' : 'todo';
-      return '<li class="' + cls + '"><span class="k mono">' + esc(m.id) + '</span>' +
+      return '<li class="' + cls + '"><span class="k">' + esc(m.id) + '</span>' +
              '<span class="v">' + esc(tx(m)) + '</span>' +
-             (m.current ? '<span class="badge"><span lang="de">läuft</span><span lang="en">current</span></span>' : '') +
-             (m.done ? '<span class="tick">✓</span>' : '') + '</li>';
+             (m.current ? '<span class="badge2"><span lang="de">läuft</span><span lang="en">current</span></span>' : '') +
+             (m.done ? '<span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+                 'stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                 '<path d="M4 12.5 9.5 18 20 6.5"/></svg></span>' : '') + '</li>';
     }).join('');
 
     return '' +
     '<section class="sect" id="abu-module">' +
       '<div class="sect-h">' +
         '<h2><span lang="de">ABU-Module</span><span lang="en">General-education modules</span></h2>' +
-        '<span class="n">' + done + '/' + n + '</span><span class="rule"></span></div>' +
-      '<div class="card rad-wrap rv">' +
+        '<span class="count">' + done + '/' + n + '</span><span class="spacer"></span></div>' +
+      '<div class="panel rad-wrap">' +
         '<div class="rad">' +
           '<svg viewBox="0 0 240 240" role="img" aria-labelledby="rad-t">' +
             '<title id="rad-t">Fortschritt durch die ABU-Themenbereiche</title>' +

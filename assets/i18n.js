@@ -65,29 +65,43 @@
     return cur === 'dark' ? 'light' : 'dark';
   }
 
-  /* ---------------- Binden ---------------- */
+  /* ---------------- Binden ----------------
+     Delegiert an das Dokument statt an die Knoepfe selbst.
 
-  function bind() {
-    var btns = document.querySelectorAll('.langswitch button[data-set]');
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].addEventListener('click', function () {
-        lang = applyLang(this.getAttribute('data-set'));
-        write(LKEY, lang);
-      });
-    }
-    applyLang(lang);
+     Warum: die Kopfleiste wird auf allen Seiten ausser der Startseite
+     von Shell.mount() eingehaengt, und das passiert erst, nachdem die
+     Daten geladen sind — also lange nach DOMContentLoaded. Wer hier
+     einzelne Knoepfe bindet, bindet auf acht von neun Seiten ins Leere:
+     Sprachschalter und Hell/Dunkel waren dort tot.                    */
 
-    var tt = document.querySelector('[data-theme-toggle]');
-    if (tt) {
-      tt.addEventListener('click', function () {
-        theme = applyTheme(nextTheme(theme));
-        write(TKEY, theme);
-      });
+  function closest(node, sel) {
+    while (node && node.nodeType === 1) {
+      if (node.matches && node.matches(sel)) return node;
+      node = node.parentElement;
     }
+    return null;
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind);
-  else bind();
+  document.addEventListener('click', function (e) {
+    var l = closest(e.target, '.langswitch button[data-set]');
+    if (l) {
+      lang = applyLang(l.getAttribute('data-set'));
+      write(LKEY, lang);
+      return;
+    }
+    var t = closest(e.target, '[data-theme-toggle]');
+    if (t) {
+      theme = applyTheme(nextTheme(theme));
+      write(TKEY, theme);
+    }
+  });
+
+  // Frisch eingehaengte Bedienelemente nachziehen: aria-pressed,
+  // Titel und Beschriftungen stehen sonst auf dem Stand des Markups.
+  function sync() { applyLang(lang); }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', sync);
+  else sync();
 
   // Alt+L wechselt die Sprache
   document.addEventListener('keydown', function (e) {
@@ -97,5 +111,5 @@
     }
   });
 
-  window.SchuleLang = { get: function () { return lang; } };
+  window.SchuleLang = { get: function () { return lang; }, sync: sync };
 })();

@@ -5,122 +5,195 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title data-de="Noten — Schule" data-en="Grades — School">Noten — Schule</title>
 <meta name="description" content="Notenverlauf über acht Semester, Zeugnisstruktur und laufender ABT-Rechner.">
-<meta name="theme-color" content="#f7f5f1">
+<meta name="theme-color" content="#e8eaee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#10131a" media="(prefers-color-scheme: dark)">
 <meta name="robots" content="noindex">
 <script>(function(){try{var l=localStorage.getItem('schule-lang');if(l==='en'||l==='de'){document.documentElement.setAttribute('data-l',l);document.documentElement.setAttribute('lang',l==='en'?'en':'de-CH');}var t=localStorage.getItem('schule-theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Azeret+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/core.css">
 <link rel="stylesheet" href="assets/page.css">
 <style>
-/* ---------- Zeugnistabelle ---------- */
+/* ---------- Zeugnistabelle ----------
+   Noten sind Messwerte: Tabellenziffern, feste Spalten, und die
+   4.0-Grenze ist ueberall sichtbar statt nur gedacht.            */
 .zeug { overflow-x: auto; }
-.ztab { font-size: .9rem; min-width: 640px; }
-.ztab th, .ztab td { padding: .5rem .55rem; border-bottom: 1px solid var(--line); text-align: center; }
-.ztab thead th { font-family: var(--f-mono); font-size: .66rem; letter-spacing: .08em; color: var(--muted); font-weight: 700; }
+.ztab { font-size: var(--t-s); min-width: 640px; }
+.ztab th, .ztab td { padding: 0.5rem 0.55rem; border-bottom: 1px solid var(--line); text-align: center; }
+.ztab thead th { font-family: var(--f-data); font-size: var(--t-xs); color: var(--muted); font-weight: 600; }
 .ztab tbody th { text-align: left; font-weight: 600; white-space: nowrap; }
-.ztab tbody th.sub { padding-left: 1.5rem; font-weight: 400; color: var(--ink-2); font-size: .86rem; }
-.ztab tr.group { background: var(--bg-deep); }
-.ztab tr.group th { font-family: var(--f-display); }
-.ztab tr.now { background: color-mix(in srgb, var(--s-abt) 10%, transparent); }
-.ztab td.derived { font-weight: 700; }
+.ztab tbody th.sub { padding-left: 1.5rem; font-weight: 400; color: var(--ink-2); }
+.ztab tr.group { background: var(--plate-2); }
+.ztab tr.now { background: color-mix(in srgb, var(--s-abt) 12%, transparent); }
+.ztab td.derived { font-weight: 700; font-family: var(--f-data); font-variant-numeric: tabular-nums; }
 .ztab input {
-  width: 3.2rem; text-align: center; font-family: var(--f-mono); font-size: .88rem; font-weight: 600;
-  border: 1px solid transparent; border-radius: var(--r-s); background: transparent; color: var(--ink);
-  padding: .22rem .1rem;
+  width: 3.2rem; text-align: center;
+  font-family: var(--f-data); font-size: var(--t-s); font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid transparent; border-radius: var(--r-s);
+  background: transparent; color: var(--ink); padding: 0.22rem 0.1rem;
+  min-height: 24px;   /* WCAG 2.2 AA: 24x24, auch mit Maus */
 }
 .ztab input:hover { border-color: var(--line-2); }
-.ztab input:focus { outline: none; border-color: var(--s-abt); background: var(--surface); }
-.ztab input:not(:placeholder-shown) { background: var(--surface-2); }
-.ztab .abs input { width: 2.6rem; font-size: .8rem; font-weight: 400; }
-.g-good { color: var(--ok); } .g-warn { color: var(--warn); } .g-bad { color: var(--alert); }
+.ztab input:focus { outline: none; border-color: var(--s-abt); background: var(--plate); }
+.ztab input:not(:placeholder-shown) { background: var(--plate-2); }
+.ztab .abs input { width: 2.6rem; font-size: var(--t-xs); font-weight: 400; }
+/* Alle drei sind Schrift auf heller Flaeche, also die -ink-Variante.
+   --warn trug hier 4.43:1 und faellt nur bei Noten zwischen 3.5 und 4.0
+   an — ohne eingetragene Noten rendert der Fall nie, deshalb blieb er
+   in der Messung unsichtbar. --alert traegt als Schrift schon 6.13:1. */
+.g-good { color: var(--live-ink); } .g-warn { color: var(--warn-ink); } .g-bad { color: var(--alert); }
+
+/* Die Bestehensgrenze als Marke im Seitenkopf */
+.kwb-pass {
+  border: 1px solid color-mix(in srgb, var(--alert) 50%, transparent);
+  color: var(--alert); border-radius: var(--r-s); padding: 0.05rem 0.4rem; font-weight: 600;
+}
+
+/* Der Hinweis, dass die Noten das Geraet nicht verlassen, ist eine
+   gute Nachricht — deshalb gruen statt der Warnfarbe. */
+.okbox { border-color: color-mix(in srgb, var(--live) 40%, var(--line-2)); }
+.okbox > .ph {
+  background: color-mix(in srgb, var(--live) 10%, var(--plate-2));
+  border-bottom-color: color-mix(in srgb, var(--live) 30%, var(--line));
+  color: var(--live-ink);
+}
 
 /* ---------- Verlauf ---------- */
-.chartcard { padding: 1.4rem 1.5rem 1rem; }
+.chartcard { padding: 1.25rem 1.35rem 1rem; }
 .chart svg { width: 100%; height: auto; display: block; }
 .chart .grid { stroke: var(--line); stroke-width: 1; }
-.chart .axis-t { font-family: var(--f-mono); font-size: 9px; fill: var(--faint); }
+.chart .axis-t { font-family: var(--f-data); font-size: 9px; fill: var(--muted); }
 .chart .ln { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.chart .pt { stroke: var(--surface); stroke-width: 2; }
-.chart .pass { stroke: var(--alert); stroke-width: 1.2; stroke-dasharray: 4 4; opacity: .55; }
-.legend { display: flex; flex-wrap: wrap; gap: .35rem 1.1rem; margin-top: .9rem; font-size: .82rem; }
-.legend span { display: flex; align-items: center; gap: .4rem; color: var(--ink-2); }
-.legend i { width: 14px; height: 3px; border-radius: 2px; display: block; }
+.chart .pt { stroke: var(--plate); stroke-width: 2; }
+.chart .pass { stroke: var(--alert); stroke-width: 1.2; stroke-dasharray: 4 4; opacity: 0.6; }
+.legend { display: flex; flex-wrap: wrap; gap: 0.35rem 1.1rem; margin-top: 0.9rem; font-size: var(--t-s); }
+.legend span { display: flex; align-items: center; gap: 0.4rem; color: var(--ink-2); }
+.legend i { width: 14px; height: 3px; display: block; }
 
 /* ---------- Kennzahlen ---------- */
-.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .8rem; }
-.kpi { padding: 1.05rem 1.15rem 1.15rem; }
-.kpi .v { font-family: var(--f-mono); font-size: 1.85rem; font-weight: 700; letter-spacing: -.03em; line-height: 1; }
-.kpi .l { font-size: .76rem; color: var(--muted); margin-top: .35rem; }
+.kpi { padding: 0.95rem 1.05rem 1rem; }
+
+/* Auf dem Telefon sind das ~64 Felder in einer seitlich scrollenden
+   Tabelle. Unter 32px trifft man sie einhaendig nicht. */
+@media (pointer: coarse) {
+  .ztab input { min-height: 34px; font-size: var(--t-b); }
+  .ztab .abs input { min-height: 34px; font-size: var(--t-s); }
+  .slot input, .addbtn { height: 52px; }
+}
+
+/* Ausserhalb 1–6 wird der Wert nicht gezaehlt — dann darf das Feld
+   auch nicht so aussehen, als waere er angekommen. */
+.slot input:out-of-range,
+.ztab input:out-of-range {
+  border-color: var(--alert);
+  background: color-mix(in srgb, var(--alert) 12%, var(--plate));
+  color: var(--alert);
+}
+.kpi .v {
+  font-family: var(--f-data); font-variant-numeric: tabular-nums;
+  font-size: 1.75rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1;
+}
+.kpi .l { font-size: var(--t-xs); color: var(--muted); margin-top: 0.35rem; }
 
 /* ---------- ABT-Rechner ---------- */
-.gblock { padding: 1.3rem 1.35rem 1.4rem; border-top: 3px solid var(--c); }
-.gblock > header { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; margin-bottom: .25rem; }
-.gblock h3 { font-size: 1.05rem; }
-.gblock .rule-txt { font-size: .8rem; color: var(--muted); margin: 0 0 .9rem; }
-.slots { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: .9rem; }
+.gblock > .pb { padding: 0.95rem; }
+.gblock .rule-txt { font-size: var(--t-s); color: var(--muted); margin: 0 0 0.9rem; }
+.slots { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 0.9rem; }
 .slot input {
-  width: 58px; height: 48px; text-align: center;
-  font-family: var(--f-mono); font-size: 1.02rem; font-weight: 700;
-  border: 1.5px solid var(--line-2); border-radius: var(--r);
-  background: var(--surface-2); color: var(--ink);
+  width: 56px; height: 46px; text-align: center;
+  font-family: var(--f-data); font-variant-numeric: tabular-nums;
+  font-size: 1rem; font-weight: 600;
+  border: 1px solid var(--line-2); border-radius: var(--r);
+  background: var(--plate-2); color: var(--ink);
 }
-.slot input:focus { outline: none; border-color: var(--c); background: var(--surface); }
-.slot input:not(:placeholder-shown) { border-color: var(--c); background: color-mix(in srgb, var(--c) 10%, var(--surface)); }
-.slot .lbl { display: block; text-align: center; font-family: var(--f-mono); font-size: .56rem; color: var(--faint); margin-top: .2rem; }
-.addbtn { width: 58px; height: 48px; border: 1.5px dashed var(--line-2); border-radius: var(--r);
-  background: transparent; cursor: pointer; color: var(--muted); font-size: 1.25rem; }
+.slot input:focus { outline: none; border-color: var(--s-abt); background: var(--plate); }
+.slot input:not(:placeholder-shown) {
+  border-color: var(--s-abt); background: color-mix(in srgb, var(--s-abt) 12%, var(--plate));
+}
+.slot .lbl {
+  display: block; text-align: center; font-family: var(--f-data);
+  font-size: 0.625rem; color: var(--muted); margin-top: 0.2rem;
+}
+.addbtn {
+  width: 56px; height: 46px; border: 1px dashed var(--line-2); border-radius: var(--r);
+  background: transparent; cursor: pointer; color: var(--muted); font-size: 1.2rem;
+}
 .addbtn:hover { border-color: var(--ink); color: var(--ink); }
-.gres { display: flex; align-items: baseline; gap: .6rem; padding-top: .8rem; border-top: 1px solid var(--line); }
-.gres .num { font-family: var(--f-mono); font-size: 1.75rem; font-weight: 700; letter-spacing: -.03em; }
-.gres .of { font-size: .8rem; color: var(--muted); }
-.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1rem; }
-.tinybtn {
-  border: 1px solid var(--line-2); background: transparent; cursor: pointer; border-radius: 999px;
-  padding: .38rem .85rem; font-family: var(--f-mono); font-size: .64rem; letter-spacing: .05em;
-  text-transform: uppercase; color: var(--muted);
+.gres { display: flex; align-items: baseline; gap: 0.6rem; padding-top: 0.8rem; border-top: 1px solid var(--line); }
+.gres .num {
+  font-family: var(--f-data); font-variant-numeric: tabular-nums;
+  font-size: 1.65rem; font-weight: 600; letter-spacing: -0.03em;
 }
-.tinybtn:hover { color: var(--ink); border-color: var(--ink); }
+.gres .of { font-size: var(--t-s); color: var(--muted); }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1rem; }
 </style>
 </head>
 <body>
+<!--
+  DIRECTION CONTRACT — schule.yanikroesti.ch
+  THESIS: Der Schultag ist eine Hutschiene. Jede Lektion ist eine Reihenklemme
+    darauf, gleiches Rastermass, beschriftetes Markierungsschild, Farbe als
+    Funktion. Verweigert das Kartenraster, das jedes Schul-Dashboard ausliefert.
+  OWN-WORLD: Kuehler Gehaeusegrau-Grund, verzinkte Schienenlinie, flache
+    Objekte mit 2-3px Radien und ohne Schlagschatten. Fuenf gesaettigte
+    Klemmenfarben (ABT orange, HTOG blau, ATD gruen, ABU violett, Sport rot)
+    auf beschrifteten Fuessen. Archivo durchgehend; Azeret Mono nur fuer Messwerte.
+  STORY: Yanik oeffnet muede, sieht die naechste Klemme und ihren Countdown,
+    weiss was er schuldet, und geht wieder.
+  FIRST VIEWPORT: Flache Kopfleiste mit Haarlinie; Schienenkopf mit Tag, Datum
+    und Kalenderwoche; darunter die naechste Lektion als eine doppelt hohe
+    Klemme auf eigener Schiene — Farbfuss links, Zeit auf dem Markierungsschild,
+    Countdown rechts als Messwert.
+  FORM: Klemmenleiste, Kandidat 6 von 7, seed 755b7433.
+  RAISED — Fahrplan: eine Zeile beherrscht die Tafel. Schweizer Raster: eine
+    Familie, enge Stufen, Ruhe. Messgeraet: Countdown und Noten sind Messwerte
+    mit Einheit und sichtbarer 4.0-Grenze.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the
+    finish review, the verdict, and DESIGN.md
+-->
 <main class="wrap" id="app">
 
-  <section class="thero">
-    <div class="eyebrow"><span lang="de">Zeugnis und Verlauf</span><span lang="en">Report card and trend</span></div>
-    <h1><span lang="de">Noten</span><span lang="en">Grades</span></h1>
+  <header class="phead">
+    <div class="top">
+      <h1><span lang="de">Noten</span><span lang="en">Grades</span></h1>
+      <p class="meta">
+        <span lang="de">8 Semester</span><span lang="en">8 semesters</span>
+        <span class="kwb-pass">4.0</span>
+      </p>
+    </div>
     <p class="lead">
       <span lang="de">Aufgebaut wie dein Semesterzeugnis: Allgemeinbildung und Berufskenntnisse mit
         je zwei Teilnoten, dazu Sport. Acht Semester, die Erfahrungsnote am Schluss.</span>
       <span lang="en">Laid out like your report card: general education and professional knowledge
         with two sub-grades each, plus sport. Eight semesters, the final grade at the end.</span>
     </p>
-  </section>
+  </header>
 
-  <div class="card openbox rv" style="border-left-color:var(--ok)">
-    <div class="eyebrow"><span lang="de">Deine Noten bleiben auf diesem Gerät</span><span lang="en">Your grades stay on this device</span></div>
-    <p>
-      <span lang="de">Diese Seite liegt öffentlich auf GitHub Pages. Deshalb werden Noten
+  <div class="panel openbox okbox">
+    <div class="ph"><span lang="de">Deine Noten bleiben auf diesem Gerät</span><span lang="en">Your grades stay on this device</span></div>
+    <div class="pb"><p>
+      <span lang="de">Diese Seite liegt öffentlich im Netz. Deshalb werden Noten
         <strong>nur im Browser</strong> gespeichert und nie ins Repo geschrieben. Wer die Adresse
         kennt, sieht eine leere Tabelle — nicht deine.</span>
-      <span lang="en">This page is public on GitHub Pages, so grades are stored <strong>in the browser
+      <span lang="en">This page is public on the web, so grades are stored <strong>in the browser
         only</strong> and never committed. Anyone with the URL sees an empty table, not yours.</span>
-    </p>
+    </p></div>
   </div>
 
   <section class="sect">
     <div class="sect-h">
       <h2><span lang="de">Auf einen Blick</span><span lang="en">At a glance</span></h2>
-      <span class="rule"></span>
+      <span class="spacer"></span>
     </div>
-    <div class="kpis" id="kpis"></div>
+    <div class="rail tight" id="kpis"></div>
   </section>
 
   <section class="sect">
     <div class="sect-h">
       <h2><span lang="de">Semesterzeugnis</span><span lang="en">Semester report</span></h2>
-      <span class="rule"></span>
+      <span class="spacer"></span>
       <button class="tinybtn" id="prefill" hidden>
         <span lang="de">Sem. 1+2 eintragen</span><span lang="en">Fill sem. 1+2</span>
       </button>
@@ -129,7 +202,7 @@
         <span lang="de">Leeren</span><span lang="en">Clear</span>
       </button>
     </div>
-    <div class="card zeug rv"><table class="ztab" id="ztab"></table></div>
+    <div class="panel zeug"><table class="ztab" id="ztab"></table></div>
     <p class="src" style="margin-top:.7rem;font-size:.8rem;color:var(--muted)">
       <span lang="de">Fettgedruckte Werte sind gerechnet: Fachbereichsnote = Mittel der beiden Teilnoten,
         auf halbe Noten gerundet. Die Erfahrungsnote steht im Zeugnis erst im 8. Semester.</span>
@@ -140,9 +213,9 @@
   <section class="sect">
     <div class="sect-h">
       <h2><span lang="de">Verlauf</span><span lang="en">Trend</span></h2>
-      <span class="rule"></span>
+      <span class="spacer"></span>
     </div>
-    <div class="card chartcard rv">
+    <div class="panel chartcard">
       <div class="chart" id="chart"></div>
       <div class="legend">
         <span><i style="background:var(--s-abu)"></i><span lang="de">Allgemeinbildung</span><span lang="en">General education</span></span>
@@ -156,7 +229,7 @@
   <section class="sect">
     <div class="sect-h">
       <h2><span lang="de">Laufendes Semester — ABT bei Wäfler</span><span lang="en">Current semester — ABT</span></h2>
-      <span class="rule"></span>
+      <span class="spacer"></span>
       <button class="tinybtn" id="resetAbt">
         <span lang="de">Leeren</span><span lang="en">Clear</span>
       </button>
@@ -167,13 +240,13 @@
       <span lang="en">The only subject whose grading rules are known. Enter the tests and the average follows.</span>
     </p>
     <div class="grid2" id="blocks"></div>
-    <div class="card kpi rv" id="abtTotal" style="margin-top:1rem"></div>
+    <div class="panel kpi" id="abtTotal" style="margin-top:1rem"></div>
   </section>
 
   <section class="sect">
-    <div class="card openbox rv">
-      <div class="eyebrow"><span lang="de">Was noch offen ist</span><span lang="en">Still open</span></div>
-      <p>
+    <div class="panel openbox">
+      <div class="ph"><span lang="de">Was noch offen ist</span><span lang="en">Still open</span></div>
+      <div class="pb"><p>
         <span lang="de">Wie <b>ABT</b>, <b>HTOG</b> und <b>ATD</b> aus dem Stundenplan auf
           <b>Technologische Grundlagen</b> und <b>Technische Dokumentation</b> im Zeugnis abgebildet
           werden, weiss ich nicht sicher. Naheliegend wäre: ABT und HTOG → Technologische Grundlagen,
@@ -181,14 +254,17 @@
           dann verknüpfe ich den ABT-Rechner unten direkt mit der richtigen Zeugniszeile.</span>
         <span lang="en">How ABT, HTOG and ATD map onto the two report-card sub-grades is not confirmed.
           Ask when you get the chance and the calculator below can feed the right row.</span>
-      </p>
+      </p></div>
     </div>
   </section>
 
 </main>
 
+<div id="foot-host"></div>
+
 <script src="assets/i18n.js"></script>
 <script src="assets/app.js"></script>
+<script src="assets/rail.js"></script>
 <script src="assets/shell.js"></script>
 <script src="assets/pin.js"></script>
 <script>
@@ -212,6 +288,50 @@
   var state = load();
   function load() { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; } }
   function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  /* ---------- Einmal-Import über die Adresszeile ----------
+     Die Noten dürfen nicht ins Repo: das ist öffentlich, und der PIN
+     ist clientseitig — eine mitgelieferte JSON-Datei könnte jeder
+     direkt abrufen, PIN hin oder her. Deshalb kommen sie über einen
+     einmaligen Link herein: #noten=<base64>. Der Wert landet im
+     localStorage dieses Geräts, die Adresszeile wird sofort wieder
+     sauber gemacht, und übertragen wird nichts.                    */
+  function importFromHash() {
+    var m = /[#&]noten=([A-Za-z0-9\-_=]+)/.exec(location.hash || '');
+    if (!m) return false;
+    try {
+      var raw = m[1].replace(/-/g, '+').replace(/_/g, '/');
+      var d = JSON.parse(decodeURIComponent(escape(atob(raw))));
+      if (!d || !d.zeugnis) return false;
+      state.zeugnis = Object.assign({}, state.zeugnis, d.zeugnis);
+      save();
+      history.replaceState(null, '', location.pathname + location.search);
+      return true;
+    } catch (e) {
+      console.error('Noten-Import fehlgeschlagen:', e);
+      return false;
+    }
+  }
+
+  function showImported() {
+    var n = document.createElement('div');
+    n.className = 'panel openbox okbox';
+    n.style.marginBottom = '1.25rem';
+    n.innerHTML =
+      '<div class="ph"><span lang="de">Noten übernommen</span>' +
+        '<span lang="en">Grades imported</span></div>' +
+      '<div class="pb"><p>' +
+        '<span lang="de">Die Noten liegen jetzt im Speicher dieses Geräts. ' +
+          'Die Adresszeile wurde wieder sauber gemacht — der Link taucht im Verlauf nicht auf. ' +
+          'Auf einem anderen Gerät musst du ihn einmal erneut öffnen.</span>' +
+        '<span lang="en">Your grades now live in this device’s storage. The address bar has been ' +
+          'cleared. On another device, open the link once more.</span>' +
+      '</p></div>';
+    var app = document.getElementById('app');
+    var head = app.querySelector('.phead');
+    if (head && head.nextSibling) app.insertBefore(n, head.nextSibling);
+    else app.appendChild(n);
+  }
   function lang() { return document.documentElement.getAttribute('data-l') || 'de'; }
   function tx(o) { return o[lang()] || o.de; }
   function z(s) { state.zeugnis = state.zeugnis || {}; return (state.zeugnis[s] = state.zeugnis[s] || {}); }
@@ -260,8 +380,12 @@
         (k === 'absE' ? (lang() === 'en' ? 'Lessons excused' : 'Lektionen entschuldigt')
                       : (lang() === 'en' ? 'Lessons unexcused' : 'Lektionen unentschuldigt')) + '</th>' +
         SEM.map(function (s) {
+          var alab = (k === 'absE'
+            ? (lang() === 'en' ? 'Lessons excused' : 'Lektionen entschuldigt')
+            : (lang() === 'en' ? 'Lessons unexcused' : 'Lektionen unentschuldigt'))
+            + ', ' + (lang() === 'en' ? 'semester ' : 'Semester ') + s;
           return '<td><input type="number" min="0" step="1" placeholder="–" data-sem="' + s + '" data-k="' + k + '" ' +
-                 'value="' + (z(s)[k] != null ? z(s)[k] : '') + '"></td>';
+                 'value="' + (z(s)[k] != null ? z(s)[k] : '') + '" aria-label="' + alab + '"></td>';
         }).join('') + '</tr>';
     }).join('');
 
@@ -292,14 +416,17 @@
     var gesamt = (mAb != null && mBk != null) ? n2((mAb + mBk) / 2) : (mAb != null ? mAb : mBk);
 
     var items = [
-      { v: fmt(gesamt), l: { de: 'Schnitt über alles', en: 'Overall mean' }, c: cls(gesamt) },
-      { v: fmt(mAb), l: { de: 'Allgemeinbildung', en: 'General education' }, c: cls(mAb) },
-      { v: fmt(mBk), l: { de: 'Berufskenntnisse', en: 'Professional knowledge' }, c: cls(mBk) },
-      { v: String(absTotal), l: { de: 'Absenzen total', en: 'Absences total' }, c: unex > 0 ? 'g-bad' : '' }
+      { k: 'AB',  s: 's-abu',     v: fmt(mAb),  l: { de: 'Allgemeinbildung', en: 'General education' }, c: cls(mAb) },
+      { k: 'BK',  s: 's-abt',     v: fmt(mBk),  l: { de: 'Berufskenntnisse', en: 'Professional knowledge' }, c: cls(mBk) },
+      { k: 'Ø',   s: 's-neutral', v: fmt(gesamt), l: { de: 'Schnitt über alles', en: 'Overall mean' }, c: cls(gesamt) },
+      { k: 'ABS', s: 's-neutral', v: String(absTotal), l: { de: 'Absenzen total', en: 'Absences total' }, c: unex > 0 ? 'g-bad' : '' }
     ];
     document.getElementById('kpis').innerHTML = items.map(function (i) {
-      return '<div class="card kpi rv"><div class="v ' + i.c + '">' + i.v + '</div>' +
-             '<div class="l">' + tx(i.l) + '</div></div>';
+      return '<div class="term ' + i.s + '">' +
+        '<span class="fuss">' + i.k + '</span>' +
+        '<span class="body"><span class="tt">' + tx(i.l) + '</span></span>' +
+        '<span class="aside"><span class="val ' + i.c + '">' + i.v + '</span></span>' +
+      '</div>';
     }).join('');
   }
 
@@ -365,13 +492,16 @@
       }
       if (b.grow) inputs += '<div class="slot"><button class="addbtn" data-add="' + b.id + '" aria-label="+">+</button></div>';
       var a = avg(vals(b.id));
-      return '<article class="card gblock rv" style="--c:var(--s-abt)">' +
-        '<header><h3>' + tx(b.title) + '</h3><span class="chip s-abt">ABT</span></header>' +
-        '<p class="rule-txt">' + tx(b.rule) + '</p>' +
-        '<div class="slots">' + inputs + '</div>' +
-        '<div class="gres"><span class="num ' + cls(a) + '">' + (a == null ? '–' : a.toFixed(2)) + '</span>' +
-        '<span class="of">' + (a == null ? (lang() === 'en' ? 'nothing yet' : 'noch nichts')
-          : vals(b.id).length + (lang() === 'en' ? ' entered' : ' eingetragen')) + '</span></div></article>';
+      return '<article class="panel gblock s-abt">' +
+        '<div class="ph"><span class="mark s-abt">ABT</span>' +
+          '<span class="t">' + tx(b.title) + '</span></div>' +
+        '<div class="pb">' +
+          '<p class="rule-txt">' + tx(b.rule) + '</p>' +
+          '<div class="slots">' + inputs + '</div>' +
+          '<div class="gres"><span class="num ' + cls(a) + '">' + (a == null ? '–' : a.toFixed(2)) + '</span>' +
+          '<span class="of">' + (a == null ? (lang() === 'en' ? 'nothing yet' : 'noch nichts')
+            : vals(b.id).length + (lang() === 'en' ? ' entered' : ' eingetragen')) + '</span></div>' +
+        '</div></article>';
     }).join('');
 
     var noten = [];
@@ -398,7 +528,7 @@
       (needed ? '<br>' + needed : '') + '</div>';
   }
 
-  function renderAll() { renderTab(); renderKpis(); renderChart(); renderAbt(); S.reveal(); }
+  function renderAll() { renderTab(); renderKpis(); renderChart(); renderAbt(); }
 
   /* ---------------- Eingaben ---------------- */
   document.addEventListener('input', function (e) {
@@ -473,6 +603,7 @@
     .then(function () { return window.Pin ? Pin.guard(hasData()) : true; })
     .then(function () {
     Shell.mount('noten', S.data().teachers);
+    if (importFromHash()) showImported();
     renderAll();
     paintPinBtn();
     document.addEventListener('langchange', renderAll);
