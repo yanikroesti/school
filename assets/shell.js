@@ -18,6 +18,7 @@
   var NAV = [
     { href: '',              key: 'home',     de: 'Übersicht', en: 'Overview' },
     { href: 'plan.html',     key: 'plan',     de: 'Plan',      en: 'Plan' },
+    { href: 'kalender.html', key: 'kalender', de: 'Kalender',  en: 'Calendar' },
     { href: 'noten.html',    key: 'noten',    de: 'Noten',     en: 'Grades' },
     { href: 'material.html', key: 'material', de: 'Material',  en: 'Material' }
   ];
@@ -76,6 +77,7 @@
     '<footer class="foot"><div class="wrap">' +
       col('<span lang="de">Schule</span><span lang="en">School</span>', [
         '<a href="' + b + 'plan.html"><span lang="de">Prüfungen &amp; Aufgaben</span><span lang="en">Exams &amp; homework</span></a>',
+        '<a href="' + b + 'kalender.html"><span lang="de">Kalender</span><span lang="en">Calendar</span></a>',
         '<a href="' + b + 'noten.html"><span lang="de">Noten</span><span lang="en">Grades</span></a>',
         '<a href="' + b + 'material.html"><span lang="de">Material</span><span lang="en">Material</span></a>'
       ]) +

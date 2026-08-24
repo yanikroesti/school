@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="de-CH" data-l="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-de="Kalender — Schule" data-en="Calendar — School">Kalender — Schule</title>
+<meta name="description" content="Monatskalender mit Stundenplan, Prüfungen und Ferien — ELI 25a, BZI Interlaken.">
+<meta name="theme-color" content="#e8eaee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#10131a" media="(prefers-color-scheme: dark)">
+<script>(function(){try{var l=localStorage.getItem('schule-lang');if(l==='en'||l==='de'){document.documentElement.setAttribute('data-l',l);document.documentElement.setAttribute('lang',l==='en'?'en':'de-CH');}var t=localStorage.getItem('schule-theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Azeret+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/core.css">
+<link rel="stylesheet" href="assets/page.css">
+<style>
+/* ---- Monatsraster ----
+   Ein Raster mit geteilten Haarlinien, kein Kartengitter: die Zellen
+   berühren sich, teilen ihre Linien und haben keine Radien. So sieht
+   ein Formular aus, kein Dashboard.                                  */
+.calbar {
+  display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.calbar h2 {
+  font-size: var(--t-l); min-width: 9.5rem;
+  font-variant-numeric: tabular-nums;
+}
+.calbar .spacer { flex: 1; }
+.navbtn {
+  border: 1px solid var(--line-2); background: var(--plate); cursor: pointer;
+  width: 32px; height: 32px; border-radius: var(--r-s);
+  display: grid; place-items: center; color: var(--ink-2);
+  transition: background 0.14s var(--ease), border-color 0.14s var(--ease);
+}
+.navbtn:hover { background: var(--plate-2); border-color: var(--rail); }
+.navbtn svg { width: 14px; height: 14px; }
+
+.cal {
+  display: grid; grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-top: 1px solid var(--line-2);
+  border-left: 1px solid var(--line-2);
+}
+.cal .wd {
+  padding: 0.4rem 0.5rem; font-size: var(--t-xs); font-weight: 600;
+  color: var(--muted); background: var(--plate-2);
+  border-right: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2);
+}
+.cal .tag {
+  position: relative; min-height: 5.4rem; padding: 0.35rem 0.4rem 0.5rem;
+  background: var(--plate); text-align: left; cursor: pointer;
+  border-right: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2);
+  border-top: 0; border-left: 0;
+  display: flex; flex-direction: column; gap: 0.28rem;
+  font: inherit; color: inherit;
+  transition: background 0.12s var(--ease);
+}
+.cal .tag:hover { background: var(--plate-2); }
+.cal .tag.aus { background: var(--ground); }
+.cal .tag.aus .n { color: var(--muted); }
+/* Ferien: schraffiert wie eine gesperrte Fläche im Plan. */
+.cal .tag.frei {
+  background: repeating-linear-gradient(135deg,
+    var(--ground), var(--ground) 5px,
+    var(--plate-2) 5px, var(--plate-2) 10px);
+}
+.cal .tag.heute { box-shadow: inset 0 0 0 2px var(--ink-2); }
+.cal .tag.gewaehlt { background: color-mix(in srgb, var(--s-abt) 14%, var(--plate)); }
+.cal .tag.heute.gewaehlt { box-shadow: inset 0 0 0 2px var(--s-abt); }
+
+.cal .n {
+  font-family: var(--f-data); font-variant-numeric: tabular-nums;
+  font-size: var(--t-xs); color: var(--ink-2); font-weight: 600;
+}
+.cal .kw {
+  /* Bei 10px trug --muted nur 4.42:1 — die Kalenderwoche ist zwar
+     Nebensache, aber lesbar muss sie sein. Klein bleibt sie trotzdem. */
+  font-family: var(--f-data); font-size: 0.625rem; color: var(--ink-2);
+  margin-left: auto; opacity: 0.75;
+}
+.cal .kopf { display: flex; align-items: baseline; gap: 0.3rem; }
+/* Was an dem Tag läuft: ein kurzer Balken je Fach, in der Fachfarbe. */
+.cal .balken { display: flex; flex-direction: column; gap: 2px; }
+.cal .balken i {
+  height: 3px; border-radius: 1px; background: var(--c, var(--rail));
+  display: block;
+}
+.cal .marke {
+  font-family: var(--f-data); font-size: 0.625rem; font-weight: 600;
+  color: #fff; background: var(--c, var(--rail));
+  border-radius: var(--r-s); padding: 0 0.22rem;
+  align-self: flex-start; white-space: nowrap;
+}
+:root[data-theme="dark"] .cal .marke { color: var(--ground); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .cal .marke { color: var(--ground); }
+}
+.cal .ferienwort {
+  font-size: 0.625rem; color: var(--muted); line-height: 1.2;
+}
+
+@media (max-width: 660px) {
+  .cal .tag { min-height: 3.9rem; padding: 0.28rem 0.3rem 0.35rem; }
+  .cal .kw, .cal .ferienwort { display: none; }
+  .cal .wd { padding: 0.35rem 0.3rem; }
+}
+
+/* ---- Abonnieren ---- */
+.abo code {
+  display: block; margin: 0.5rem 0; padding: 0.5rem 0.6rem;
+  overflow-x: auto; white-space: nowrap; font-size: var(--t-xs);
+}
+.abo ol { margin: 0.6rem 0 0; padding-left: 1.2rem; }
+.abo li { font-size: var(--t-s); color: var(--ink-2); margin-bottom: 0.3rem; }
+</style>
+</head>
+<body>
+<!--
+  DIRECTION CONTRACT — schule.yanikroesti.ch
+  THESIS: Der Schultag ist eine Hutschiene. Jede Lektion ist eine Reihenklemme
+    darauf, gleiches Rastermass, beschriftetes Markierungsschild, Farbe als
+    Funktion. Verweigert das Kartenraster, das jedes Schul-Dashboard ausliefert.
+  OWN-WORLD: Kuehler Gehaeusegrau-Grund, verzinkte Schienenlinie, flache
+    Objekte mit 2-3px Radien und ohne Schlagschatten. Fuenf gesaettigte
+    Klemmenfarben (ABT orange, HTOG blau, ATD gruen, ABU violett, Sport rot)
+    auf beschrifteten Fuessen. Archivo durchgehend; Azeret Mono nur fuer Messwerte.
+  STORY: Yanik oeffnet muede, sieht die naechste Klemme und ihren Countdown,
+    weiss was er schuldet, und geht wieder.
+  FIRST VIEWPORT: Flache Kopfleiste mit Haarlinie; Schienenkopf mit Tag, Datum
+    und Kalenderwoche; darunter die naechste Lektion als eine doppelt hohe
+    Klemme auf eigener Schiene — Farbfuss links, Zeit auf dem Markierungsschild,
+    Countdown rechts als Messwert.
+  FORM: Klemmenleiste, Kandidat 6 von 7, seed 755b7433.
+  RAISED — Fahrplan: eine Zeile beherrscht die Tafel. Schweizer Raster: eine
+    Familie, enge Stufen, Ruhe. Messgeraet: Countdown und Noten sind Messwerte
+    mit Einheit und sichtbarer 4.0-Grenze.
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the
+    finish review, the verdict, and DESIGN.md
+-->
+<main class="wrap" id="app">
+
+  <header class="phead">
+    <div class="top">
+      <h1><span lang="de">Kalender</span><span lang="en">Calendar</span></h1>
+      <p class="meta" id="phead-meta"></p>
+    </div>
+    <p class="lead">
+      <span lang="de">Der ganze Plan als Monat: Lektionen, Prüfungen, Hausaufgaben
+        und Ferien. Tag antippen zeigt ihn als Schiene. Abonnierbar für Google,
+        Apple und Outlook — unten.</span>
+      <span lang="en">The whole plan by month: lessons, exams, homework and holidays.
+        Tap a day to see it as a rail. Subscribable from Google, Apple and Outlook — below.</span>
+    </p>
+  </header>
+
+  <section class="sect" aria-labelledby="cal-h">
+    <div class="calbar">
+      <h2 id="cal-h"></h2>
+      <button class="navbtn" id="prev" data-de-label="Voriger Monat" data-en-label="Previous month">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+      </button>
+      <button class="navbtn" id="next" data-de-label="Nächster Monat" data-en-label="Next month">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <button class="tinybtn" id="heute"><span lang="de">Heute</span><span lang="en">Today</span></button>
+      <span class="spacer"></span>
+    </div>
+    <div class="cal" id="cal" role="grid"></div>
+  </section>
+
+  <section class="sect" aria-labelledby="tag-h">
+    <div class="sect-h">
+      <h2 id="tag-h"></h2>
+      <span class="spacer"></span>
+    </div>
+    <div class="rail" id="tagrail"></div>
+  </section>
+
+  <section class="sect" aria-labelledby="abo-h">
+    <div class="sect-h">
+      <h2 id="abo-h"><span lang="de">In Google Kalender holen</span><span lang="en">Add to Google Calendar</span></h2>
+      <span class="spacer"></span>
+    </div>
+    <div class="panel abo">
+      <div class="ph"><span lang="de">Abonnieren statt importieren</span><span lang="en">Subscribe, don't import</span></div>
+      <div class="pb">
+        <p>
+          <span lang="de">Diese Adresse abonnieren — dann aktualisiert sich alles von
+            selbst, auch wenn später eine Prüfung dazukommt. Ein <em>Import</em> wäre
+            eine einmalige Kopie und würde veralten.</span>
+          <span lang="en">Subscribe to this address and everything updates by itself.
+            An <em>import</em> would be a one-off copy and would go stale.</span>
+        </p>
+        <code id="icsurl">…</code>
+        <ol>
+          <li><span lang="de">Google Kalender öffnen (am Rechner, nicht in der App).</span>
+              <span lang="en">Open Google Calendar on a computer, not the app.</span></li>
+          <li><span lang="de">Links bei <b>Weitere Kalender</b> auf <b>+</b> → <b>Per URL</b>.</span>
+              <span lang="en">Left, next to <b>Other calendars</b>, click <b>+</b> → <b>From URL</b>.</span></li>
+          <li><span lang="de">Adresse einfügen, <b>Kalender hinzufügen</b>.</span>
+              <span lang="en">Paste the address, <b>Add calendar</b>.</span></li>
+        </ol>
+        <p style="margin-top:.8rem">
+          <span lang="de"><b>Google holt den Feed gemächlich ab</b> — meist alle paar
+            Stunden, manchmal erst am nächsten Tag. Das lässt sich nicht beschleunigen,
+            das entscheidet Google. Was du gerade eingetragen hast, steht sofort hier
+            auf der Seite, aber nicht sofort im Handy-Kalender.</span>
+          <span lang="en"><b>Google refreshes slowly</b> — usually every few hours,
+            sometimes only the next day. That is Google's decision, not something this
+            page controls.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="foot-host"></div>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/app.js"></script>
+<script src="assets/rail.js"></script>
+<script src="assets/shell.js"></script>
+<script>
+(function () {
+  'use strict';
+  var S = window.Schule, R = window.Rail, seed = { tests: [], homework: [] };
+
+  var MONATE = {
+    de: ['Januar','Februar','März','April','Mai','Juni','Juli','August',
+         'September','Oktober','November','Dezember'],
+    en: ['January','February','March','April','May','June','July','August',
+         'September','October','November','December']
+  };
+  var WOCHENTAGE_KURZ = {
+    de: ['Mo','Di','Mi','Do','Fr','Sa','So'],
+    en: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
+  };
+
+  function lang() { return document.documentElement.getAttribute('data-l') || 'de'; }
+  function tx(o) { return o ? (o[lang()] || o.de || o.en || '') : ''; }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  var gezeigt = new Date();        // welcher Monat im Raster steht
+  var gewaehlt = new Date();       // welcher Tag unten als Schiene steht
+  gezeigt.setHours(0, 0, 0, 0);
+  gewaehlt.setHours(0, 0, 0, 0);
+
+  function gleich(a, b) {
+    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth()
+        && a.getDate() === b.getDate();
+  }
+
+  /* ---------------- Was ist an dem Tag? ---------------- */
+
+  function eintraege(tag) {
+    var iso = S.iso(tag);
+    return {
+      frei: S.freeDay(tag),
+      lektionen: S.lessonsFor(tag),
+      pruefungen: (seed.tests || []).filter(function (t) { return t.date === iso; }),
+      aufgaben: (seed.homework || []).filter(function (h) { return h.due === iso; })
+    };
+  }
+
+  /* ---------------- Monatsraster ---------------- */
+
+  function zeichneMonat() {
+    var jahr = gezeigt.getFullYear(), monat = gezeigt.getMonth();
+    document.getElementById('cal-h').textContent =
+      MONATE[lang()][monat] + ' ' + jahr;
+
+    // Montag als erster Tag der Woche — so steht es in jedem Schweizer Plan.
+    var erster = new Date(jahr, monat, 1);
+    var versatz = (erster.getDay() + 6) % 7;
+    var start = new Date(erster);
+    start.setDate(start.getDate() - versatz);
+
+    var html = WOCHENTAGE_KURZ[lang()].map(function (w) {
+      return '<div class="wd" role="columnheader">' + w + '</div>';
+    }).join('');
+
+    var heute = new Date(); heute.setHours(0, 0, 0, 0);
+
+    for (var i = 0; i < 42; i++) {
+      var d = new Date(start);
+      d.setDate(d.getDate() + i);
+      var e = eintraege(d);
+
+      var cls = ['tag'];
+      if (d.getMonth() !== monat) cls.push('aus');
+      if (e.frei) cls.push('frei');
+      if (gleich(d, heute)) cls.push('heute');
+      if (gleich(d, gewaehlt)) cls.push('gewaehlt');
+
+      // Balken je Fach, Prüfungen als beschriftete Marke.
+      var inhalt = '';
+      if (e.frei) {
+        inhalt = '<span class="ferienwort">' + esc(tx(e.frei.name)) + '</span>';
+      } else {
+        var faecher = [];
+        e.lektionen.forEach(function (l) {
+          if (faecher.indexOf(l.subject) === -1) faecher.push(l.subject);
+        });
+        if (faecher.length) {
+          inhalt += '<span class="balken">' + faecher.map(function (f) {
+            return '<i class="s-' + f + '"></i>';
+          }).join('') + '</span>';
+        }
+        e.pruefungen.forEach(function (t) {
+          inhalt += '<span class="marke s-' + t.subject + '">' +
+                    esc(S.data().subjects[t.subject] ? S.data().subjects[t.subject].code : '?') +
+                    '</span>';
+        });
+        if (e.aufgaben.length) {
+          inhalt += '<span class="ferienwort">' + e.aufgaben.length +
+                    (lang() === 'en' ? ' due' : ' fällig') + '</span>';
+        }
+      }
+
+      var kw = d.getDay() === 1
+        ? '<span class="kw">' + S.isoWeek(d) + '</span>' : '';
+
+      html += '<button class="' + cls.join(' ') + '" role="gridcell" ' +
+              'data-tag="' + S.iso(d) + '" ' +
+              'aria-label="' + esc(S.dayName(d, lang()) + ', ' + S.fmtDate(d, lang())) + '">' +
+                '<span class="kopf"><span class="n">' + d.getDate() + '</span>' + kw + '</span>' +
+                inhalt +
+              '</button>';
+    }
+
+    document.getElementById('cal').innerHTML = html;
+  }
+
+  /* ---------------- Der gewählte Tag als Schiene ---------------- */
+
+  function zeichneTag() {
+    var kopf = document.getElementById('tag-h');
+    kopf.textContent = S.dayName(gewaehlt, lang()) + ', ' + S.fmtDate(gewaehlt, lang());
+
+    var e = eintraege(gewaehlt);
+    var teile = [];
+
+    if (e.frei) {
+      teile.push(R.bare(e.frei, lang()));
+    } else if (e.lektionen.length) {
+      teile.push(R.day(gewaehlt, { lang: lang() }));
+    }
+
+    e.pruefungen.forEach(function (t) { teile.push(R.entry(t, 'test', lang())); });
+    e.aufgaben.forEach(function (h) { teile.push(R.entry(h, 'homework', lang())); });
+
+    if (!teile.length) {
+      teile.push(R.bare({ kind: 'no-school' }, lang()));
+    }
+    document.getElementById('tagrail').innerHTML = teile.join('');
+  }
+
+  function zeichne() { zeichneMonat(); zeichneTag(); }
+
+  /* ---------------- Bedienung ---------------- */
+
+  function bind() {
+    document.getElementById('prev').addEventListener('click', function () {
+      gezeigt = new Date(gezeigt.getFullYear(), gezeigt.getMonth() - 1, 1);
+      zeichneMonat();
+    });
+    document.getElementById('next').addEventListener('click', function () {
+      gezeigt = new Date(gezeigt.getFullYear(), gezeigt.getMonth() + 1, 1);
+      zeichneMonat();
+    });
+    document.getElementById('heute').addEventListener('click', function () {
+      gezeigt = new Date(); gezeigt.setHours(0, 0, 0, 0);
+      gewaehlt = new Date(gezeigt);
+      zeichne();
+    });
+
+    // Ein Zuhörer am Raster statt 42 an den Zellen — die werden neu gebaut.
+    document.getElementById('cal').addEventListener('click', function (ev) {
+      var z = ev.target.closest('button[data-tag]');
+      if (!z) return;
+      gewaehlt = new Date(z.dataset.tag + 'T00:00:00');
+      if (gewaehlt.getMonth() !== gezeigt.getMonth()) {
+        gezeigt = new Date(gewaehlt.getFullYear(), gewaehlt.getMonth(), 1);
+      }
+      zeichne();
+    });
+
+    document.addEventListener('keydown', function (ev) {
+      if (ev.target.tagName === 'INPUT' || ev.altKey || ev.ctrlKey || ev.metaKey) return;
+      var um = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 }[ev.key];
+      if (!um) return;
+      ev.preventDefault();
+      gewaehlt = new Date(gewaehlt.getTime());
+      gewaehlt.setDate(gewaehlt.getDate() + um);
+      if (gewaehlt.getMonth() !== gezeigt.getMonth()) {
+        gezeigt = new Date(gewaehlt.getFullYear(), gewaehlt.getMonth(), 1);
+      }
+      zeichne();
+    });
+  }
+
+  /* ---------------- Start ---------------- */
+
+  document.getElementById('icsurl').textContent =
+    location.origin + '/api/kalender.ics';
+
+  S.load()
+    .then(function () {
+      window.Shell.mount('kalender', S.data().teachers);
+      document.getElementById('phead-meta').innerHTML =
+        '<span>KW ' + S.isoWeek(new Date()) + '</span><span>' +
+        S.fmtDate(new Date(), lang()) + '</span>';
+      return fetch('data/seed.json').then(function (r) { return r.json(); });
+    })
+    .then(function (d) {
+      // Aus seed.json kommen Termine mit "date", Hausaufgaben mit "due".
+      seed = { tests: d.tests || [], homework: d.homework || [] };
+      zeichne();
+      bind();
+      document.addEventListener('langchange', zeichne);
+    })
+    .catch(function (e) {
+      console.error(e);
+      try { window.Shell.mount('kalender', []); } catch (x) {}
+      document.getElementById('cal').innerHTML =
+        '<div class="err" style="grid-column:1/-1">' +
+        '<b><span lang="de">Daten nicht geladen</span><span lang="en">Data did not load</span></b>' +
+        '<span lang="de">Die Seite konnte den Stundenplan nicht lesen. Neu laden hilft meistens.</span>' +
+        '<span lang="en">Could not read the timetable. A reload usually fixes it.</span></div>';
+    });
+})();
+</script>
+</body>
+</html>
