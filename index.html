@@ -104,6 +104,7 @@
       <a href="material.html"><span lang="de">Material</span><span lang="en">Material</span></a>
     </nav>
     <div class="tools">
+      <span id="tzhost"></span>
       <div class="langswitch" role="group" aria-label="Sprache / Language">
         <button type="button" data-set="de" aria-pressed="true">DE</button>
         <button type="button" data-set="en" aria-pressed="false">EN</button>
@@ -221,6 +222,33 @@
   function lang() { return document.documentElement.getAttribute('data-l') || 'de'; }
   function tx(o) { if (!o) return ''; return typeof o === 'string' ? o : (o[lang()] || o.de || o.en || ''); }
 
+
+  /* Weicht die eingestellte Zone von der Uhr des Geraets ab, sagt die
+     Seite das. Sonst zeigt sie still eine andere Zeit als das Handy
+     daneben, und man haelt die Seite fuer kaputt. */
+  function zeitzonenhinweis() {
+    if (!window.SchuleZeit) return;
+    var ab = window.SchuleZeit.abweichung();
+    var alt = document.getElementById('tzwarn');
+    if (alt) alt.remove();
+    if (!ab) return;
+    var std = Math.abs(ab) / 60;
+    var richtung = ab > 0 ? (lang() === 'en' ? 'ahead of' : 'vor') : (lang() === 'en' ? 'behind' : 'hinter');
+    var name = (window.SchuleZeit.zonen.filter(function (z) {
+      return z.id === window.SchuleZeit.zone();
+    })[0] || {})[lang()] || window.SchuleZeit.zone();
+    var el = document.createElement('div');
+    el.className = 'tzwarn';
+    el.id = 'tzwarn';
+    el.innerHTML = lang() === 'en'
+      ? 'Showing <b>' + name + '</b> — ' + std + ' h ' + richtung + ' this device.'
+      : 'Angezeigt wird <b>' + name + '</b> — ' + std + ' h ' + richtung + ' der Uhr dieses Geräts.';
+    var app = document.querySelector('main');
+    var kopf = app.querySelector('.board, .phead');
+    if (kopf && kopf.nextSibling) app.insertBefore(el, kopf.nextSibling);
+    else app.insertBefore(el, app.firstChild);
+  }
+
   /* ---------- Schienenkopf ---------- */
   function head() {
     var now = new Date();
@@ -312,7 +340,7 @@
 
   /* ---------- Alles ---------- */
   function renderAll() {
-    head(); next(); tests(); homework(); week();
+    head(); next(); tests(); homework(); week(); zeitzonenhinweis();
     document.getElementById('lp-host').innerHTML =
       window.Lernpakete ? window.Lernpakete.html(S.data().subjects) : '';
   }
@@ -323,6 +351,9 @@
       '<span lang="de">Die Seite konnte ihre Daten nicht lesen. Neu laden hilft meistens.</span>' +
       '<span lang="en">The page could not read its data. A reload usually fixes it.</span></div>';
   }
+
+  var tzhost = document.getElementById('tzhost');
+  if (tzhost && window.SchuleZeit) tzhost.innerHTML = window.SchuleZeit.auswahlHTML();
 
   S.load()
     .then(function () {
@@ -339,6 +370,7 @@
       // Der Countdown ist ein Messwert; er läuft mit.
       tick = setInterval(next, 30000);
       document.addEventListener('langchange', renderAll);
+      document.addEventListener('tzchange', renderAll);
     })
     .catch(function (e) { fail('next-rail', e); });
 })();

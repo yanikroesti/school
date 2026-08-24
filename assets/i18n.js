@@ -8,6 +8,7 @@
 
   var LKEY = 'schule-lang';
   var TKEY = 'schule-theme';
+  var ZKEY = 'schule-tz';
   var root = document.documentElement;
 
   function read(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
@@ -65,6 +66,66 @@
     return cur === 'dark' ? 'light' : 'dark';
   }
 
+  /* ---------------- Zeitzone ----------------
+     Warum das eine Einstellung ist: der Stundenplan steht in Schweizer
+     Ortszeit. Wer die Seite auf einem Geraet oeffnet, das anders gestellt
+     ist — Server in UTC, Ferien im Ausland, falsch gestelltes Handy —
+     bekaeme sonst einen Countdown, der um Stunden danebenliegt.
+
+     Voreinstellung ist deshalb Europe/Zurich, nicht das Geraet: die
+     Schulzeit ist die Wahrheit, nicht die Uhr in der Hand.               */
+
+  var ZONEN = [
+    { id: 'Europe/Zurich', de: 'Schulzeit (Zürich)', en: 'School time (Zurich)' },
+    { id: 'auto',          de: 'Gerät',              en: 'Device' },
+    { id: 'Europe/London', de: 'London',             en: 'London' },
+    { id: 'Europe/Lisbon', de: 'Lissabon',           en: 'Lisbon' },
+    { id: 'America/New_York', de: 'New York',        en: 'New York' },
+    { id: 'Asia/Tokyo',    de: 'Tokio',              en: 'Tokyo' },
+    { id: 'UTC',           de: 'UTC',                en: 'UTC' }
+  ];
+
+  var tz = read(ZKEY) || 'Europe/Zurich';
+
+  /** Jetzt, in der eingestellten Zone — als Date, dessen oertliche
+      Felder die dortige Wanduhr zeigen. Genau das braucht der
+      Stundenplan, denn dort stehen Wanduhrzeiten. */
+  function jetzt() {
+    if (tz === 'auto') return new Date();
+    try {
+      return new Date(new Date().toLocaleString('en-US', { timeZone: tz }));
+    } catch (e) {
+      return new Date();          // unbekannte Zone: lieber Geraetezeit als nichts
+    }
+  }
+
+  /** Weicht die eingestellte Zone gerade von der des Geraets ab? Dann
+      sagt die Seite das, statt still eine andere Zeit zu zeigen. */
+  function abweichung() {
+    if (tz === 'auto') return 0;
+    var a = new Date(), b = jetzt();
+    return Math.round((b - a) / 60000);
+  }
+
+  function setzeZone(neu) {
+    tz = neu || 'Europe/Zurich';
+    write(ZKEY, tz);
+    document.dispatchEvent(new CustomEvent('tzchange', { detail: { tz: tz } }));
+    return tz;
+  }
+
+  function zonenAuswahl() {
+    var l = sprache();
+    return '<select class="tzpick" id="tzpick" aria-label="' +
+      (l === 'en' ? 'Time zone' : 'Zeitzone') + '">' +
+      ZONEN.map(function (z) {
+        return '<option value="' + z.id + '"' + (z.id === tz ? ' selected' : '') + '>' +
+               (l === 'en' ? z.en : z.de) + '</option>';
+      }).join('') + '</select>';
+  }
+
+  function sprache() { return root.getAttribute('data-l') || 'de'; }
+
   /* ---------------- Binden ----------------
      Delegiert an das Dokument statt an die Knoepfe selbst.
 
@@ -96,6 +157,11 @@
     }
   });
 
+  document.addEventListener('change', function (e) {
+    var z = closest(e.target, '#tzpick');
+    if (z) setzeZone(z.value);
+  });
+
   // Frisch eingehaengte Bedienelemente nachziehen: aria-pressed,
   // Titel und Beschriftungen stehen sonst auf dem Stand des Markups.
   function sync() { applyLang(lang); }
@@ -112,4 +178,13 @@
   });
 
   window.SchuleLang = { get: function () { return lang; }, sync: sync };
+
+  window.SchuleZeit = {
+    jetzt: jetzt,
+    zone: function () { return tz; },
+    setzen: setzeZone,
+    zonen: ZONEN,
+    auswahlHTML: zonenAuswahl,
+    abweichung: abweichung
+  };
 })();

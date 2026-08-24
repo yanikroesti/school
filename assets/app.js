@@ -7,6 +7,14 @@
   'use strict';
 
   var DATA = null;
+
+  /** Jetzt — in der eingestellten Zeitzone, nicht in der des Geraets.
+      Faellt i18n.js aus, bleibt die Geraetezeit; lieber eine Zeit als
+      keine. */
+  function jetzt() {
+    return (global.SchuleZeit && global.SchuleZeit.jetzt)
+      ? global.SchuleZeit.jetzt() : new Date();
+  }
   var loading = null;
 
   var DAYS = {
@@ -95,7 +103,7 @@
   // Nächste Lektion ab jetzt. 70 Tage Vorlauf — die Sommerferien dauern sechs Wochen.
   function nextLesson(from) {
     if (!DATA) return null;
-    var now = from || new Date();
+    var now = from || jetzt();
     for (var i = 0; i < 70; i++) {
       var d = new Date(now);
       d.setDate(d.getDate() + i);
@@ -128,7 +136,7 @@
   function until(target, lang, running) {
     var en = lang === 'en';
     if (running) return en ? 'running now' : 'läuft gerade';
-    var ms = target - new Date();
+    var ms = target - jetzt();
     if (ms <= 0) return en ? 'now' : 'jetzt';
     var min = Math.floor(ms / 60000);
     var h = Math.floor(min / 60);
@@ -145,13 +153,14 @@
   // Tage bis zu einem Datum (für Prüfungs-Countdown)
   function daysUntil(isoDate) {
     var t = new Date(isoDate + 'T00:00:00');
-    var now = new Date(); now.setHours(0, 0, 0, 0);
+    var now = jetzt(); now.setHours(0, 0, 0, 0);
     return Math.round((t - now) / 86400000);
   }
 
   /* ---------------- Export ---------------- */
 
   global.Schule = {
+    jetzt: jetzt,
     load: load,
     data: function () { return DATA; },
     base: base,

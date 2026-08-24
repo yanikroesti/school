@@ -48,6 +48,7 @@
         }).join('') +
       '</nav>' +
       '<div class="tools">' +
+        (global.SchuleZeit ? global.SchuleZeit.auswahlHTML() : '') +
         '<div class="langswitch" role="group" aria-label="Sprache / Language">' +
           '<button type="button" data-set="de" aria-pressed="true">DE</button>' +
           '<button type="button" data-set="en" aria-pressed="false">EN</button>' +

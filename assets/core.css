@@ -256,6 +256,30 @@ code, kbd {
   background: var(--accent); color: var(--plate);
 }
 
+/* Zeitzonen-Waehler. Ein echtes <select>, kein nachgebautes Menue —
+   auf dem Handy oeffnet das die Systemauswahl, und die bedient sich
+   einhaendig besser als alles Selbstgebaute. */
+.tzpick {
+  font: inherit; font-size: var(--t-xs); font-family: var(--f-data);
+  color: var(--ink-2); background: var(--plate);
+  border: 1px solid var(--line-2); border-radius: var(--r-s);
+  padding: 0.28rem 0.4rem; max-width: 9.5rem; cursor: pointer;
+}
+.tzpick:hover { border-color: var(--rail); }
+@media (pointer: coarse) { .tzpick { padding: 0.45rem 0.5rem; font-size: var(--t-s); } }
+@media (max-width: 480px) { .tzpick { max-width: 6.5rem; } }
+
+/* Hinweis, wenn die gewaehlte Zone von der Geraetezeit abweicht. Ohne
+   den wuerde die Seite still eine andere Zeit zeigen als die Uhr daneben. */
+.tzwarn {
+  display: flex; align-items: center; gap: 0.45rem;
+  font-size: var(--t-s); color: var(--warn-ink);
+  border: 1px solid color-mix(in srgb, var(--warn) 40%, transparent);
+  background: color-mix(in srgb, var(--warn) 8%, var(--plate));
+  border-radius: var(--r); padding: 0.5rem 0.7rem; margin-bottom: 1rem;
+}
+.tzwarn b { font-weight: 600; }
+
 .iconbtn {
   border: 1px solid var(--line-2); background: transparent; cursor: pointer;
   width: 30px; height: 30px; border-radius: var(--r); display: grid; place-items: center;

@@ -255,6 +255,33 @@
         && a.getDate() === b.getDate();
   }
 
+
+  /* Weicht die eingestellte Zone von der Uhr des Geraets ab, sagt die
+     Seite das. Sonst zeigt sie still eine andere Zeit als das Handy
+     daneben, und man haelt die Seite fuer kaputt. */
+  function zeitzonenhinweis() {
+    if (!window.SchuleZeit) return;
+    var ab = window.SchuleZeit.abweichung();
+    var alt = document.getElementById('tzwarn');
+    if (alt) alt.remove();
+    if (!ab) return;
+    var std = Math.abs(ab) / 60;
+    var richtung = ab > 0 ? (lang() === 'en' ? 'ahead of' : 'vor') : (lang() === 'en' ? 'behind' : 'hinter');
+    var name = (window.SchuleZeit.zonen.filter(function (z) {
+      return z.id === window.SchuleZeit.zone();
+    })[0] || {})[lang()] || window.SchuleZeit.zone();
+    var el = document.createElement('div');
+    el.className = 'tzwarn';
+    el.id = 'tzwarn';
+    el.innerHTML = lang() === 'en'
+      ? 'Showing <b>' + name + '</b> — ' + std + ' h ' + richtung + ' this device.'
+      : 'Angezeigt wird <b>' + name + '</b> — ' + std + ' h ' + richtung + ' der Uhr dieses Geräts.';
+    var app = document.querySelector('main');
+    var kopf = app.querySelector('.board, .phead');
+    if (kopf && kopf.nextSibling) app.insertBefore(el, kopf.nextSibling);
+    else app.insertBefore(el, app.firstChild);
+  }
+
   /* ---------------- Was ist an dem Tag? ---------------- */
 
   function eintraege(tag) {
@@ -360,7 +387,7 @@
     document.getElementById('tagrail').innerHTML = teile.join('');
   }
 
-  function zeichne() { zeichneMonat(); zeichneTag(); }
+  function zeichne() { zeichneMonat(); zeichneTag(); zeitzonenhinweis(); }
 
   /* ---------------- Bedienung ---------------- */
 
@@ -423,6 +450,7 @@
       zeichne();
       bind();
       document.addEventListener('langchange', zeichne);
+      document.addEventListener('tzchange', zeichne);
     })
     .catch(function (e) {
       console.error(e);
