@@ -104,6 +104,7 @@
       <a href="material.html"><span lang="de">Material</span><span lang="en">Material</span></a>
     </nav>
     <div class="tools">
+      <span id="verthost"></span>
       <span id="tzhost"></span>
       <div class="langswitch" role="group" aria-label="Sprache / Language">
         <button type="button" data-set="de" aria-pressed="true">DE</button>
@@ -354,6 +355,13 @@
 
   var tzhost = document.getElementById('tzhost');
   if (tzhost && window.SchuleZeit) tzhost.innerHTML = window.SchuleZeit.auswahlHTML();
+
+  var verthost = document.getElementById('verthost');
+  if (verthost && window.Shell) verthost.innerHTML = window.Shell.verteilerHTML();
+
+  // Frisch eingehaengte Bedienelemente nachziehen: aria-label und Titel
+  // stehen sonst auf dem Stand des Markups, das es hier noch gar nicht gab.
+  if (window.SchuleLang && window.SchuleLang.sync) window.SchuleLang.sync();
 
   S.load()
     .then(function () {

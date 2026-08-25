@@ -289,6 +289,71 @@ code, kbd {
 .iconbtn:active { background: var(--line); }
 .iconbtn svg { width: 15px; height: 15px; }
 
+/* ---- Verteiler ----
+   Von dieser Schiene gehen die anderen ab. Das ist kein Menue im
+   ueblichen Sinn, sondern eine Abzweigdose: eine kurze Liste eigener
+   Seiten, jede mit beschriftetem Fuss in ihrer Farbe — dasselbe
+   Bauteil wie ueberall, nur kleiner.                                 */
+.vert { position: relative; }
+.vertbtn {
+  border: 1px solid var(--line-2); background: transparent; cursor: pointer;
+  width: 30px; height: 30px; border-radius: var(--r); display: grid; place-items: center;
+  color: var(--muted);
+  transition: color 0.14s var(--ease), border-color 0.14s var(--ease), background 0.14s var(--ease);
+}
+.vertbtn:hover { color: var(--ink); border-color: var(--line-2); background: var(--plate-2); }
+.vertbtn svg { width: 15px; height: 15px; }
+.vertbtn[aria-expanded="true"] {
+  background: var(--plate-2); color: var(--ink); border-color: var(--rail);
+}
+
+.vertliste {
+  position: absolute; top: calc(100% + 7px); right: 0; z-index: 70;
+  min-width: 17rem; max-width: min(21rem, calc(100vw - 1.5rem));
+  background: var(--plate); border: 1px solid var(--line-2);
+  border-radius: var(--r-s); padding: 0.3rem;
+}
+.vertliste[hidden] { display: none; }
+.verth {
+  font-family: var(--f-data); font-size: 0.625rem; color: var(--ink-2);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 0.4rem 0.45rem 0.45rem;
+  border-bottom: 1px solid var(--line); margin-bottom: 0.3rem;
+}
+.vertz {
+  display: grid; grid-template-columns: 2.7rem minmax(0, 1fr) auto; gap: 0.55rem;
+  align-items: center; text-decoration: none; color: inherit;
+  padding: 0.42rem 0.45rem; border-radius: var(--r-s); min-height: 44px;
+  transition: background 0.12s var(--ease);
+}
+.vertz:hover { background: var(--plate-2); }
+.vertz .fuss {
+  font-family: var(--f-data); font-size: 0.625rem; font-weight: 600;
+  color: #fff; background: var(--c, var(--rail));
+  border-radius: var(--r-s); padding: 0.18rem 0; text-align: center;
+  letter-spacing: 0.02em;
+}
+:root[data-theme="dark"] .vertz .fuss { color: var(--ground); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .vertz .fuss { color: var(--ground); }
+}
+.vertz .vt { min-width: 0; }
+.vertz .vt b {
+  display: block; font-size: var(--t-s); font-weight: 600; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.vertz .vt span {
+  display: block; font-size: var(--t-xs); color: var(--muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.vertz .ext { color: var(--ink-2); font-size: var(--t-xs); font-family: var(--f-data); }
+.vertz[aria-current="page"] { background: var(--plate-2); }
+.vertz[aria-current="page"] .ext { color: var(--live-ink); font-weight: 600; }
+
+@media (max-width: 480px) {
+  .vertliste { right: -0.4rem; min-width: 15rem; }
+}
+
 /* ============================================================
    DIE SCHIENE — das tragende Element
    ------------------------------------------------------------
@@ -705,7 +770,13 @@ a.term:active, button.term:active { background: var(--line); }
     border-left: 0; border-top: 1px solid var(--line);
     flex-direction: row; align-items: baseline; justify-content: space-between;
     text-align: left; padding-top: 0.42rem; padding-bottom: 0.42rem;
+    /* Countdown und Raumzeile passen bei 375 px nicht nebeneinander.
+       Ohne Umbruch schob sich die Raumzeile rechts aus der Klemme und
+       die ganze Seite liess sich waagrecht schieben. Lieber zwei Zeilen
+       als eine, die aus dem Bild laeuft. */
+    flex-wrap: wrap; gap: 0.15rem 0.6rem;
   }
+  .term > .aside > * { min-width: 0; }
   .term.lead .val { font-size: var(--t-2xl); }
   .foot .wrap { gap: 1.4rem 2rem; }
 }
