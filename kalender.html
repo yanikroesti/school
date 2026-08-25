@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title data-de="Kalender — Schule" data-en="Calendar — School">Kalender — Schule</title>
-<meta name="description" content="Monatskalender mit Stundenplan, Prüfungen und Ferien — ELI 25a, BZI Interlaken.">
+<meta name="description" content="Monat und Woche mit Stundenplan, Prüfungen und eigenen Terminen — ELI 25a, BZI Interlaken.">
 <meta name="theme-color" content="#e8eaee" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#10131a" media="(prefers-color-scheme: dark)">
 <script>(function(){try{var l=localStorage.getItem('schule-lang');if(l==='en'||l==='de'){document.documentElement.setAttribute('data-l',l);document.documentElement.setAttribute('lang',l==='en'?'en':'de-CH');}var t=localStorage.getItem('schule-theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();</script>
@@ -35,6 +35,19 @@
 }
 .navbtn:hover { background: var(--plate-2); border-color: var(--rail); }
 .navbtn svg { width: 14px; height: 14px; }
+
+/* Umschalter Monat / Woche — dieselbe Bauform wie der Sprachschalter. */
+.ansicht { display: inline-flex; border: 1px solid var(--line-2); border-radius: var(--r-s); overflow: hidden; }
+.ansicht button {
+  border: 0; background: var(--plate); color: var(--muted); cursor: pointer;
+  font: 600 var(--t-xs)/1 var(--f-ui, inherit); padding: 0.5rem 0.7rem;
+  min-height: 32px;
+}
+.ansicht button + button { border-left: 1px solid var(--line-2); }
+.ansicht button[aria-pressed="true"] { background: var(--plate-2); color: var(--ink); }
+.ansicht button:hover { color: var(--ink); }
+
+[hidden] { display: none !important; }
 
 .cal {
   display: grid; grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -98,11 +111,244 @@
 .cal .ferienwort {
   font-size: 0.625rem; color: var(--muted); line-height: 1.2;
 }
+/* Eigener Termin im Monat: ein Punkt in der Fachfarbe, damit man sieht,
+   dass an dem Tag etwas Eigenes steht, ohne dass die Zelle überläuft. */
+.cal .eigen {
+  display: flex; gap: 2px; flex-wrap: wrap; margin-top: auto;
+}
+.cal .eigen i {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--c, var(--ink-2)); display: block;
+}
 
 @media (max-width: 660px) {
   .cal .tag { min-height: 3.9rem; padding: 0.28rem 0.3rem 0.35rem; }
   .cal .kw, .cal .ferienwort { display: none; }
   .cal .wd { padding: 0.35rem 0.3rem; }
+}
+
+/* ---- Wochenraster ----
+   Sieben senkrechte Hutschienen. Die Zeit läuft nach unten, jede
+   Spalte trägt links ihre Schiene, die Klemmen sitzen darauf.        */
+.woche { --stunde-h: 51px; }
+.wkopf {
+  display: grid; grid-template-columns: 3.4rem repeat(7, minmax(0, 1fr));
+  position: sticky; top: 0; z-index: 3; background: var(--ground);
+  border-bottom: 1px solid var(--line-2);
+}
+.wkopf .ecke {
+  display: grid; place-items: center; padding: 0.3rem 0.2rem;
+}
+.wkopf .kwzahl {
+  font-family: var(--f-data); font-size: 0.625rem; color: var(--ink-2);
+  opacity: 0.8; white-space: nowrap;
+}
+.wtag {
+  border: 0; border-left: 1px solid var(--line-2); background: var(--plate-2);
+  cursor: pointer; padding: 0.35rem 0.2rem 0.4rem; color: var(--ink-2);
+  display: flex; flex-direction: column; align-items: center; gap: 1px;
+  font: inherit; min-height: 44px;
+  transition: background 0.12s var(--ease);
+}
+.wtag:hover { background: var(--plate); }
+.wtag .wd { font-size: 0.625rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.wtag b { font-family: var(--f-data); font-size: var(--t-s); font-variant-numeric: tabular-nums; }
+.wtag.heute { background: var(--ground); }
+.wtag.heute b { color: var(--s-abt); }
+.wtag.frei { color: var(--muted); }
+/* Das Wochenende trägt der Grund, nicht die Schrift. Vorher stand das
+   Kürzel in --rail — der Schienenfarbe — und kam auf 2.44:1. Eine
+   Bauteilfarbe als Schriftfarbe geht fast nie gut aus. */
+.wtag.we { background: var(--ground); }
+
+.wleib { position: relative; }
+.wfeld {
+  display: grid; grid-template-columns: 3.4rem repeat(7, minmax(0, 1fr));
+  position: relative; touch-action: pan-y;
+}
+.wzeit { position: relative; }
+.wzeit span {
+  position: absolute; right: 0.4rem; transform: translateY(-50%);
+  font-family: var(--f-data); font-size: 0.625rem; color: var(--muted);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.spalte {
+  position: relative;
+  border-left: 2px solid var(--rail-2);
+  border-right: 1px solid var(--line);
+  background-image: repeating-linear-gradient(to bottom,
+    var(--line) 0, var(--line) 1px,
+    transparent 1px, transparent var(--stunde-h));
+}
+.spalte.we { background-color: var(--ground); }
+.spalte.heute { background-color: color-mix(in srgb, var(--s-abt) 5%, transparent); }
+.spalte.frei {
+  background-image:
+    repeating-linear-gradient(135deg,
+      transparent, transparent 5px,
+      var(--plate-2) 5px, var(--plate-2) 10px),
+    repeating-linear-gradient(to bottom,
+      var(--line) 0, var(--line) 1px,
+      transparent 1px, transparent var(--stunde-h));
+}
+
+/* Klemme in der Woche. Flach, 2px Radius, kein Schatten — wie überall. */
+.ter {
+  position: absolute; overflow: hidden;
+  border: 1px solid var(--line-2); border-radius: var(--r-s);
+  background: var(--plate); color: inherit;
+  padding: 2px 3px 2px 7px; text-align: left;
+  font: inherit; min-width: 0;
+}
+.ter > .fuss {
+  position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  background: var(--c, var(--rail)); display: block;
+}
+.ter .wi { display: block; min-width: 0; line-height: 1.15; }
+.ter b {
+  display: block; font-size: 0.6875rem; font-weight: 600; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ter .wz, .ter .wl {
+  display: block; font-family: var(--f-data); font-size: 0.5875rem;
+  color: var(--muted); font-variant-numeric: tabular-nums;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ter .wl { font-family: inherit; }
+.ter.lek { background: color-mix(in srgb, var(--c) 9%, var(--plate)); cursor: default; }
+.ter.eig { cursor: grab; border-color: var(--c, var(--rail)); }
+.ter.eig:active { cursor: grabbing; }
+.ter.eig:hover { border-color: var(--ink-2); }
+.ter .griff {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 7px;
+  cursor: ns-resize; display: block;
+}
+.ter .griff::after {
+  content: ""; position: absolute; left: 50%; bottom: 2px;
+  width: 16px; height: 2px; margin-left: -8px; border-radius: 1px;
+  background: var(--rail); opacity: 0; transition: opacity 0.12s var(--ease);
+}
+.ter.eig:hover .griff::after { opacity: 1; }
+
+/* 24 px hoch, nicht 15: anders als bei einer Klemme sagt die Höhe hier
+   nichts über die Dauer — ein ganzer Tag ist ein ganzer Tag. Also gibt
+   es keinen Grund, unter die Antippgrösse zu gehen. */
+.ganz {
+  position: absolute; left: 1px; right: 1px; height: 24px;
+  border: 0; border-left: 4px solid var(--c, var(--rail));
+  background: var(--plate-2); color: var(--ink-2); cursor: pointer;
+  font: 600 0.625rem/24px inherit; padding: 0 3px; text-align: left;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  border-radius: var(--r-s); z-index: 2;
+}
+
+.geist {
+  position: absolute; left: 1px; right: 1px; z-index: 4;
+  border: 1px dashed var(--s-abt); border-radius: var(--r-s);
+  background: color-mix(in srgb, var(--s-abt) 12%, transparent);
+  font-family: var(--f-data); font-size: 0.5875rem; color: var(--ink-2);
+  padding: 1px 3px; pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Die Uhrzeitlinie. Rot heisst hier wie im Schema: geschaltet, jetzt. */
+.jetzt {
+  position: absolute; left: -2px; right: 0; height: 2px;
+  background: var(--s-sport); z-index: 5; pointer-events: none;
+}
+.jetzt::before {
+  content: ""; position: absolute; left: -3px; top: -3px;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--s-sport);
+}
+
+@media (max-width: 720px) {
+  .woche { --stunde-h: 44px; }
+  .wkopf, .wfeld { grid-template-columns: 2.5rem repeat(7, minmax(0, 1fr)); }
+  .ter { padding-left: 6px; }
+  .ter .wl { display: none; }
+}
+
+/* ---- Bearbeitungskasten ---- */
+dialog.kasten {
+  border: 1px solid var(--line-2); border-radius: var(--r-l);
+  background: var(--plate); color: var(--ink);
+  padding: 0; width: min(30rem, calc(100vw - 2rem)); max-height: 90vh;
+}
+dialog.kasten::backdrop { background: rgba(8, 10, 14, 0.55); }
+.kasten .kh {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.8rem 0.95rem; border-bottom: 1px solid var(--line-2);
+  background: var(--plate-2);
+}
+.kasten .kh h3 { font-size: var(--t-m); margin: 0; }
+.kasten .kb { padding: 0.95rem; display: grid; gap: 0.7rem; }
+.kasten .kf { display: grid; gap: 0.25rem; }
+.kasten .kf > label {
+  font-size: var(--t-xs); font-weight: 600; color: var(--muted);
+}
+.kasten .reihe { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+.kasten .reihe3 { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 0.7rem; }
+.kasten input[type="text"], .kasten input[type="date"], .kasten input[type="time"],
+.kasten select, .kasten textarea {
+  font: inherit; font-size: var(--t-s); color: var(--ink);
+  background: var(--ground); border: 1px solid var(--line-2);
+  border-radius: var(--r-s); padding: 0.5rem 0.55rem; width: 100%;
+  min-height: 40px;
+}
+.kasten textarea { min-height: 4.5rem; resize: vertical; }
+.kasten input:focus-visible, .kasten select:focus-visible, .kasten textarea:focus-visible {
+  outline: 2px solid var(--s-abt); outline-offset: 1px;
+}
+/* Das Kästchen selbst ist 20 px, anfassbar ist aber die ganze Zeile:
+   die Beschriftung liegt im <label>, also schaltet ein Klick irgendwo
+   darauf mit. Deshalb muss die Zeile die 24 px halten, nicht das
+   Kästchen. */
+.kasten .anhak {
+  display: flex; align-items: center; gap: 0.45rem;
+  font-size: var(--t-s); color: var(--ink-2);
+  min-height: 32px; cursor: pointer; align-self: flex-start;
+}
+.kasten .anhak input { width: 20px; height: 20px; min-height: 0; accent-color: var(--s-abt); }
+.kasten .rat {
+  font-size: var(--t-xs); color: var(--warn-ink); line-height: 1.35;
+  border-left: 2px solid var(--warn); padding-left: 0.5rem;
+}
+.kasten .rat b { font-weight: 600; }
+.kasten .kfuss {
+  display: flex; gap: 0.5rem; align-items: center;
+  padding: 0.75rem 0.95rem; border-top: 1px solid var(--line-2);
+  background: var(--plate-2);
+}
+.kasten .kfuss .spacer { flex: 1; }
+.knopf {
+  font: 600 var(--t-s)/1 inherit; cursor: pointer; min-height: 40px;
+  padding: 0.6rem 0.9rem; border-radius: var(--r-s);
+  border: 1px solid var(--line-2); background: var(--plate); color: var(--ink-2);
+}
+.knopf:hover { border-color: var(--rail); color: var(--ink); }
+.knopf.haupt { background: var(--ink); color: var(--ground); border-color: var(--ink); }
+.knopf.haupt:hover { background: var(--ink-2); border-color: var(--ink-2); }
+.knopf.weg { color: var(--alert, var(--s-sport)); }
+.knopf.weg:hover { border-color: var(--s-sport); color: var(--s-sport); }
+
+/* ---- Google-Anschluss ---- */
+.gzeile { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+.gpunkt {
+  width: 8px; height: 8px; border-radius: 50%; flex: none;
+  background: var(--rail);
+}
+.gpunkt.an { background: var(--live); }
+.gstatus { font-size: var(--t-s); color: var(--ink-2); }
+.gstatus .zeit { font-family: var(--f-data); font-size: var(--t-xs); color: var(--muted); }
+.gmeldung {
+  font-size: var(--t-s); border-left: 2px solid var(--warn);
+  padding-left: 0.6rem; color: var(--warn-ink); margin-top: 0.6rem; line-height: 1.4;
+}
+.gmeldung.gut { border-color: var(--live); color: var(--live-ink); }
+.vlist { margin: 0.6rem 0 0; padding: 0; list-style: none; display: grid; gap: 0.3rem; }
+.vlist li {
+  font-size: var(--t-xs); color: var(--ink-2); font-family: var(--f-data);
+  border-left: 2px solid var(--rail-2); padding-left: 0.5rem;
 }
 
 /* ---- Abonnieren ---- */
@@ -134,6 +380,9 @@
   RAISED — Fahrplan: eine Zeile beherrscht die Tafel. Schweizer Raster: eine
     Familie, enge Stufen, Ruhe. Messgeraet: Countdown und Noten sind Messwerte
     mit Einheit und sichtbarer 4.0-Grenze.
+  WOCHE: dieselbe Schiene um 90 Grad gedreht — sieben davon nebeneinander,
+    Zeit nach unten. Eigene Termine sind Klemmen, die man anfassen darf;
+    Lektionen sind Klemmen, die festsitzen, weil ihre Quelle Stundenplan.md ist.
   FINISH: unreviewed and undocumented is unfinished; this build ends with the
     finish review, the verdict, and DESIGN.md
 -->
@@ -145,30 +394,101 @@
       <p class="meta" id="phead-meta"></p>
     </div>
     <p class="lead">
-      <span lang="de">Der ganze Plan als Monat: Lektionen, Prüfungen, Hausaufgaben
-        und Ferien. Tag antippen zeigt ihn als Schiene. Abonnierbar für Google,
-        Apple und Outlook — unten.</span>
-      <span lang="en">The whole plan by month: lessons, exams, homework and holidays.
-        Tap a day to see it as a rail. Subscribable from Google, Apple and Outlook — below.</span>
+      <span lang="de">Monat für den Überblick, Woche zum Eintragen. Im Wochenraster
+        ziehst du einen Termin auf; das Fach schlägt die Seite aus dem Stundenplan
+        vor. Verbunden mit Google gleicht sich alles in beide Richtungen ab.</span>
+      <span lang="en">Month for the overview, week for entering things. In the week
+        grid you drag out an event; the subject is proposed from the timetable.
+        Connected to Google, everything syncs both ways.</span>
     </p>
   </header>
 
+  <!-- ---------------- Google ---------------- -->
+  <section class="sect" aria-labelledby="g-h">
+    <div class="sect-h">
+      <h2 id="g-h"><span lang="de">Google Kalender</span><span lang="en">Google Calendar</span></h2>
+      <span class="spacer"></span>
+    </div>
+    <div class="panel">
+      <div class="ph">
+        <span lang="de">Eigene Termine, beide Richtungen</span>
+        <span lang="en">Your own events, both directions</span>
+      </div>
+      <div class="pb">
+        <div class="gzeile">
+          <span class="gpunkt" id="gpunkt" aria-hidden="true"></span>
+          <span class="gstatus" id="gstatus"></span>
+          <span class="spacer" style="flex:1"></span>
+          <button class="knopf" id="gverbinden" hidden>
+            <span lang="de">Mit Google verbinden</span><span lang="en">Connect Google</span>
+          </button>
+          <button class="tinybtn" id="gabgleich" hidden>
+            <span lang="de">Jetzt abgleichen</span><span lang="en">Sync now</span>
+          </button>
+          <button class="tinybtn" id="gtrennen" hidden>
+            <span lang="de">Trennen</span><span lang="en">Disconnect</span>
+          </button>
+        </div>
+        <div id="gmeldung"></div>
+        <div id="gverworfen"></div>
+        <p style="margin-top:.8rem;font-size:var(--t-s);color:var(--muted);line-height:1.5">
+          <span lang="de">Die Seite legt bei Google einen eigenen Kalender
+            <b>«Schule — ELI 25a»</b> an und schreibt ausschliesslich dorthin. Deinen
+            Hauptkalender fasst sie nicht an — sie kann es nicht, der Riegel sitzt im
+            Code. Trennen löscht nur die Verbindung auf diesem Gerät; der Kalender bei
+            Google bleibt. Ganz zurückziehen kannst du die Erlaubnis bei Google unter
+            <b>Konto → Sicherheit → Drittanbieter-Apps</b>.</span>
+          <span lang="en">This page creates its own Google calendar
+            <b>“Schule — ELI 25a”</b> and writes only there. It never touches your main
+            calendar. Disconnecting only clears the link on this device.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------------- Raster ---------------- -->
   <section class="sect" aria-labelledby="cal-h">
     <div class="calbar">
       <h2 id="cal-h"></h2>
-      <button class="navbtn" id="prev" data-de-label="Voriger Monat" data-en-label="Previous month">
+      <button class="navbtn" id="prev" data-de-label="Zurück" data-en-label="Previous">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
       </button>
-      <button class="navbtn" id="next" data-de-label="Nächster Monat" data-en-label="Next month">
+      <button class="navbtn" id="next" data-de-label="Weiter" data-en-label="Next">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
       </button>
       <button class="tinybtn" id="heute"><span lang="de">Heute</span><span lang="en">Today</span></button>
       <span class="spacer"></span>
+      <div class="ansicht" role="group" aria-label="Ansicht / View">
+        <button type="button" data-ansicht="monat" aria-pressed="true"><span lang="de">Monat</span><span lang="en">Month</span></button>
+        <button type="button" data-ansicht="woche" aria-pressed="false"><span lang="de">Woche</span><span lang="en">Week</span></button>
+      </div>
+      <button class="tinybtn" id="neu">+&nbsp;<span lang="de">Termin</span><span lang="en">Event</span></button>
     </div>
+
     <div class="cal" id="cal" role="grid"></div>
+    <div class="woche" id="woche" hidden></div>
+
+    <p id="wochenhilfe" hidden
+       style="margin-top:.7rem;font-size:var(--t-xs);color:var(--muted);line-height:1.5">
+      <span lang="de">Auf freie Fläche ziehen legt einen Termin an. Eigene Termine
+        lassen sich verschieben, an der Unterkante verlängern und auf einen anderen Tag
+        ziehen. Lektionen sitzen fest — sie kommen aus dem Stundenplan.</span>
+      <span lang="en">Drag on empty space to create an event. Your own events can be
+        moved, resized from the bottom edge and dragged to another day. Lessons are
+        fixed — they come from the timetable.</span>
+    </p>
+
+    <p id="wochenhilfe-tipp" hidden
+       style="margin-top:.7rem;font-size:var(--t-xs);color:var(--muted);line-height:1.5">
+      <span lang="de">Auf eine freie Stelle tippen legt 45 Minuten an. Auf diesem Gerät
+        wird nicht gezogen — sonst liesse sich die Seite nicht mehr scrollen.</span>
+      <span lang="en">Tap an empty slot to create 45 minutes. No dragging on this device
+        — it would break page scrolling.</span>
+    </p>
   </section>
 
-  <section class="sect" aria-labelledby="tag-h">
+  <!-- ---------------- Der gewählte Tag ---------------- -->
+  <section class="sect" aria-labelledby="tag-h" id="tagsect">
     <div class="sect-h">
       <h2 id="tag-h"></h2>
       <span class="spacer"></span>
@@ -176,20 +496,23 @@
     <div class="rail" id="tagrail"></div>
   </section>
 
+  <!-- ---------------- Abonnieren ---------------- -->
   <section class="sect" aria-labelledby="abo-h">
     <div class="sect-h">
-      <h2 id="abo-h"><span lang="de">In Google Kalender holen</span><span lang="en">Add to Google Calendar</span></h2>
+      <h2 id="abo-h"><span lang="de">Stundenplan abonnieren</span><span lang="en">Subscribe to the timetable</span></h2>
       <span class="spacer"></span>
     </div>
     <div class="panel abo">
-      <div class="ph"><span lang="de">Abonnieren statt importieren</span><span lang="en">Subscribe, don't import</span></div>
+      <div class="ph"><span lang="de">Nur hinaus — und das mit Absicht</span><span lang="en">One direction only — by design</span></div>
       <div class="pb">
         <p>
-          <span lang="de">Diese Adresse abonnieren — dann aktualisiert sich alles von
-            selbst, auch wenn später eine Prüfung dazukommt. Ein <em>Import</em> wäre
-            eine einmalige Kopie und würde veralten.</span>
-          <span lang="en">Subscribe to this address and everything updates by itself.
-            An <em>import</em> would be a one-off copy and would go stale.</span>
+          <span lang="de">Stundenplan, Prüfungen und Hausaufgaben entstehen <em>hier</em>:
+            der Plan aus <b>Stundenplan.md</b> im Vault, die Prüfungen über den Telegram-Bot.
+            Google ist dafür die Anzeige, nicht die Quelle. Darum werden sie abonniert
+            statt abgeglichen — wer sie in Google löscht, löscht nur die Anzeige, und
+            beim nächsten Abruf stehen sie wieder da.</span>
+          <span lang="en">Timetable, exams and homework originate <em>here</em>. Google is
+            the display, not the source — so they are subscribed, not synced.</span>
         </p>
         <code id="icsurl">…</code>
         <ol>
@@ -202,12 +525,11 @@
         </ol>
         <p style="margin-top:.8rem">
           <span lang="de"><b>Google holt den Feed gemächlich ab</b> — meist alle paar
-            Stunden, manchmal erst am nächsten Tag. Das lässt sich nicht beschleunigen,
-            das entscheidet Google. Was du gerade eingetragen hast, steht sofort hier
-            auf der Seite, aber nicht sofort im Handy-Kalender.</span>
-          <span lang="en"><b>Google refreshes slowly</b> — usually every few hours,
-            sometimes only the next day. That is Google's decision, not something this
-            page controls.</span>
+            Stunden, manchmal erst am nächsten Tag. Das entscheidet Google, nicht diese
+            Seite. Eigene Termine, die du oben verbunden hast, gehen dagegen sofort
+            hin und her.</span>
+          <span lang="en"><b>Google refreshes slowly</b> — usually every few hours.
+            Your own events, once connected above, sync immediately.</span>
         </p>
       </div>
     </div>
@@ -215,253 +537,85 @@
 
 </main>
 
+<!-- ---------------- Bearbeitungskasten ---------------- -->
+<dialog class="kasten" id="kasten" aria-labelledby="kasten-h">
+  <form method="dialog" id="kform">
+    <div class="kh">
+      <h3 id="kasten-h"></h3>
+    </div>
+    <div class="kb">
+      <div class="kf">
+        <label for="f-titel"><span lang="de">Titel</span><span lang="en">Title</span></label>
+        <input type="text" id="f-titel" required maxlength="120"
+               data-de-placeholder="z. B. Lerngruppe NIN" data-en-placeholder="e.g. NIN study group">
+      </div>
+
+      <label class="anhak">
+        <input type="checkbox" id="f-ganz">
+        <span lang="de">Ganzer Tag</span><span lang="en">All day</span>
+      </label>
+
+      <div class="reihe3">
+        <div class="kf">
+          <label for="f-tag"><span lang="de">Tag</span><span lang="en">Day</span></label>
+          <input type="date" id="f-tag" required>
+        </div>
+        <div class="kf" id="f-vonbox">
+          <label for="f-von"><span lang="de">Von</span><span lang="en">From</span></label>
+          <input type="time" id="f-von" step="300">
+        </div>
+        <div class="kf" id="f-bisbox">
+          <label for="f-bis"><span lang="de">Bis</span><span lang="en">To</span></label>
+          <input type="time" id="f-bis" step="300">
+        </div>
+      </div>
+
+      <div class="reihe">
+        <div class="kf">
+          <label for="f-fach"><span lang="de">Fach</span><span lang="en">Subject</span></label>
+          <select id="f-fach"></select>
+        </div>
+        <div class="kf">
+          <label for="f-lehrer"><span lang="de">Lehrperson</span><span lang="en">Teacher</span></label>
+          <select id="f-lehrer"></select>
+        </div>
+      </div>
+
+      <div class="rat" id="f-rat" hidden></div>
+
+      <div class="kf">
+        <label for="f-ort"><span lang="de">Ort</span><span lang="en">Location</span></label>
+        <input type="text" id="f-ort" maxlength="120">
+      </div>
+
+      <div class="kf">
+        <label for="f-notiz"><span lang="de">Notiz</span><span lang="en">Note</span></label>
+        <textarea id="f-notiz" maxlength="2000"></textarea>
+      </div>
+    </div>
+    <div class="kfuss">
+      <button type="button" class="knopf weg" id="f-loeschen" hidden>
+        <span lang="de">Löschen</span><span lang="en">Delete</span>
+      </button>
+      <span class="spacer"></span>
+      <button type="button" class="knopf" id="f-abbrechen">
+        <span lang="de">Abbrechen</span><span lang="en">Cancel</span>
+      </button>
+      <button type="submit" class="knopf haupt" id="f-speichern">
+        <span lang="de">Speichern</span><span lang="en">Save</span>
+      </button>
+    </div>
+  </form>
+</dialog>
+
 <div id="foot-host"></div>
 
 <script src="assets/i18n.js"></script>
 <script src="assets/app.js"></script>
 <script src="assets/rail.js"></script>
+<script src="assets/events.js"></script>
+<script src="assets/woche.js"></script>
 <script src="assets/shell.js"></script>
-<script>
-(function () {
-  'use strict';
-  var S = window.Schule, R = window.Rail, seed = { tests: [], homework: [] };
-
-  var MONATE = {
-    de: ['Januar','Februar','März','April','Mai','Juni','Juli','August',
-         'September','Oktober','November','Dezember'],
-    en: ['January','February','March','April','May','June','July','August',
-         'September','October','November','December']
-  };
-  var WOCHENTAGE_KURZ = {
-    de: ['Mo','Di','Mi','Do','Fr','Sa','So'],
-    en: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
-  };
-
-  function lang() { return document.documentElement.getAttribute('data-l') || 'de'; }
-  function tx(o) { return o ? (o[lang()] || o.de || o.en || '') : ''; }
-  function esc(s) {
-    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
-    });
-  }
-
-  var gezeigt = new Date();        // welcher Monat im Raster steht
-  var gewaehlt = new Date();       // welcher Tag unten als Schiene steht
-  gezeigt.setHours(0, 0, 0, 0);
-  gewaehlt.setHours(0, 0, 0, 0);
-
-  function gleich(a, b) {
-    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth()
-        && a.getDate() === b.getDate();
-  }
-
-
-  /* Weicht die eingestellte Zone von der Uhr des Geraets ab, sagt die
-     Seite das. Sonst zeigt sie still eine andere Zeit als das Handy
-     daneben, und man haelt die Seite fuer kaputt. */
-  function zeitzonenhinweis() {
-    if (!window.SchuleZeit) return;
-    var ab = window.SchuleZeit.abweichung();
-    var alt = document.getElementById('tzwarn');
-    if (alt) alt.remove();
-    if (!ab) return;
-    var std = Math.abs(ab) / 60;
-    var richtung = ab > 0 ? (lang() === 'en' ? 'ahead of' : 'vor') : (lang() === 'en' ? 'behind' : 'hinter');
-    var name = (window.SchuleZeit.zonen.filter(function (z) {
-      return z.id === window.SchuleZeit.zone();
-    })[0] || {})[lang()] || window.SchuleZeit.zone();
-    var el = document.createElement('div');
-    el.className = 'tzwarn';
-    el.id = 'tzwarn';
-    el.innerHTML = lang() === 'en'
-      ? 'Showing <b>' + name + '</b> — ' + std + ' h ' + richtung + ' this device.'
-      : 'Angezeigt wird <b>' + name + '</b> — ' + std + ' h ' + richtung + ' der Uhr dieses Geräts.';
-    var app = document.querySelector('main');
-    var kopf = app.querySelector('.board, .phead');
-    if (kopf && kopf.nextSibling) app.insertBefore(el, kopf.nextSibling);
-    else app.insertBefore(el, app.firstChild);
-  }
-
-  /* ---------------- Was ist an dem Tag? ---------------- */
-
-  function eintraege(tag) {
-    var iso = S.iso(tag);
-    return {
-      frei: S.freeDay(tag),
-      lektionen: S.lessonsFor(tag),
-      pruefungen: (seed.tests || []).filter(function (t) { return t.date === iso; }),
-      aufgaben: (seed.homework || []).filter(function (h) { return h.due === iso; })
-    };
-  }
-
-  /* ---------------- Monatsraster ---------------- */
-
-  function zeichneMonat() {
-    var jahr = gezeigt.getFullYear(), monat = gezeigt.getMonth();
-    document.getElementById('cal-h').textContent =
-      MONATE[lang()][monat] + ' ' + jahr;
-
-    // Montag als erster Tag der Woche — so steht es in jedem Schweizer Plan.
-    var erster = new Date(jahr, monat, 1);
-    var versatz = (erster.getDay() + 6) % 7;
-    var start = new Date(erster);
-    start.setDate(start.getDate() - versatz);
-
-    var html = WOCHENTAGE_KURZ[lang()].map(function (w) {
-      return '<div class="wd" role="columnheader">' + w + '</div>';
-    }).join('');
-
-    var heute = new Date(); heute.setHours(0, 0, 0, 0);
-
-    for (var i = 0; i < 42; i++) {
-      var d = new Date(start);
-      d.setDate(d.getDate() + i);
-      var e = eintraege(d);
-
-      var cls = ['tag'];
-      if (d.getMonth() !== monat) cls.push('aus');
-      if (e.frei) cls.push('frei');
-      if (gleich(d, heute)) cls.push('heute');
-      if (gleich(d, gewaehlt)) cls.push('gewaehlt');
-
-      // Balken je Fach, Prüfungen als beschriftete Marke.
-      var inhalt = '';
-      if (e.frei) {
-        inhalt = '<span class="ferienwort">' + esc(tx(e.frei.name)) + '</span>';
-      } else {
-        var faecher = [];
-        e.lektionen.forEach(function (l) {
-          if (faecher.indexOf(l.subject) === -1) faecher.push(l.subject);
-        });
-        if (faecher.length) {
-          inhalt += '<span class="balken">' + faecher.map(function (f) {
-            return '<i class="s-' + f + '"></i>';
-          }).join('') + '</span>';
-        }
-        e.pruefungen.forEach(function (t) {
-          inhalt += '<span class="marke s-' + t.subject + '">' +
-                    esc(S.data().subjects[t.subject] ? S.data().subjects[t.subject].code : '?') +
-                    '</span>';
-        });
-        if (e.aufgaben.length) {
-          inhalt += '<span class="ferienwort">' + e.aufgaben.length +
-                    (lang() === 'en' ? ' due' : ' fällig') + '</span>';
-        }
-      }
-
-      var kw = d.getDay() === 1
-        ? '<span class="kw">' + S.isoWeek(d) + '</span>' : '';
-
-      html += '<button class="' + cls.join(' ') + '" role="gridcell" ' +
-              'data-tag="' + S.iso(d) + '" ' +
-              'aria-label="' + esc(S.dayName(d, lang()) + ', ' + S.fmtDate(d, lang())) + '">' +
-                '<span class="kopf"><span class="n">' + d.getDate() + '</span>' + kw + '</span>' +
-                inhalt +
-              '</button>';
-    }
-
-    document.getElementById('cal').innerHTML = html;
-  }
-
-  /* ---------------- Der gewählte Tag als Schiene ---------------- */
-
-  function zeichneTag() {
-    var kopf = document.getElementById('tag-h');
-    kopf.textContent = S.dayName(gewaehlt, lang()) + ', ' + S.fmtDate(gewaehlt, lang());
-
-    var e = eintraege(gewaehlt);
-    var teile = [];
-
-    if (e.frei) {
-      teile.push(R.bare(e.frei, lang()));
-    } else if (e.lektionen.length) {
-      teile.push(R.day(gewaehlt, { lang: lang() }));
-    }
-
-    e.pruefungen.forEach(function (t) { teile.push(R.entry(t, 'test', lang())); });
-    e.aufgaben.forEach(function (h) { teile.push(R.entry(h, 'homework', lang())); });
-
-    if (!teile.length) {
-      teile.push(R.bare({ kind: 'no-school' }, lang()));
-    }
-    document.getElementById('tagrail').innerHTML = teile.join('');
-  }
-
-  function zeichne() { zeichneMonat(); zeichneTag(); zeitzonenhinweis(); }
-
-  /* ---------------- Bedienung ---------------- */
-
-  function bind() {
-    document.getElementById('prev').addEventListener('click', function () {
-      gezeigt = new Date(gezeigt.getFullYear(), gezeigt.getMonth() - 1, 1);
-      zeichneMonat();
-    });
-    document.getElementById('next').addEventListener('click', function () {
-      gezeigt = new Date(gezeigt.getFullYear(), gezeigt.getMonth() + 1, 1);
-      zeichneMonat();
-    });
-    document.getElementById('heute').addEventListener('click', function () {
-      gezeigt = new Date(); gezeigt.setHours(0, 0, 0, 0);
-      gewaehlt = new Date(gezeigt);
-      zeichne();
-    });
-
-    // Ein Zuhörer am Raster statt 42 an den Zellen — die werden neu gebaut.
-    document.getElementById('cal').addEventListener('click', function (ev) {
-      var z = ev.target.closest('button[data-tag]');
-      if (!z) return;
-      gewaehlt = new Date(z.dataset.tag + 'T00:00:00');
-      if (gewaehlt.getMonth() !== gezeigt.getMonth()) {
-        gezeigt = new Date(gewaehlt.getFullYear(), gewaehlt.getMonth(), 1);
-      }
-      zeichne();
-    });
-
-    document.addEventListener('keydown', function (ev) {
-      if (ev.target.tagName === 'INPUT' || ev.altKey || ev.ctrlKey || ev.metaKey) return;
-      var um = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 }[ev.key];
-      if (!um) return;
-      ev.preventDefault();
-      gewaehlt = new Date(gewaehlt.getTime());
-      gewaehlt.setDate(gewaehlt.getDate() + um);
-      if (gewaehlt.getMonth() !== gezeigt.getMonth()) {
-        gezeigt = new Date(gewaehlt.getFullYear(), gewaehlt.getMonth(), 1);
-      }
-      zeichne();
-    });
-  }
-
-  /* ---------------- Start ---------------- */
-
-  document.getElementById('icsurl').textContent =
-    location.origin + '/api/kalender.ics';
-
-  S.load()
-    .then(function () {
-      window.Shell.mount('kalender', S.data().teachers);
-      document.getElementById('phead-meta').innerHTML =
-        '<span>KW ' + S.isoWeek(new Date()) + '</span><span>' +
-        S.fmtDate(new Date(), lang()) + '</span>';
-      return fetch('data/seed.json').then(function (r) { return r.json(); });
-    })
-    .then(function (d) {
-      // Aus seed.json kommen Termine mit "date", Hausaufgaben mit "due".
-      seed = { tests: d.tests || [], homework: d.homework || [] };
-      zeichne();
-      bind();
-      document.addEventListener('langchange', zeichne);
-      document.addEventListener('tzchange', zeichne);
-    })
-    .catch(function (e) {
-      console.error(e);
-      try { window.Shell.mount('kalender', []); } catch (x) {}
-      document.getElementById('cal').innerHTML =
-        '<div class="err" style="grid-column:1/-1">' +
-        '<b><span lang="de">Daten nicht geladen</span><span lang="en">Data did not load</span></b>' +
-        '<span lang="de">Die Seite konnte den Stundenplan nicht lesen. Neu laden hilft meistens.</span>' +
-        '<span lang="en">Could not read the timetable. A reload usually fixes it.</span></div>';
-    });
-})();
-</script>
+<script src="assets/kalender.js"></script>
 </body>
 </html>

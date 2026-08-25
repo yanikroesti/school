@@ -550,6 +550,70 @@ Auswahl, Cursor, Bildlaufleiste und Fokusring gehören zum Entwurf, nicht zum Br
 2 px ABT-Orange mit 2 px Versatz auf allen fokussierbaren Elementen,
 `text-underline-offset: 0.22em` auf allen Links.
 
+## Wochenraster — dieselbe Schiene, um 90 Grad gedreht
+
+Die Monatsansicht ist der Überblick. Das Wochenraster ist die Werkbank: nur hier
+gibt es eine Zeitachse, und nur an einer Zeitachse lässt sich ziehen.
+
+**Die Welt bleibt dieselbe.** Sieben senkrechte Hutschienen, eine je Tag. Jede
+Spalte trägt links ihre Schiene (`border-left: 2px var(--rail-2)`), die Klemmen
+sitzen darauf, an der Stelle ihrer Uhrzeit. Der farbige Fuss wandert von links
+neben die Klemme an ihre linke Kante — dieselbe Funktion, dieselbe Farbe, nur
+gedreht.
+
+**Geometrie.** Eine Minute ist 0.85 px. Die Stundenlinien kommen aus einem
+`repeating-linear-gradient` mit `--stunde-h` (60 × 0.85 = 51 px), von JavaScript
+gesetzt, damit CSS und Rechnung nicht auseinanderlaufen können. Der Ausschnitt
+ist standardmässig 07:00–18:00 und zieht sich auf, sobald etwas davor oder
+danach liegt — ein Termin, den man nicht sieht, ist schlimmer als ein etwas
+höheres Raster.
+
+**Was sich anfassen lässt, und was nicht.**
+
+| | ziehen | verschieben | verlängern |
+|---|---|---|---|
+| Eigener Termin | ✅ | ✅ auch auf einen anderen Tag | ✅ Unterkante |
+| Lektion | ✕ | ✕ | ✕ |
+
+Lektionen sitzen fest, weil ihre Quelle `Stundenplan.md` ist. Wer sie
+verschieben könnte, würde glauben, damit den Stundenplan zu ändern — er ändert
+nur die Anzeige, und beim nächsten Laden wäre alles wie vorher. Eine Bedienung,
+die etwas verspricht, was sie nicht hält, ist schlechter als keine.
+
+**Überschneidungen** teilen sich die Breite über eine gierige Spurzuteilung:
+jeder Termin nimmt die erste Spur, die zu seiner Zeit frei ist.
+
+**Mindesthöhe 20 px.** Eine 15-Minuten-Klemme wäre bei 0.85 px/min nur 12.75 px
+hoch und mit dem Finger nicht mehr zu treffen. Die Höhe erzählt für die
+kürzesten Termine dadurch etwas zu viel — das ist der bessere Fehler. Beim
+Ganztagsband gilt das nicht: dort sagt die Höhe ohnehin nichts über Dauer, also
+gibt es keinen Grund, unter 24 px zu gehen.
+
+### Warum am Handy nicht gezogen wird
+
+Auf Geräten ohne Maus legt ein Tipp 45 Minuten an; gezogen wird nicht. Zum
+Ziehen müsste das Raster das senkrechte Wischen abfangen (`touch-action: none`),
+und dann liesse sich die Seite in diesem Bereich nicht mehr scrollen. Eine
+Bedienung, die das Scrollen kaputtmacht, ist schlechter als eine ohne Ziehen.
+Der Griff zum Verlängern wird auf groben Zeigern gar nicht erst gerendert.
+
+### Farbe als Funktion, auch bei Google
+
+Googles Farbtöpfe sind eine feste Liste von elf. Die Zuordnung hält die
+Klemmenfarben so nah wie möglich: ABT → Tangerine, HTOG → Blueberry,
+ATD → Basil, ABU → Grape, Sport → Tomato.
+
+### Zwei Fehler, die die Prüfung fand
+
+**Die Wochenend-Kürzel standen in `--rail`** — der Schienenfarbe — und kamen auf
+2.44:1. Eine Bauteilfarbe als Schriftfarbe geht fast nie gut aus. Das Wochenende
+trägt jetzt der Grund, nicht die Schrift.
+
+**`.spalte.we` war totes CSS**: die Regel stand da, die Klasse wurde nie gesetzt.
+Beim Beheben des ersten Fehlers fiel auf, dass sie gebraucht wird.
+
+---
+
 ## Do's and Don'ts
 
 ### Do:
