@@ -614,6 +614,105 @@ Beim Beheben des ersten Fehlers fiel auf, dass sie gebraucht wird.
 
 ---
 
+## Bericht für den Lehrbetrieb
+
+`lehrmeister.html` ist kein zweites Dashboard, sondern ein **Bericht**. Andere
+Leserschaft, andere Haltung: wer ihn öffnet, ist nicht Yanik, sondern jemand,
+der in dreissig Sekunden wissen will, ob es läuft, und danach die Zahlen
+dahinter sehen möchte. Kein Countdown, kein Betrieb, keine Bedienung ausser dem
+Nötigen.
+
+Dieselbe Welt, ruhiger eingestellt: derselbe Grund, dieselben Klemmenfarben in
+der Tabelle und an den Prüfungen, dieselben flachen Kanten. Was fehlt, sind
+Schiene und Klemme als tragende Form — ein Bericht ist ein Blatt, keine Werkbank.
+
+### Die Regel, die diese Seite trägt: was fehlt, wird nicht gezeigt
+
+Kein Strich, kein leerer Kasten, kein «noch keine Daten». Eine Kennzahl ohne
+Wert wird nicht gerendert. Eine Tabellenzeile ohne einen einzigen Wert
+verschwindet. Ein Abschnitt ohne Inhalt wird ausgeblendet. Der Verlauf erscheint
+erst ab zwei Semestern — eine Linie durch einen Punkt ist kein Verlauf.
+
+Der Grund ist nicht Kosmetik: ein Bericht mit Lücken sieht nachlässig aus, ein
+kürzerer Bericht nicht. Die Seite wächst mit den Daten, statt von Anfang an
+löchrig zu wirken.
+
+**Ausnahme, und sie ist wichtig:** Sport ohne Note ist keine Lücke, sondern
+**besucht**. Das ist der Fachausdruck aus dem Zeugnis. Eine leere Zelle wäre
+dort schlicht falsch.
+
+### Die Achse beginnt bei 4.0
+
+Nicht bei 1.0, und das ist keine Schönfärberei: 4.0 ist die Grenze zwischen
+genügend und ungenügend, und um sie geht es. Die Linie ist gestrichelt und
+rot — dieselbe Farbe, die im Schema «geschaltet» heisst. Fällt ein Wert
+darunter, zieht sich die Achse selbsttätig nach unten, damit nichts aus dem
+Bild rutscht. Die Beschriftung nennt die Grenze ausdrücklich.
+
+### Ein Knoten je Stelle, nicht je Reihe
+
+Im 2. Semester sind Gesamt und Allgemeinbildung beide 5.00. Zwei Punkte lagen
+dort exakt übereinander: der untere unsichtbar, nicht anklickbar, als Ziel im
+Abstand null. Gezeichnet wird deshalb **ein Knoten je (Semester, Wert)**, und
+die Ablesung nennt alle Reihen, die ihn teilen. Ein geteilter Wert ist genau
+das — eine Stelle, an der zwei Linien zusammenlaufen. Ein Knoten mehrerer
+Reihen trägt keine Reihenfarbe, sondern die neutrale: er gehört keiner allein.
+
+### Auf dem Handy ist das Diagramm ein Bild
+
+Bei 375 px staucht sich das Diagramm auf etwa 43 Prozent. Zwei Noten, die 0.13
+auseinanderliegen — 4.88 und 4.75 —, sind dann sechs Pixel voneinander entfernt.
+Das trifft kein Finger, und grösser geht es nicht, ohne die Achse zu strecken,
+bis sie lügt.
+
+Dort verlieren die Punkte deshalb ihre Anfassbarkeit: kein `tabindex`, keine
+Trefferfläche. Stattdessen trägt das SVG eine Beschriftung, die **jeden Wert
+ausspricht**, und die Zahlen stehen ohnehin in der Tabelle direkt darunter.
+Ein Ziel, das zu klein ist, um getroffen zu werden, ist schlechter als gar
+keines — solange die Information anderswo vollständig dasteht.
+
+---
+
+## Die Kopfleiste auf schmalen Schirmen
+
+Gemessen am 26.08.2026: Marke (136), Verteiler (30), Zeitzone (104), Sprache
+(88), Hell/Dunkel (40), dazu Polster und Lücken — **456 px auf 375 px Schirm.**
+Sie brach in zwei Zeilen um und ass 96 Pixel Höhe.
+
+Ausgeräumt in drei Schritten, in dieser Reihenfolge:
+
+1. **Die Reiter wandern in den Verteiler.** Fünf Seiten nebeneinander sind auf
+   einem Telefon ohnehin eine waagrechte Scrollleiste — untereinander in einer
+   Liste sind sie lesbar und treffbar.
+2. **Die Zeitzone wandert mit.** Sie ist eine Einstellung, die man einmal setzt,
+   und stand oben nur im Weg. Dass sie überhaupt in der Kopfleiste sass, war
+   eine Fehleinschätzung von der Woche davor.
+3. **Das Klassenkürzel entfällt** unter 480 px. Die Klasse steht auf jeder Seite
+   im Text.
+
+Ergebnis: **eine Zeile, 54 px**, 280 von 375 px belegt.
+
+Der Verteiler ist damit auf dem Handy die einzige Navigation. Er trägt deshalb
+drei Gruppen — *Diese Seite*, *Meine Seiten*, *Zeitzone* —, klemmt sich beim
+Öffnen selbst ins Fenster (rein mit CSS nicht zu fassen, weil die Lage des
+Knopfs vom Umbruch abhängt) und scrollt bei Bedarf selbst, statt unten
+abgeschnitten zu werden.
+
+### Woche als Standard — ausser dort, wo sie nicht lesbar ist
+
+Bei 375 px ist eine Wochenspalte **44 px** breit. Darin wird schon «HTOG»
+abgeschnitten, die Uhrzeiten sowieso. Die Wochenansicht bleibt die
+Voreinstellung, aber auf schmalen Schirmen beginnt der Kalender im **Tag** —
+eine Spalte, 306 px, nichts abgeschnitten. Dieselbe Absicht (die Ansicht, in
+der man arbeitet), an den Schirm angepasst. Wählt jemand ausdrücklich anders,
+bleibt das gemerkt.
+
+Wer trotzdem die Woche aufruft, bekommt dort die Uhrzeit in der Klemme nicht
+mehr angezeigt: sie steht links an der Achse, und die Lage der Klemme sagt sie
+ebenfalls. Lieber ein Wert weniger als einer, der abgeschnitten ist.
+
+---
+
 ## Do's and Don'ts
 
 ### Do:
