@@ -267,7 +267,12 @@ code, kbd {
 }
 .tzpick:hover { border-color: var(--rail); }
 @media (pointer: coarse) { .tzpick { padding: 0.45rem 0.5rem; font-size: var(--t-s); } }
-@media (max-width: 480px) { .tzpick { max-width: 6.5rem; } }
+@media (max-width: 480px) {
+  .tzpick { max-width: 6.5rem; }
+  /* Auf schmalen Schirmen zaehlt jeder Millimeter in der Kopfleiste.
+     Die Klasse steht ohnehin auf jeder Seite im Text. */
+  .brand i { display: none; }
+}
 
 /* Hinweis, wenn die gewaehlte Zone von der Geraetezeit abweicht. Ohne
    den wuerde die Seite still eine andere Zeit zeigen als die Uhr daneben. */
@@ -312,6 +317,11 @@ code, kbd {
   min-width: 17rem; max-width: min(21rem, calc(100vw - 1.5rem));
   background: var(--plate); border: 1px solid var(--line-2);
   border-radius: var(--r-s); padding: 0.3rem;
+  /* Auf dem Handy ist das die ganze Navigation — neun Zeilen passen im
+     Querformat nicht mehr aufs Bild. Dann scrollt die Liste selbst,
+     statt unten abgeschnitten zu werden. */
+  max-height: calc(100vh - 5rem); overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .vertliste[hidden] { display: none; }
 .verth {
@@ -320,6 +330,22 @@ code, kbd {
   padding: 0.4rem 0.45rem 0.45rem;
   border-bottom: 1px solid var(--line); margin-bottom: 0.3rem;
 }
+.verth.zweite { margin-top: 0.5rem; }
+
+/* Die Seiten dieser Site brauchen keinen Farbfuss — sie haben keine
+   Fachfarbe. Schmalere Zeile, gleiche Hoehe fuer den Finger. */
+.vertz.klein {
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-height: 40px; padding-top: 0.3rem; padding-bottom: 0.3rem;
+}
+.vertz.klein .vt b { font-weight: 500; }
+.vertz.klein[aria-current="page"] .vt b { font-weight: 700; }
+
+/* Die Zeitzone im Verteiler: eine Zeile, volle Breite, nicht anklickbar
+   als Ganzes — das Auswahlfeld darin macht die Arbeit. */
+.vertz.zeile { display: block; padding: 0.3rem 0.45rem 0.45rem; }
+.vertz.zeile:hover { background: transparent; }
+.vertz.zeile .tzpick { width: 100%; max-width: none; }
 .vertz {
   display: grid; grid-template-columns: 2.7rem minmax(0, 1fr) auto; gap: 0.55rem;
   align-items: center; text-decoration: none; color: inherit;
@@ -754,13 +780,11 @@ a.term:active, button.term:active { background: var(--line); }
   }
   .brand { order: 1; }
   .tools { order: 2; margin-left: auto; }
-  .nav {
-    order: 3; width: 100%; margin-left: 0;
-    overflow-x: auto; overscroll-behavior-x: contain;
-    scrollbar-width: none; -ms-overflow-style: none; padding-bottom: 2px;
-  }
-  .nav::-webkit-scrollbar { display: none; }
-  .nav a { white-space: nowrap; flex: none; }
+  /* Die obere Leiste passte auf dem Handy nicht mehr ins Bild: Marke,
+     fuenf Reiter, Zeitzone, Sprache und Hell/Dunkel auf 375 px. Die
+     Reiter wandern deshalb in den Verteiler — dort stehen sie
+     untereinander, lesbar, und die Leiste bleibt eine Zeile. */
+  .nav { display: none; }
 
   .term { grid-template-columns: var(--foot) minmax(0, 1fr); }
   .term > .strip { width: calc(var(--strip) - 1.05rem); font-size: 0.6875rem; }

@@ -35,7 +35,7 @@
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
   function $(id) { return document.getElementById(id); }
 
-  var ansicht = 'monat';
+  var ansicht = 'woche';        // Woche ist die Voreinstellung — dort wird gearbeitet
   var gezeigt = S.jetzt();          // welcher Monat im Raster steht
   var gewaehlt = S.jetzt();         // welcher Tag unten als Schiene steht
   gezeigt.setHours(0, 0, 0, 0);
@@ -199,17 +199,22 @@
   function kopfzeile() {
     if (ansicht === 'monat') {
       $('cal-h').textContent = MONATE[lang()][gezeigt.getMonth()] + ' ' + gezeigt.getFullYear();
-    } else {
-      var mo = W.montag();
-      var so = new Date(mo); so.setDate(so.getDate() + 6);
-      var gleicherMonat = mo.getMonth() === so.getMonth();
-      $('cal-h').textContent =
-        pad(mo.getDate()) + '.' + (gleicherMonat ? '' : pad(mo.getMonth() + 1) + '.') +
-        ' – ' + pad(so.getDate()) + '.' + pad(so.getMonth() + 1) + '. ' + so.getFullYear();
+      return;
     }
+    var mo = W.montag();
+    if (ansicht === 'tag') {
+      $('cal-h').textContent = S.dayName(mo, lang()) + ', ' + S.fmtDate(mo, lang());
+      return;
+    }
+    var so = new Date(mo); so.setDate(so.getDate() + 6);
+    var gleicherMonat = mo.getMonth() === so.getMonth();
+    $('cal-h').textContent =
+      pad(mo.getDate()) + '.' + (gleicherMonat ? '' : pad(mo.getMonth() + 1) + '.') +
+      ' – ' + pad(so.getDate()) + '.' + pad(so.getMonth() + 1) + '. ' + so.getFullYear();
   }
 
   function setzeAnsicht(neu) {
+    if (['tag', 'woche', 'monat'].indexOf(neu) === -1) neu = 'woche';
     ansicht = neu;
     var monat = neu === 'monat';
     $('cal').hidden = !monat;
@@ -225,7 +230,7 @@
     // man gerade in der Woche angelegt hat, fehlte dort, bis man
     // zufaellig irgendwo hinklickte.
     if (monat) { zeichneMonat(); zeichneTag(); }
-    else W.setzeDatum(gewaehlt);
+    else W.setzeTage(neu === 'tag' ? 1 : 7, gewaehlt);
     kopfzeile();
     try { localStorage.setItem('schule-kal-ansicht', neu); } catch (e) {}
   }
@@ -529,24 +534,24 @@
   /* ---------------- Bedienung ---------------- */
 
   function bind() {
-    $('prev').addEventListener('click', function () {
+    function blaettern(um) {
       if (ansicht === 'monat') {
-        gezeigt = new Date(gezeigt.getFullYear(), gezeigt.getMonth() - 1, 1);
+        gezeigt = new Date(gezeigt.getFullYear(), gezeigt.getMonth() + um, 1);
         zeichneMonat();
-      } else W.weiter(-1);
+      } else {
+        // weiter() springt um so viele Tage, wie gerade gezeigt werden:
+        // im Tag um einen, in der Woche um sieben.
+        W.weiter(um);
+        gewaehlt = new Date(W.montag());
+      }
       kopfzeile();
-    });
-    $('next').addEventListener('click', function () {
-      if (ansicht === 'monat') {
-        gezeigt = new Date(gezeigt.getFullYear(), gezeigt.getMonth() + 1, 1);
-        zeichneMonat();
-      } else W.weiter(1);
-      kopfzeile();
-    });
+    }
+    $('prev').addEventListener('click', function () { blaettern(-1); });
+    $('next').addEventListener('click', function () { blaettern(1); });
     $('heute').addEventListener('click', function () {
       gezeigt = S.jetzt(); gezeigt.setHours(0, 0, 0, 0);
       gewaehlt = new Date(gezeigt);
-      if (ansicht === 'woche') W.setzeDatum(gewaehlt);
+      if (ansicht !== 'monat') W.setzeDatum(gewaehlt);
       zeichne();
     });
 
@@ -606,7 +611,8 @@
       if (ev.key === 'n' || ev.key === 'N') { ev.preventDefault(); oeffne(null, null); return; }
       if (ev.key === 'w' || ev.key === 'W') {
         ev.preventDefault();
-        setzeAnsicht(ansicht === 'monat' ? 'woche' : 'monat');
+        var folge = ['tag', 'woche', 'monat'];
+        setzeAnsicht(folge[(folge.indexOf(ansicht) + 1) % folge.length]);
         return;
       }
       if (ansicht !== 'monat') return;
@@ -646,7 +652,15 @@
 
       var gemerkt = null;
       try { gemerkt = localStorage.getItem('schule-kal-ansicht'); } catch (e) {}
-      setzeAnsicht(gemerkt === 'woche' ? 'woche' : 'monat');
+      // Ohne gemerkte Wahl: die Woche — dort wird gearbeitet. Auf einem
+      // schmalen Schirm aber der Tag.
+      //
+      // Nachgemessen am 26.08.2026: bei 375 px ist eine Wochenspalte
+      // 44 px breit, und darin wird schon "HTOG" abgeschnitten, die
+      // Uhrzeiten sowieso. Dieselbe Absicht — die Ansicht, in der man
+      // arbeitet — heisst auf dem Handy eben Tag. Eine ausdrueckliche
+      // Wahl bleibt immer erhalten.
+      setzeAnsicht(gemerkt || (window.innerWidth < 640 ? 'tag' : 'woche'));
       zeichne();
 
       T.aufHorchen(function () { zeichneGoogle(); if (!kasten.open) zeichne(); });

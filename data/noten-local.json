@@ -1,5 +1,5 @@
 {
-  "_comment": "PRIVAT — steht in .gitignore und wird nie gepusht. Quelle: Semesterzeugnis BZI vom 26.06.2026.",
+  "_comment": "ÖFFENTLICH. Diese Datei liegt im Repo und wird mit der Seite ausgeliefert — Yaniks Entscheidung vom 20.08.2026. Hier stand vorher das Gegenteil ('PRIVAT, wird nie gepusht'); das war seit dem Entscheid falsch. Quelle: Semesterzeugnis BZI vom 26.06.2026.",
   "zeugnis": {
     "1": { "ges": 5.0, "sk": 5.0, "tg": 5.0, "td": 4.5, "sport": null, "sportBesucht": true, "absE": 10, "absU": 0 },
     "2": { "ges": 5.0, "sk": 5.0, "tg": 4.5, "td": 5.0, "sport": 5.5, "sportBesucht": true, "absE": 0, "absU": 0 }

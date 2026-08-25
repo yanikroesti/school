@@ -23,6 +23,14 @@
     { href: 'material.html', key: 'material', de: 'Material',  en: 'Material' }
   ];
 
+  /* Steht bewusst NICHT in der oberen Leiste: die Seite ist fuer den
+     Lehrbetrieb gedacht, nicht fuer den taeglichen Gebrauch. Im
+     Verteiler ist sie zu finden, ohne oben Platz zu kosten. */
+  var EXTRA = [
+    { href: 'lehrmeister.html', key: 'lehrmeister',
+      de: 'Für den Lehrbetrieb', en: 'For the training company' }
+  ];
+
   var LOGOS = [
     { file: 'bzi.svg',           alt: 'BZI — Bildungszentrum Interlaken', href: 'https://bzi.ch',               w: 134, de: 'Bildungszentrum Interlaken', en: 'Interlaken education centre' },
     { file: 'etavis.png',        alt: 'Etavis',                           href: 'https://www.etavis.ch',        w: 115, de: 'Etavis — Lehrbetrieb', en: 'Etavis — training company' },
@@ -62,12 +70,38 @@
     return ziel === location.hostname.replace(/^www\./, '');
   }
 
-  function verteiler() {
+  function verteiler(aktiv) {
+    var b = up();
+    // Auf schmalen Schirmen ist das hier die einzige Navigation — die
+    // obere Leiste wird dort ausgeblendet, weil sie nicht mehr ins Bild
+    // passte. Darum stehen die Seiten dieser Site mit drin, nicht nur
+    // die fremden.
+    var innen = NAV.concat(EXTRA).map(function (n) {
+      var da = n.key === aktiv;
+      return '<a class="vertz klein" role="menuitem" href="' + b + n.href + '"' +
+        (da ? ' aria-current="page"' : '') + '>' +
+        '<span class="vt"><b><span lang="de">' + n.de + '</span>' +
+          '<span lang="en">' + n.en + '</span></b></span>' +
+        (da ? '<span class="ext" aria-hidden="true">●</span>' : '') +
+      '</a>';
+    }).join('');
+
+    var aussen = SATELLITEN.map(function (s) {
+      var da = istHier(s);
+      return '<a class="vertz ' + s.farbe + '" role="menuitem" href="' + s.href + '"' +
+        (da ? ' aria-current="page"' : ' target="_blank" rel="noopener"') + '>' +
+        '<span class="fuss">' + s.kuerzel + '</span>' +
+        '<span class="vt"><b>' + s.titel + '</b>' +
+          '<span lang="de">' + s.de + '</span><span lang="en">' + s.en + '</span></span>' +
+        '<span class="ext" aria-hidden="true">' + (da ? '●' : '↗') + '</span>' +
+      '</a>';
+    }).join('');
+
     return '' +
     '<div class="vert">' +
       '<button class="vertbtn" type="button" id="vertbtn" aria-expanded="false" ' +
         'aria-controls="vertliste" aria-haspopup="true" ' +
-        'data-de-label="Meine Seiten" data-en-label="My sites">' +
+        'data-de-label="Menü und meine Seiten" data-en-label="Menu and my sites">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
         'stroke-linecap="round" aria-hidden="true">' +
         // Eine Schiene, von der drei Leitungen abgehen.
@@ -76,17 +110,20 @@
         '</svg>' +
       '</button>' +
       '<div class="vertliste" id="vertliste" hidden role="menu" aria-labelledby="vertbtn">' +
-        '<div class="verth"><span lang="de">Meine Seiten</span><span lang="en">My sites</span></div>' +
-        SATELLITEN.map(function (s) {
-          var da = istHier(s);
-          return '<a class="vertz ' + s.farbe + '" role="menuitem" href="' + s.href + '"' +
-            (da ? ' aria-current="page"' : ' target="_blank" rel="noopener"') + '>' +
-            '<span class="fuss">' + s.kuerzel + '</span>' +
-            '<span class="vt"><b>' + s.titel + '</b>' +
-              '<span lang="de">' + s.de + '</span><span lang="en">' + s.en + '</span></span>' +
-            '<span class="ext" aria-hidden="true">' + (da ? '●' : '↗') + '</span>' +
-          '</a>';
-        }).join('') +
+        '<div class="verth"><span lang="de">Diese Seite</span><span lang="en">This site</span></div>' +
+        innen +
+        '<div class="verth zweite"><span lang="de">Meine Seiten</span><span lang="en">My sites</span></div>' +
+        aussen +
+        /* Die Zeitzone stand bis zum 26.08.2026 in der Kopfleiste. Dort
+           passte sie auf 375 px nicht mehr: Marke, Verteiler, Zeitzone,
+           Sprache und Hell/Dunkel brauchten 456 px. Sie ist ohnehin eine
+           Einstellung, die man einmal setzt — und steht hier richtiger
+           als dauerhaft oben. */
+        (global.SchuleZeit
+          ? '<div class="verth zweite"><span lang="de">Zeitzone</span>' +
+            '<span lang="en">Time zone</span></div>' +
+            '<div class="vertz zeile">' + global.SchuleZeit.auswahlHTML() + '</div>'
+          : '') +
       '</div>' +
     '</div>';
   }
@@ -109,8 +146,7 @@
         }).join('') +
       '</nav>' +
       '<div class="tools">' +
-        verteiler() +
-        (global.SchuleZeit ? global.SchuleZeit.auswahlHTML() : '') +
+        verteiler(active) +
         '<div class="langswitch" role="group" aria-label="Sprache / Language">' +
           '<button type="button" data-set="de" aria-pressed="true">DE</button>' +
           '<button type="button" data-set="en" aria-pressed="false">EN</button>' +

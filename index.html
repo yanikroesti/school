@@ -105,7 +105,6 @@
     </nav>
     <div class="tools">
       <span id="verthost"></span>
-      <span id="tzhost"></span>
       <div class="langswitch" role="group" aria-label="Sprache / Language">
         <button type="button" data-set="de" aria-pressed="true">DE</button>
         <button type="button" data-set="en" aria-pressed="false">EN</button>
@@ -353,11 +352,8 @@
       '<span lang="en">The page could not read its data. A reload usually fixes it.</span></div>';
   }
 
-  var tzhost = document.getElementById('tzhost');
-  if (tzhost && window.SchuleZeit) tzhost.innerHTML = window.SchuleZeit.auswahlHTML();
-
   var verthost = document.getElementById('verthost');
-  if (verthost && window.Shell) verthost.innerHTML = window.Shell.verteilerHTML();
+  if (verthost && window.Shell) verthost.innerHTML = window.Shell.verteilerHTML('home');
 
   // Frisch eingehaengte Bedienelemente nachziehen: aria-label und Titel
   // stehen sonst auf dem Stand des Markups, das es hier noch gar nicht gab.

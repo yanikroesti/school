@@ -37,7 +37,11 @@
   var VON_STD = 7, BIS_STD = 18; // Standardausschnitt
 
   var wurzel = null;
-  var montag = null;             // Montag der gezeigten Woche
+  var montag = null;             // erster gezeigter Tag
+  /* Wie viele Tage nebeneinander: 7 = Woche, 1 = Tag. Dasselbe Raster,
+     dieselbe Rechnerei — nur schmaler. Eine eigene Tagesansicht zu
+     bauen waere doppelter Code fuer dieselbe Sache. */
+  var TAGE = 7;
   var vonMin = VON_STD * 60, bisMin = BIS_STD * 60;
   var beimOeffnen = null;        // Rueckruf: Termin bearbeiten
   var grob = global.matchMedia && global.matchMedia('(pointer: coarse)').matches;
@@ -69,10 +73,12 @@
     var x = new Date(d); x.setDate(x.getDate() + n); x.setHours(0, 0, 0, 0); return x;
   }
 
-  /** Montag der Woche, in der d liegt. Schweizer Plaene fangen montags an. */
+  /** Der erste gezeigte Tag. In der Woche ist das der Montag — Schweizer
+   *  Plaene fangen montags an; in der Tagesansicht der Tag selbst. */
   function montagVon(d) {
     var x = new Date(d);
     x.setHours(0, 0, 0, 0);
+    if (TAGE === 1) return x;
     x.setDate(x.getDate() - ((x.getDay() + 6) % 7));
     return x;
   }
@@ -105,7 +111,7 @@
 
   function wochendaten() {
     var tage = [];
-    for (var i = 0; i < 7; i++) {
+    for (var i = 0; i < TAGE; i++) {
       var d = tageAb(montag, i);
       var iso = isoTag(d);
       var frei = S.freeDay(d);
@@ -261,6 +267,8 @@
 
     wurzel.innerHTML = kopf + '<div class="wleib">' + feld + '</div>';
     wurzel.style.setProperty('--stunde-h', (60 * PX_PRO_MIN).toFixed(2) + 'px');
+    wurzel.style.setProperty('--spalten', TAGE);
+    wurzel.setAttribute('data-tage', TAGE);
     jetztLinie();
   }
 
@@ -290,9 +298,9 @@
 
     var r0 = spalten[0].getBoundingClientRect();
     var rn = spalten[spalten.length - 1].getBoundingClientRect();
-    var breite = (rn.right - r0.left) / 7;
+    var breite = (rn.right - r0.left) / spalten.length;
     var i = Math.floor((ev.clientX - r0.left) / breite);
-    i = Math.max(0, Math.min(6, i));
+    i = Math.max(0, Math.min(spalten.length - 1, i));
 
     var y = ev.clientY - r0.top;
     var m = vonMin + y / PX_PRO_MIN;
@@ -462,7 +470,13 @@
     zeichne: zeichne,
     montag: function () { return montag; },
     setzeDatum: function (d) { montag = montagVon(d); zeichne(); },
-    weiter: function (n) { montag = tageAb(montag, n * 7); zeichne(); },
+    weiter: function (n) { montag = tageAb(montag, n * TAGE); zeichne(); },
+    tage: function () { return TAGE; },
+    setzeTage: function (n, datum) {
+      TAGE = (n === 1) ? 1 : 7;
+      montag = montagVon(datum || montag || S.jetzt());
+      zeichne();
+    },
     grob: function () { return grob; }
   };
 })(window);

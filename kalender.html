@@ -130,9 +130,11 @@
 /* ---- Wochenraster ----
    Sieben senkrechte Hutschienen. Die Zeit läuft nach unten, jede
    Spalte trägt links ihre Schiene, die Klemmen sitzen darauf.        */
-.woche { --stunde-h: 51px; }
+/* --spalten setzt woche.js: 7 fuer die Woche, 1 fuer den Tag. Dasselbe
+   Raster, dieselben Klemmen — nur breiter. */
+.woche { --stunde-h: 51px; --spalten: 7; }
 .wkopf {
-  display: grid; grid-template-columns: 3.4rem repeat(7, minmax(0, 1fr));
+  display: grid; grid-template-columns: 3.4rem repeat(var(--spalten), minmax(0, 1fr));
   position: sticky; top: 0; z-index: 3; background: var(--ground);
   border-bottom: 1px solid var(--line-2);
 }
@@ -163,9 +165,20 @@
 
 .wleib { position: relative; }
 .wfeld {
-  display: grid; grid-template-columns: 3.4rem repeat(7, minmax(0, 1fr));
+  display: grid; grid-template-columns: 3.4rem repeat(var(--spalten), minmax(0, 1fr));
   position: relative; touch-action: pan-y;
 }
+
+/* Tagesansicht: eine Spalte, also ist Platz fuer den ganzen Wochentag
+   und mehr Text in den Klemmen. */
+.woche[data-tage="1"] .wtag { flex-direction: row; gap: 0.4rem; align-items: baseline; }
+.woche[data-tage="1"] .wtag .wd { font-size: var(--t-xs); }
+.woche[data-tage="1"] .wtag b { font-size: var(--t-m); }
+.woche[data-tage="1"] .ter { padding-left: 10px; }
+.woche[data-tage="1"] .ter b { font-size: var(--t-s); }
+.woche[data-tage="1"] .ter .wz,
+.woche[data-tage="1"] .ter .wl { font-size: var(--t-xs); }
+.woche[data-tage="1"] .ter .wl { display: block; }
 .wzeit { position: relative; }
 .wzeit span {
   position: absolute; right: 0.4rem; transform: translateY(-50%);
@@ -263,9 +276,19 @@
 
 @media (max-width: 720px) {
   .woche { --stunde-h: 44px; }
-  .wkopf, .wfeld { grid-template-columns: 2.5rem repeat(7, minmax(0, 1fr)); }
+  .wkopf, .wfeld { grid-template-columns: 2.5rem repeat(var(--spalten), minmax(0, 1fr)); }
   .ter { padding-left: 6px; }
   .ter .wl { display: none; }
+}
+
+/* Sieben Spalten auf einem Handy sind 44 px breit — dort passt die
+   Uhrzeit nicht mehr in die Klemme und wird abgeschnitten. Sie steht
+   ohnehin links an der Achse, und die Lage der Klemme sagt sie auch.
+   In der Tagesansicht ist Platz, dort bleibt sie stehen. */
+@media (max-width: 560px) {
+  .woche[data-tage="7"] .ter .wz { display: none; }
+  .woche[data-tage="7"] .ter b { font-size: 0.625rem; }
+  .woche[data-tage="7"] .ter { padding-left: 5px; padding-right: 1px; }
 }
 
 /* ---- Bearbeitungskasten ---- */
@@ -459,8 +482,9 @@ dialog.kasten::backdrop { background: rgba(8, 10, 14, 0.55); }
       <button class="tinybtn" id="heute"><span lang="de">Heute</span><span lang="en">Today</span></button>
       <span class="spacer"></span>
       <div class="ansicht" role="group" aria-label="Ansicht / View">
-        <button type="button" data-ansicht="monat" aria-pressed="true"><span lang="de">Monat</span><span lang="en">Month</span></button>
-        <button type="button" data-ansicht="woche" aria-pressed="false"><span lang="de">Woche</span><span lang="en">Week</span></button>
+        <button type="button" data-ansicht="tag" aria-pressed="false"><span lang="de">Tag</span><span lang="en">Day</span></button>
+        <button type="button" data-ansicht="woche" aria-pressed="true"><span lang="de">Woche</span><span lang="en">Week</span></button>
+        <button type="button" data-ansicht="monat" aria-pressed="false"><span lang="de">Monat</span><span lang="en">Month</span></button>
       </div>
       <button class="tinybtn" id="neu">+&nbsp;<span lang="de">Termin</span><span lang="en">Event</span></button>
     </div>

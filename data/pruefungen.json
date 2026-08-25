@@ -1,0 +1,25 @@
+{
+  "_hinweis": "Einzelne Prüfungsergebnisse. Das Semesterzeugnis steht in noten-local.json und ist etwas anderes: dort stehen die Fachnoten am Semesterende, hier die einzelnen Arbeiten, aus denen sie entstehen.",
+  "_bereiche": "ges = Gesellschaft · sk = Sprache und Kommunikation · tg = Technologische Grundlagen · td = Technische Dokumentation · sport = Sport. Dieselben Schlüssel wie im Zeugnis, damit sich beides zusammenrechnen lässt.",
+  "_öffentlich": "Diese Datei liegt im Repo und ist damit öffentlich — dieselbe Entscheidung wie bei den Zeugnisnoten am 20.08.2026.",
+
+  "pruefungen": [
+    {
+      "id": "2026-08-13-abu-krankenkasse",
+      "datum": "2026-08-13",
+      "semester": 3,
+      "fach": "abu",
+      "bereich": "ges",
+      "lehrer": "laedrach",
+      "art": "test",
+      "titel": {
+        "de": "Krankenkasse und Unfallversicherung (Suva)",
+        "en": "Health and accident insurance (Suva)"
+      },
+      "themen": ["Grundleistungen", "Franchise", "Selbstbehalt", "Suva"],
+      "note": 4.9,
+      "punkte": 10.5,
+      "maxPunkte": 14
+    }
+  ]
+}
