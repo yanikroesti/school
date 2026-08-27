@@ -3,6 +3,31 @@
   "base": "https://dump.yanikroesti.ch/artifacts/",
   "pakete": [
     {
+      "id": "aus-psa",
+      "file": "aus_psa_lernpaket.html",
+      "subject": "htog",
+      "teacher": "berisha",
+      "status": "aktiv",
+      "forTest": "htog-aus-2026-08-28",
+      "archiveAfter": "2026-08-28",
+      "title": {
+        "de": "AuS 1 & 2 · PSA · Arbeitsmethoden",
+        "en": "Live working 1 & 2 · PPE · working methods"
+      },
+      "detail": {
+        "de": "Arbeitssicherheit · zum Kurztest vom 28.08. · Schutzstufen-Rechner · 29 Karten",
+        "en": "Workplace safety · for the 28 Aug short test · protection-level tool · 29 cards"
+      },
+      "tabs": [
+        "Theorie",
+        "Schutzstufe",
+        "Begriffe",
+        "Karteikarten",
+        "Quiz",
+        "Lernplan"
+      ]
+    },
+    {
       "id": "krankenkasse-unfall",
       "file": "krankenkasse_unfall_lernpaket.html",
       "subject": "abu",
