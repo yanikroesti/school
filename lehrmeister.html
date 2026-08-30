@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title data-de="Ausbildungsstand — Yanik Rösti" data-en="Training progress — Yanik Rösti">Ausbildungsstand — Yanik Rösti</title>
-<meta name="description" content="Schulischer Ausbildungsstand von Yanik Rösti, Elektroinstallateur EFZ, ELI 25a, BZI Interlaken — für den Lehrbetrieb.">
+<meta name="description" content="Laufender Stand der Berufsfachschule: was ansteht, was offen ist, was zuletzt war. Yanik Rösti, Elektroinstallateur EFZ, ELI 25a, BZI Interlaken.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#e8eaee" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#10131a" media="(prefers-color-scheme: dark)">
@@ -15,43 +15,122 @@
 <link rel="stylesheet" href="assets/core.css">
 <link rel="stylesheet" href="assets/page.css">
 <style>
-/* ---- Bericht für den Lehrbetrieb ----
-   Ruhiger als der Rest der Seite. Dieselbe Welt, aber ohne Countdown
-   und ohne Betrieb: wer das hier liest, will in dreissig Sekunden
-   wissen, ob es läuft — und danach die Zahlen dahinter.
+/* ---- Bericht für den Lehrbetrieb, als Verlauf ----
+   Kein Notenblatt, sondern ein Stand der Dinge: was ansteht, was
+   offen ist, was zuletzt war. Wer das öffnet, will in dreissig
+   Sekunden wissen, ob es läuft und ob von ihm etwas erwartet wird.
 
-   Grundsatz für die ganze Seite: was fehlt, wird nicht gezeigt.
-   Keine Striche, keine leeren Kästen, kein «noch keine Daten».
-   Ein Bericht mit Lücken sieht nachlässig aus; ein kürzerer Bericht
-   nicht.                                                             */
+   Die Zahlen stehen weiter unten. Sie sind der Beleg, nicht die
+   Nachricht.
+
+   Regel für die ganze Seite: was fehlt, wird nicht gezeigt. Keine
+   Striche, keine leeren Kästen. Ein Abschnitt ohne Inhalt
+   verschwindet.                                                     */
 
 .bkopf {
   border-bottom: 1px solid var(--line-2);
-  padding-bottom: 1.1rem; margin-bottom: 1.6rem;
+  padding-bottom: 1.1rem; margin-bottom: 1.4rem;
 }
-.bkopf .zeile {
-  display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap;
-}
+.bkopf .zeile { display: flex; align-items: baseline; gap: 0.7rem; flex-wrap: wrap; }
 .bkopf h1 { font-size: var(--t-2xl); }
-.bkopf .beruf {
-  font-size: var(--t-m); color: var(--ink-2); font-weight: 500;
-}
+.bkopf .beruf { font-size: var(--t-m); color: var(--ink-2); font-weight: 500; }
 .bkopf .stand {
   margin-left: auto; font-family: var(--f-data); font-size: var(--t-xs);
   color: var(--muted); white-space: nowrap;
 }
 .fakten {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
   gap: 0.1rem 1.6rem; margin-top: 0.9rem;
 }
-.fakten div { font-size: var(--t-s); color: var(--ink-2); }
 .fakten dt {
   font-family: var(--f-data); font-size: 0.625rem; color: var(--muted);
   text-transform: uppercase; letter-spacing: 0.06em;
 }
 .fakten dd { margin: 0 0 0.55rem; font-size: var(--t-s); color: var(--ink); }
 
-/* ---- Kennzahlen ---- */
+/* ---- Die Lage in zwei Sätzen ---- */
+.lage {
+  border-left: 3px solid var(--s-abt); padding: 0.1rem 0 0.1rem 0.95rem;
+  margin-bottom: 1.8rem;
+}
+.lage p { font-size: var(--t-m); line-height: 1.55; margin: 0 0 0.4rem; }
+.lage p:last-child { margin-bottom: 0; }
+.lage b { font-weight: 700; }
+
+/* ---- Der Verlauf: eine Schiene, Einträge als Klemmen ---- */
+.feed { position: relative; margin-left: 0.2rem; }
+.feed::before {
+  content: ""; position: absolute; left: 3.9rem; top: 0.4rem; bottom: 0.4rem;
+  width: 2px; background: var(--rail-2);
+}
+.fe {
+  position: relative; display: grid;
+  grid-template-columns: 3.9rem 1.5rem minmax(0, 1fr);
+  gap: 0 0.5rem; padding: 0.5rem 0 0.9rem;
+  align-items: start;
+}
+.fe .wann {
+  font-family: var(--f-data); font-size: var(--t-xs); color: var(--ink-2);
+  text-align: right; padding-top: 0.15rem; font-variant-numeric: tabular-nums;
+  line-height: 1.25;
+}
+.fe .wann b { display: block; font-weight: 600; }
+.fe .wann span { display: block; font-size: 0.625rem; color: var(--muted); }
+/* Der Knoten auf der Schiene, in der Fachfarbe. */
+.fe .knoten {
+  position: relative; width: 11px; height: 11px; margin: 0.35rem 0 0 -0.34rem;
+  border-radius: 50%; background: var(--plate);
+  border: 2.5px solid var(--c, var(--rail)); z-index: 1;
+}
+.fe.offen .knoten { border-style: dashed; }
+.fe .inhalt { min-width: 0; }
+.fe .kopf {
+  display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap;
+  margin-bottom: 0.15rem;
+}
+.fe .tt { font-size: var(--t-b); font-weight: 600; color: var(--ink); }
+.fe .marke {
+  font-family: var(--f-data); font-size: 0.625rem; font-weight: 600;
+  border: 1px solid var(--c, var(--line-2)); color: var(--c, var(--ink-2));
+  border-radius: var(--r-s); padding: 0.05rem 0.32rem; white-space: nowrap;
+}
+.fe .marke.voll {
+  background: var(--c, var(--rail)); color: #fff; border-color: transparent;
+}
+:root[data-theme="dark"] .fe .marke.voll { color: var(--ground); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .fe .marke.voll { color: var(--ground); }
+}
+.fe .det { font-size: var(--t-s); color: var(--ink-2); line-height: 1.5; }
+.fe .quelle {
+  font-family: var(--f-data); font-size: 0.625rem; color: var(--muted);
+  margin-top: 0.25rem; display: block;
+}
+.fe .note {
+  font-family: var(--f-data); font-size: var(--t-l); font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Was noch offen ist — der einzige Teil, bei dem jemand handeln muss. */
+.warten {
+  border: 1px solid var(--warn); border-radius: var(--r-s);
+  background: color-mix(in srgb, var(--warn) 7%, var(--plate));
+  padding: 0.85rem 0.95rem; margin-bottom: 0.6rem;
+}
+.warten .wt {
+  display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap;
+  margin-bottom: 0.3rem;
+}
+.warten .wt b { font-size: var(--t-b); }
+.warten .dauer {
+  font-family: var(--f-data); font-size: var(--t-xs); color: var(--warn-ink);
+  font-weight: 600; margin-left: auto;
+}
+.warten p { font-size: var(--t-s); color: var(--ink-2); margin: 0 0 0.35rem; }
+.warten p:last-child { margin-bottom: 0; }
+.warten .warum { font-size: var(--t-xs); color: var(--muted); }
+
+/* ---- Zahlen, weiter unten ---- */
 .kpi {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
   border-top: 1px solid var(--line-2); border-left: 1px solid var(--line-2);
@@ -62,125 +141,72 @@
   display: flex; flex-direction: column; gap: 0.15rem;
 }
 .kpi .titel {
-  font-size: var(--t-xs); color: var(--muted); font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.625rem;
+  font-size: 0.625rem; color: var(--muted); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
 }
 .kpi .wert {
   font-family: var(--f-data); font-size: var(--t-2xl); font-weight: 600;
   line-height: 1.05; font-variant-numeric: tabular-nums;
   display: flex; align-items: baseline; gap: 0.3rem;
 }
-.kpi .wert .einheit {
-  font-size: var(--t-xs); font-weight: 500; color: var(--muted);
-}
+.kpi .wert .einheit { font-size: var(--t-xs); font-weight: 500; color: var(--muted); }
 .kpi .unten { font-size: var(--t-xs); color: var(--ink-2); }
 .kpi .pfeil { font-family: var(--f-data); font-weight: 600; }
 .kpi .pfeil.hoch { color: var(--live-ink); }
 .kpi .pfeil.runter { color: var(--warn-ink); }
 
-/* Notenfarben. Zwei Werte je Bedeutung, weil Flächenfarben als
-   Schrift auf getöntem Grund durchfallen. */
 .n-gut  { color: var(--live-ink); }
 .n-warn { color: var(--warn-ink); }
 .n-weg  { color: var(--alert); }
 
-/* ---- Verlauf ---- */
-.verlauf { position: relative; }
 .verlauf svg { display: block; width: 100%; height: auto; }
-.vsteuer {
-  display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap;
-  margin-bottom: 0.9rem;
-}
+.vsteuer { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; margin-bottom: 0.9rem; }
 .vsteuer .spacer { flex: 1; }
 .reihe {
   display: inline-flex; align-items: center; gap: 0.35rem;
   border: 1px solid var(--line-2); background: var(--plate);
   border-radius: var(--r-s); padding: 0.35rem 0.6rem; cursor: pointer;
-  font-size: var(--t-xs); font-weight: 600; color: var(--muted);
-  min-height: 32px;
+  font-size: var(--t-xs); font-weight: 600; color: var(--muted); min-height: 32px;
   transition: background 0.12s var(--ease), color 0.12s var(--ease);
 }
 .reihe i { width: 9px; height: 9px; border-radius: 2px; background: var(--c); display: block; }
 .reihe[aria-pressed="true"] { color: var(--ink); background: var(--plate-2); border-color: var(--rail); }
 .reihe[aria-pressed="false"] i { opacity: 0.3; }
-
 .ablesung {
   font-family: var(--f-data); font-size: var(--t-xs); color: var(--ink-2);
-  min-height: 1.4em; margin-top: 0.5rem;
-  font-variant-numeric: tabular-nums;
+  min-height: 1.4em; margin-top: 0.5rem; font-variant-numeric: tabular-nums;
 }
 .ablesung b { color: var(--ink); }
 .punkt { cursor: pointer; }
 .punkt:focus-visible { outline: 2px solid var(--s-abt); outline-offset: 2px; }
 
-/* ---- Tabelle ---- */
 .tab { width: 100%; font-size: var(--t-s); }
-.tab th, .tab td {
-  border-bottom: 1px solid var(--line); padding: 0.5rem 0.6rem; text-align: right;
-}
+.tab th, .tab td { border-bottom: 1px solid var(--line); padding: 0.5rem 0.6rem; text-align: right; }
 .tab th:first-child, .tab td:first-child { text-align: left; }
 .tab thead th {
   font-size: 0.625rem; text-transform: uppercase; letter-spacing: 0.05em;
-  color: var(--muted); border-bottom-color: var(--line-2);
-  font-family: var(--f-data);
+  color: var(--muted); border-bottom-color: var(--line-2); font-family: var(--f-data);
 }
 .tab td.zahl { font-family: var(--f-data); font-variant-numeric: tabular-nums; }
 .tab tr.gruppe td { font-weight: 700; background: var(--plate-2); }
 .tab tr.gruppe td:first-child { border-left: 3px solid var(--c, var(--rail)); }
 .tab tr.unter td:first-child { padding-left: 1.5rem; color: var(--ink-2); }
 
-/* ---- Einzelne Prüfungen ---- */
-.pliste { display: grid; gap: 0.5rem; }
-.pruef {
-  border: 1px solid var(--line-2); border-radius: var(--r-s);
-  background: var(--plate); overflow: hidden;
-}
-.pruef > summary {
-  display: grid; grid-template-columns: 3px 1fr auto; align-items: center;
-  gap: 0 0.8rem; padding: 0; cursor: pointer; list-style: none;
-  min-height: 56px;
-}
-.pruef > summary::-webkit-details-marker { display: none; }
-.pruef > summary:hover { background: var(--plate-2); }
-.pruef .fuss { background: var(--c, var(--rail)); align-self: stretch; }
-.pruef .mitte { padding: 0.6rem 0; min-width: 0; }
-.pruef .mitte b { display: block; font-size: var(--t-b); font-weight: 600; }
-.pruef .mitte span {
-  display: block; font-size: var(--t-xs); color: var(--muted);
-  font-family: var(--f-data);
-}
-.pruef .note {
-  font-family: var(--f-data); font-size: var(--t-xl); font-weight: 600;
-  padding-right: 0.95rem; font-variant-numeric: tabular-nums;
-}
-.pruef .pb {
-  padding: 0.75rem 0.95rem 0.85rem 1.75rem;
-  border-top: 1px solid var(--line); font-size: var(--t-s); color: var(--ink-2);
-}
-.pruef .themen { display: flex; gap: 0.3rem; flex-wrap: wrap; margin-top: 0.5rem; }
-.pruef .themen span {
-  font-size: var(--t-xs); border: 1px solid var(--line-2); border-radius: var(--r-s);
-  padding: 0.1rem 0.4rem; color: var(--ink-2);
-}
-.balkenzeile {
-  display: flex; align-items: center; gap: 0.6rem; margin-top: 0.5rem;
-  font-family: var(--f-data); font-size: var(--t-xs);
-}
-.balken2 {
-  flex: 1; height: 6px; background: var(--line); border-radius: 2px; overflow: hidden;
-}
-.balken2 i { display: block; height: 100%; background: var(--c, var(--rail)); }
-
 .fussnote {
   font-size: var(--t-xs); color: var(--muted); line-height: 1.55;
   border-top: 1px solid var(--line); padding-top: 0.9rem; margin-top: 2.2rem;
 }
 
+@media (max-width: 560px) {
+  .feed::before { left: 3.1rem; }
+  .fe { grid-template-columns: 3.1rem 1.2rem minmax(0, 1fr); }
+  .fe .wann { font-size: 0.625rem; }
+}
+
 @media print {
   .topbar, .foot, .vsteuer, #drucken { display: none !important; }
   body { background: #fff; }
-  .kpi > div, .pruef { background: #fff; }
-  .pruef .pb { display: block !important; }
+  .kpi > div { background: #fff; }
   a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.7em; color: #555; }
 }
 </style>
@@ -195,15 +221,44 @@
         <span class="stand" id="stand"></span>
       </div>
       <p class="beruf" style="margin:.25rem 0 0">
-        <span lang="de">Elektroinstallateur EFZ — schulischer Ausbildungsstand</span>
-        <span lang="en">Electrical installer EFZ — school progress report</span>
+        <span lang="de">Elektroinstallateur EFZ — Stand der Berufsfachschule</span>
+        <span lang="en">Electrical installer EFZ — vocational school status</span>
       </p>
       <dl class="fakten" id="fakten"></dl>
     </header>
 
-    <section class="sect" aria-labelledby="k-h" id="s-kpi">
+    <div class="lage" id="lage"></div>
+
+    <section class="sect" aria-labelledby="w-h" id="s-warten" hidden>
       <div class="sect-h">
-        <h2 id="k-h"><span lang="de">Auf einen Blick</span><span lang="en">At a glance</span></h2>
+        <h2 id="w-h"><span lang="de">Offen — hier wartet etwas</span><span lang="en">Open — waiting on something</span></h2>
+        <span class="spacer"></span>
+      </div>
+      <div id="wartenListe"></div>
+    </section>
+
+    <section class="sect" aria-labelledby="k-h" id="s-kommend" hidden>
+      <div class="sect-h">
+        <h2 id="k-h"><span lang="de">Was ansteht</span><span lang="en">What is coming</span></h2>
+        <span class="spacer"></span>
+      </div>
+      <div class="feed" id="kommendFeed"></div>
+    </section>
+
+    <section class="sect" aria-labelledby="g-h" id="s-geschehen" hidden>
+      <div class="sect-h">
+        <h2 id="g-h"><span lang="de">Zuletzt</span><span lang="en">Recently</span></h2>
+        <span class="spacer"></span>
+        <button class="tinybtn" id="mehr" hidden>
+          <span lang="de">Mehr zeigen</span><span lang="en">Show more</span>
+        </button>
+      </div>
+      <div class="feed" id="geschehenFeed"></div>
+    </section>
+
+    <section class="sect" aria-labelledby="z-h" id="s-zahlen">
+      <div class="sect-h">
+        <h2 id="z-h"><span lang="de">Die Zahlen</span><span lang="en">The numbers</span></h2>
         <span class="spacer"></span>
         <button class="tinybtn" id="drucken">
           <span lang="de">Drucken / PDF</span><span lang="en">Print / PDF</span>
@@ -222,29 +277,19 @@
       <p class="ablesung" id="ablesung"></p>
     </section>
 
-    <section class="sect" aria-labelledby="z-h" id="s-zeugnis" hidden>
+    <section class="sect" aria-labelledby="t-h" id="s-zeugnis" hidden>
       <div class="sect-h">
-        <h2 id="z-h"><span lang="de">Semesterzeugnisse</span><span lang="en">Semester reports</span></h2>
+        <h2 id="t-h"><span lang="de">Semesterzeugnisse</span><span lang="en">Semester reports</span></h2>
         <span class="spacer"></span>
       </div>
       <table class="tab" id="ztab"></table>
-    </section>
-
-    <section class="sect" aria-labelledby="p-h" id="s-pruef" hidden>
-      <div class="sect-h">
-        <h2 id="p-h"></h2>
-        <span class="spacer"></span>
-      </div>
-      <div class="pliste" id="pliste"></div>
     </section>
 
     <p class="fussnote" id="fussnote"></p>
   </div>
 
   <div id="laedt" class="panel" style="margin:2rem 0">
-    <div class="pb">
-      <span lang="de">Daten werden geladen …</span><span lang="en">Loading …</span>
-    </div>
+    <div class="pb"><span lang="de">Daten werden geladen …</span><span lang="en">Loading …</span></div>
   </div>
 </main>
 

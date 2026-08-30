@@ -1,0 +1,131 @@
+{
+  "_hinweis": "Was ansteht, was offen ist und was zuletzt war. Speist den Bericht für den Lehrbetrieb (lehrmeister.html). Noten kommen NICHT hierher — die stehen in pruefungen.json und noten-local.json und werden dort gelesen.",
+  "_quelle": "Gepflegt aus Yaniks Freitagsnotizen unter Career/Apprenticeship/Fächer/<FACH>/<Thema>/notes/. Jede Zeile nennt die Notiz, aus der sie stammt.",
+  "_arten": "test = angekündigte Prüfung · kurztest = wöchentlicher Kurztest · unterricht = behandelter Stoff · termin = sonstiges",
+
+  "erwartet": [
+    {
+      "id": "uek-aufgebot",
+      "titel": {
+        "de": "Aufgebot zum überbetrieblichen Kurs",
+        "en": "Call-up for the inter-company course"
+      },
+      "von": { "de": "Lehrbetrieb", "en": "Training company" },
+      "offenSeit": "2026-08-17",
+      "detail": {
+        "de": "Der überbetriebliche Kurs (ÜK) wird vom Lehrbetrieb aufgeboten. Datum und Kursort sind noch nicht bekannt.",
+        "en": "The inter-company course is scheduled by the training company. Date and location are not yet known."
+      },
+      "warumWichtig": {
+        "de": "Der ÜK 3 ist Voraussetzung dafür, dass ein Lernender überhaupt als «ausgebildet für AuS 1» gilt — ohne ihn sind Arbeiten unter Spannung nicht zulässig.",
+        "en": "Passing the third inter-company course is what qualifies an apprentice for live working level 1."
+      }
+    }
+  ],
+
+  "kommend": [
+    {
+      "datum": "2026-09-04",
+      "art": "test",
+      "fach": "atd",
+      "lehrer": "aeschlimann",
+      "titel": {
+        "de": "Telekommunikation — Systemübersicht und Grundlagen",
+        "en": "Telecoms — system overview and fundamentals"
+      },
+      "detail": {
+        "de": "Kapitel 1 und 2, Seiten 1.1–2.7",
+        "en": "Chapters 1 and 2, pages 1.1–2.7"
+      },
+      "quelle": "Notiz Telekommunikation 28.08.2026"
+    },
+    {
+      "datum": "2026-09-04",
+      "art": "kurztest",
+      "fach": "abt",
+      "lehrer": "waefler",
+      "titel": { "de": "NIN — wöchentlicher Kurztest", "en": "NIN — weekly short test" },
+      "detail": {
+        "de": "Stoff der letzten Lektion: PSA-Stufen, Gefahren der Elektrizität, Wirkung auf den Körper",
+        "en": "Last lesson's material: PPE levels, electrical hazards, effects on the body"
+      },
+      "quelle": "Notiz NIN 28.08.2026 — «Nächstes Mal: Kurztest»"
+    },
+    {
+      "datum": "2026-09-11",
+      "art": "test",
+      "fach": "abt",
+      "lehrer": "waefler",
+      "gross": true,
+      "titel": { "de": "Grosser Test Nr. 1 — NIN", "en": "Major test no. 1 — NIN" },
+      "detail": {
+        "de": "Erster Grosstest im Semester. Stoff bisher: Kapitelaufbau N1–N8, 5+5 Regeln, die drei Arbeitsmethoden, AuS 1 und AuS 2, PSA und Schutzstufen, Gefahren der Elektrizität, Körperimpedanz, ESTI.",
+        "en": "First major test of the semester, covering everything since August."
+      },
+      "quelle": "Notiz NIN 28.08.2026 — «Grosser Test Nr. 1 — 11.09.2026»"
+    }
+  ],
+
+  "geschehen": [
+    {
+      "datum": "2026-08-28",
+      "art": "unterricht",
+      "fach": "abt",
+      "lehrer": "waefler",
+      "titel": { "de": "NIN — Arbeitsmethoden, PSA, Gefahren der Elektrizität", "en": "NIN — working methods, PPE, electrical hazards" },
+      "detail": {
+        "de": "Kurztest 5-5-5 geschrieben und besprochen. Theorie zu Arbeitsmethoden und AuS abgeschlossen, PSA-Stufen, Gefahren der Elektrizität, Wirkung des Stroms auf den Körper (Gruppenarbeit), ESTI.",
+        "en": "Short test written and reviewed. Theory on working methods and live working completed, PPE levels, electrical hazards, effects of current on the body, ESTI."
+      },
+      "quelle": "Notiz NIN 28.08.2026"
+    },
+    {
+      "datum": "2026-08-28",
+      "art": "unterricht",
+      "fach": "abt",
+      "lehrer": "waefler",
+      "titel": { "de": "Werkstoffkunde — thermische, elektrische und chemische Eigenschaften", "en": "Materials science — thermal, electrical and chemical properties" },
+      "detail": {
+        "de": "Aggregatszustände und alle sechs Übergänge, Wärmekapazität und Wärmeausdehnung, Durchschlagsfestigkeit, Magnetismus, Korrosionsbeständigkeit und elektrochemische Spannungsreihe.",
+        "en": "States of matter and all six transitions, heat capacity and expansion, dielectric strength, magnetism, corrosion resistance."
+      },
+      "quelle": "Notiz Werkstoffkunde 28.08.2026"
+    },
+    {
+      "datum": "2026-08-28",
+      "art": "unterricht",
+      "fach": "atd",
+      "lehrer": "aeschlimann",
+      "titel": { "de": "Telekommunikation — DTMF, Schalldruck, Mikrofonarten", "en": "Telecoms — DTMF, sound pressure, microphone types" },
+      "detail": {
+        "de": "Mehrfrequenzwahlverfahren mit vollständiger Kombinationstabelle, Zusammenhang zwischen Schalldruck und zulässiger Einwirkungsdauer, Schallgeschwindigkeit, fünf Mikrofonarten.",
+        "en": "Dual-tone multi-frequency dialling, sound pressure and exposure time, speed of sound, five microphone types."
+      },
+      "quelle": "Notiz Telekommunikation 28.08.2026"
+    },
+    {
+      "datum": "2026-08-28",
+      "art": "unterricht",
+      "fach": "abt",
+      "lehrer": "waefler",
+      "titel": { "de": "Apparatekunde — Kochstellen", "en": "Equipment studies — cooktops" },
+      "detail": {
+        "de": "Guss-Kochplatten (Normal und Blitz), Glaskeramik und Induktion: Leistungen, Durchmesser, Schaltprinzip und Überhitzungsschutz.",
+        "en": "Cast hotplates, ceramic and induction cooktops: power, diameters, switching and overheat protection."
+      },
+      "quelle": "Notiz Apparatekunde 28.08.2026"
+    },
+    {
+      "datum": "2026-08-21",
+      "art": "unterricht",
+      "fach": "abt",
+      "lehrer": "waefler",
+      "titel": { "de": "NIN — Kapitelaufbau N1 bis N8", "en": "NIN — structure, chapters N1 to N8" },
+      "detail": {
+        "de": "Grobstruktur des Nachschlagewerks, Schutzmassnahmen N4, Auswahl der Betriebsmittel N5, dazu die 5+5 lebenswichtigen Regeln und die drei anerkannten Arbeitsmethoden.",
+        "en": "Structure of the reference work, protective measures, equipment selection, the 5+5 vital rules and the three recognised working methods."
+      },
+      "quelle": "Notiz NIN 21.08.2026"
+    }
+  ]
+}

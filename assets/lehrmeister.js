@@ -1,26 +1,31 @@
 /* =========================================================
    Ausbildungsstand — der Bericht für den Lehrbetrieb.
 
-   Zwei Quellen, zwei verschiedene Dinge:
+   Das hier ist kein Notenblatt, sondern ein **Stand der Dinge**:
+   was ansteht, was offen ist, was zuletzt war. Wer die Seite öffnet,
+   will in dreissig Sekunden wissen, ob es läuft — und ob von ihm
+   selbst etwas erwartet wird. Genau dafür steht «Offen» zuoberst:
+   es ist der einzige Abschnitt, bei dem jemand handeln muss.
 
-     data/noten-local.json   Semesterzeugnisse — die offiziellen
-                             Fachnoten am Semesterende.
-     data/pruefungen.json    einzelne Arbeiten im laufenden Semester,
-                             aus denen die nächste Zeugnisnote entsteht.
+   Die Noten kommen danach. Sie sind der Beleg, nicht die Nachricht.
+
+   Vier Quellen:
+
+     data/agenda.json        was ansteht, offen ist, zuletzt war —
+                             gepflegt aus Yaniks Freitagsnotizen
+     data/pruefungen.json    einzelne Arbeiten mit Note
+     data/noten-local.json   die Semesterzeugnisse
+     data/*.json (Schule)    Klasse, Schule, Lehrpersonen, Fachfarben
 
    Durchgehende Regel: **was fehlt, wird nicht gezeigt.** Kein Strich,
    kein leerer Kasten, kein «noch keine Daten». Ein Abschnitt ohne
-   Inhalt verschwindet ganz. Ein kürzerer Bericht liest sich besser als
-   ein löchriger.
+   Inhalt verschwindet ganz.
    ========================================================= */
 (function () {
   'use strict';
 
   var S = window.Schule;
 
-  /* Dieselben Schlüssel und dieselbe Gliederung wie im Zeugnis —
-     wer den Bericht neben das Papier legt, soll dieselben Wörter
-     in derselben Reihenfolge finden. */
   var ROWS = [
     { k: 'ab', gruppe: true, de: 'Allgemeinbildung', en: 'General education',
       c: 'var(--s-abu)', aus: ['ges', 'sk'] },
@@ -39,8 +44,18 @@
     { k: 'bk', de: 'Berufskenntnisse', en: 'Professional knowledge', c: 'var(--s-abt)' }
   ];
 
-  var daten = { zeugnis: {}, pruefungen: [], lehrer: {} };
+  var ARTEN = {
+    test:       { de: 'Prüfung',   en: 'Exam' },
+    kurztest:   { de: 'Kurztest',  en: 'Short test' },
+    note:       { de: 'Note',      en: 'Grade' },
+    unterricht: { de: 'Unterricht', en: 'Lesson' },
+    termin:     { de: 'Termin',    en: 'Event' }
+  };
+
+  var daten = { zeugnis: {}, pruefungen: [], agenda: {} };
   var an = { gesamt: true, ab: true, bk: true };
+  var alleZeigen = false;
+  var ZEIGE = 6;                       // wie viele Einträge zuerst
 
   function lang() { return document.documentElement.getAttribute('data-l') || 'de'; }
   function tx(o) { return o ? (o[lang()] || o.de || o.en || '') : ''; }
@@ -50,11 +65,9 @@
     });
   }
   function $(id) { return document.getElementById(id); }
-  function n1(v) { return v == null ? null : Math.round(v * 10) / 10; }
   function n2(v) { return v == null ? null : Math.round(v * 100) / 100; }
   function fmt(v, k) { return v == null ? '' : v.toFixed(k == null ? 1 : k); }
 
-  /** Notenfarbe. 4.0 ist die Grenze; ab 4.75 rundet ein Zeugnis auf 5. */
   function farbe(g) {
     if (g == null) return '';
     if (g >= 4.75) return 'n-gut';
@@ -63,25 +76,57 @@
     return 'n-weg';
   }
 
-  /* ---------------- Rechnen ---------------- */
+  function fachFarbe(f) { return f ? 'var(--s-' + f + ')' : 'var(--rail)'; }
+
+  function tage(isoA, isoB) {
+    var a = new Date(isoA + 'T00:00:00'), b = new Date(isoB + 'T00:00:00');
+    return Math.round((a - b) / 86400000);
+  }
+
+  function heuteIso() {
+    var d = S.jetzt();
+    return d.getFullYear() + '-' +
+      ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+  }
+
+  /** «in 5 Tagen», «morgen», «heute», «vor 2 Tagen» — als Wort, nicht als Zahl. */
+  function wann(iso) {
+    var d = tage(iso, heuteIso());
+    var en = lang() === 'en';
+    if (d === 0) return en ? 'today' : 'heute';
+    if (d === 1) return en ? 'tomorrow' : 'morgen';
+    if (d === -1) return en ? 'yesterday' : 'gestern';
+    if (d > 1) return en ? 'in ' + d + ' days' : 'in ' + d + ' Tagen';
+    return en ? d * -1 + ' days ago' : 'vor ' + (d * -1) + ' Tagen';
+  }
+
+  function datumKurz(iso) {
+    var d = new Date(iso + 'T00:00:00');
+    return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.';
+  }
+
+  function wochentag(iso) {
+    var d = new Date(iso + 'T00:00:00');
+    var kurz = {
+      de: ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'],
+      en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    };
+    return kurz[lang() === 'en' ? 'en' : 'de'][d.getDay()];
+  }
+
+  /* ---------------- Zeugnis rechnen ---------------- */
 
   function z(sem) { return daten.zeugnis[sem] || {}; }
 
-  /** Welche Semester haben überhaupt Zeugnisnoten? Nur die kommen vor. */
   function semester() {
-    return Object.keys(daten.zeugnis)
-      .map(Number)
-      .filter(function (s) {
-        var d = z(s);
-        return ['ges', 'sk', 'tg', 'td', 'sport'].some(function (k) {
-          return typeof d[k] === 'number';
-        });
-      })
-      .sort(function (a, b) { return a - b; });
+    return Object.keys(daten.zeugnis).map(Number).filter(function (s) {
+      var d = z(s);
+      return ['ges', 'sk', 'tg', 'td', 'sport'].some(function (k) {
+        return typeof d[k] === 'number';
+      });
+    }).sort(function (a, b) { return a - b; });
   }
 
-  /** Mittel über eine Liste von Schlüsseln — fehlende zählen nicht mit,
-   *  statt als Null das Ergebnis zu verfälschen. */
   function mittel(sem, keys) {
     var v = keys.map(function (k) { return z(sem)[k]; })
                 .filter(function (x) { return typeof x === 'number'; });
@@ -98,19 +143,13 @@
   }
 
   function gesamt(sem) { return mittel(sem, ['ges', 'sk', 'tg', 'td', 'sport']); }
-
-  function wert(sem, reihe) {
-    return reihe === 'gesamt' ? gesamt(sem) : bereich(sem, reihe);
-  }
+  function wert(sem, reihe) { return reihe === 'gesamt' ? gesamt(sem) : bereich(sem, reihe); }
 
   /* ---------------- Kopf ---------------- */
 
   function kopf() {
-    var d = S.data();
-    var t = d.timetable;
+    var t = S.data().timetable;
     var sem = semester();
-    var letzte = sem.length ? sem[sem.length - 1] : null;
-
     $('stand').textContent = (lang() === 'en' ? 'As of ' : 'Stand ') +
       S.fmtDate(S.jetzt(), lang());
 
@@ -121,17 +160,200 @@
       { de: 'Lehrjahr', en: 'Year', v: (t.apprenticeshipYear || 2) + '. ' +
         (lang() === 'en' ? 'year' : 'Lehrjahr') + ', ' + (t.semester || 3) + '. ' +
         (lang() === 'en' ? 'semester' : 'Semester') },
-      { de: 'Schuljahr', en: 'School year', v: t.schoolYear || '26/27' }
+      { de: 'Schultage', en: 'School days', v: lang() === 'en' ? 'Mon and Fri' : 'Montag und Freitag' }
     ];
-    if (letzte) {
+    if (sem.length) {
       f.push({ de: 'Letztes Zeugnis', en: 'Last report',
-               v: letzte + '. ' + (lang() === 'en' ? 'semester' : 'Semester') });
+               v: sem[sem.length - 1] + '. ' + (lang() === 'en' ? 'semester' : 'Semester') });
     }
-
     $('fakten').innerHTML = f.map(function (x) {
       return '<div><dt>' + esc(lang() === 'en' ? x.en : x.de) + '</dt>' +
              '<dd>' + esc(x.v) + '</dd></div>';
     }).join('');
+  }
+
+  /* ---------------- Die Lage in zwei, drei Sätzen ----------------
+     Aus den Daten erzeugt, nicht getippt: wenn sich der Schnitt
+     ändert oder eine Prüfung näher rückt, ändert sich der Text mit.  */
+
+  function lage() {
+    var en = lang() === 'en';
+    var sem = semester();
+    var teile = [];
+
+    if (sem.length) {
+      var letzte = sem[sem.length - 1];
+      var vor = sem.length > 1 ? sem[sem.length - 2] : null;
+      var g = gesamt(letzte), gv = vor != null ? gesamt(vor) : null;
+      var richtung = '';
+      if (g != null && gv != null) {
+        var d = n2(g - gv);
+        if (Math.abs(d) < 0.005) richtung = en ? ', unverändert zum Vorsemester' : ', unverändert zum Vorsemester';
+        else if (d > 0) richtung = en ? ', up ' + d.toFixed(2) : ', ' + d.toFixed(2) + ' besser als im Vorsemester';
+        else richtung = en ? ', down ' + Math.abs(d).toFixed(2) : ', ' + Math.abs(d).toFixed(2) + ' tiefer als im Vorsemester';
+      }
+      if (g != null) {
+        teile.push(en
+          ? '<p>Last semester report: overall average <b>' + fmt(g, 2) + '</b>' + richtung + '.</p>'
+          : '<p>Letztes Semesterzeugnis: Gesamtschnitt <b>' + fmt(g, 2) + '</b>' + richtung + '.</p>');
+      }
+    }
+
+    // Die jüngste einzelne Arbeit
+    var p = (daten.pruefungen || []).slice().sort(function (a, b) {
+      return (b.datum || '').localeCompare(a.datum || '');
+    })[0];
+    if (p && p.note != null) {
+      teile.push(en
+        ? '<p>Most recent piece of work: <b>' + esc(tx(p.titel)) + '</b> — grade <b>' +
+          fmt(p.note) + '</b>, ' + wann(p.datum) + '.</p>'
+        : '<p>Jüngste Arbeit: <b>' + esc(tx(p.titel)) + '</b> — Note <b>' +
+          fmt(p.note) + '</b>, ' + wann(p.datum) + '.</p>');
+    }
+
+    // Was als Nächstes kommt
+    var k = kommendeListe()[0];
+    if (k) {
+      var gross = k.gross ? (en ? 'major test' : '<b>Grosstest</b>') : tx(ARTEN[k.art] || {});
+      teile.push(en
+        ? '<p>Next up: ' + gross + ' — <b>' + esc(tx(k.titel)) + '</b>, ' + wann(k.datum) + '.</p>'
+        : '<p>Als Nächstes: ' + gross + ' — <b>' + esc(tx(k.titel)) + '</b>, ' + wann(k.datum) + '.</p>');
+    }
+
+    // Offene Punkte — die kommen zuletzt, weil sie am meisten hängen bleiben
+    var w = (daten.agenda.erwartet || []).filter(function (x) { return x.status !== 'erledigt'; });
+    if (w.length) {
+      teile.push(en
+        ? '<p>' + w.length + ' item' + (w.length > 1 ? 's are' : ' is') +
+          ' still open — see below.</p>'
+        : '<p>' + (w.length === 1 ? 'Ein Punkt ist' : w.length + ' Punkte sind') +
+          ' offen — siehe unten.</p>');
+    }
+
+    $('lage').innerHTML = teile.join('');
+    $('lage').hidden = !teile.length;
+  }
+
+  /* ---------------- Offen ---------------- */
+
+  function warten() {
+    var w = (daten.agenda.erwartet || []).filter(function (x) { return x.status !== 'erledigt'; });
+    if (!w.length) { $('s-warten').hidden = true; return; }
+    $('s-warten').hidden = false;
+
+    $('wartenListe').innerHTML = w.map(function (x) {
+      var d = x.offenSeit ? tage(heuteIso(), x.offenSeit) : null;
+      var dauer = d == null ? '' :
+        (lang() === 'en' ? 'open for ' + d + ' days' : 'seit ' + d + ' Tagen offen');
+      return '<div class="warten">' +
+        '<div class="wt"><b>' + esc(tx(x.titel)) + '</b>' +
+          (x.von ? '<span class="marke">' + esc(tx(x.von)) + '</span>' : '') +
+          (dauer ? '<span class="dauer">' + esc(dauer) + '</span>' : '') +
+        '</div>' +
+        (x.detail ? '<p>' + esc(tx(x.detail)) + '</p>' : '') +
+        (x.warumWichtig ? '<p class="warum">' + esc(tx(x.warumWichtig)) + '</p>' : '') +
+      '</div>';
+    }).join('');
+  }
+
+  /* ---------------- Was ansteht ---------------- */
+
+  function kommendeListe() {
+    var h = heuteIso();
+    return (daten.agenda.kommend || [])
+      .filter(function (x) { return x.datum >= h; })
+      .sort(function (a, b) { return a.datum.localeCompare(b.datum); });
+  }
+
+  function eintrag(x, opt) {
+    opt = opt || {};
+    var D = S.data();
+    var fach = x.fach ? (D.subjects[x.fach] || {}) : {};
+    var lehr = x.lehrer ? D.teacherById[x.lehrer] : null;
+    var marken = [];
+
+    if (x.art) {
+      marken.push('<span class="marke' + (x.gross || x.art === 'note' ? ' voll' : '') + '"' +
+        (x.fach ? ' style="--c:' + fachFarbe(x.fach) + '"' : '') + '>' +
+        esc(tx(ARTEN[x.art] || {}) || x.art) + '</span>');
+    }
+    if (fach.code) {
+      marken.push('<span class="marke" style="--c:' + fachFarbe(x.fach) + '">' +
+        esc(fach.code) + '</span>');
+    }
+    if (lehr) marken.push('<span class="marke">' + esc(lehr.name) + '</span>');
+
+    var rechts = '';
+    if (x.note != null) {
+      rechts = '<span class="note ' + farbe(x.note) + '">' + fmt(x.note) + '</span>';
+      if (typeof x.punkte === 'number' && typeof x.maxPunkte === 'number') {
+        rechts += ' <span class="quelle" style="display:inline">' +
+          x.punkte + '/' + x.maxPunkte + '</span>';
+      }
+    }
+
+    return '<div class="fe' + (opt.offen ? ' offen' : '') + '">' +
+      '<div class="wann"><b>' + datumKurz(x.datum) + '</b>' +
+        '<span>' + wochentag(x.datum) + ' · ' + esc(wann(x.datum)) + '</span></div>' +
+      '<div class="knoten" style="--c:' + fachFarbe(x.fach) + '"></div>' +
+      '<div class="inhalt">' +
+        '<div class="kopf"><span class="tt">' + esc(tx(x.titel)) + '</span>' +
+          marken.join('') + rechts + '</div>' +
+        (x.detail ? '<div class="det">' + esc(tx(x.detail)) + '</div>' : '') +
+        (x.quelle ? '<span class="quelle">' + esc(x.quelle) + '</span>' : '') +
+      '</div>' +
+    '</div>';
+  }
+
+  function kommend() {
+    var k = kommendeListe();
+    if (!k.length) { $('s-kommend').hidden = true; return; }
+    $('s-kommend').hidden = false;
+    $('kommendFeed').innerHTML = k.map(function (x) { return eintrag(x); }).join('');
+  }
+
+  /* ---------------- Was zuletzt war ----------------
+     Noten und Unterricht in einem Strom, neueste zuerst. Die Noten
+     stammen aus pruefungen.json, der Unterricht aus agenda.json —
+     zusammengeführt, damit man beim Lesen nicht springen muss.       */
+
+  function geschehen() {
+    var h = heuteIso();
+    var liste = [];
+
+    (daten.pruefungen || []).forEach(function (p) {
+      liste.push({
+        datum: p.datum, art: 'note', fach: p.fach, lehrer: p.lehrer,
+        titel: p.titel, note: p.note, punkte: p.punkte, maxPunkte: p.maxPunkte,
+        detail: p.themen && p.themen.length
+          ? { de: p.themen.join(' · '), en: p.themen.join(' · ') } : null
+      });
+    });
+
+    (daten.agenda.geschehen || []).forEach(function (e) { liste.push(e); });
+
+    // Angekündigtes, dessen Datum vorbei ist, gehört auch hierher.
+    (daten.agenda.kommend || []).forEach(function (e) {
+      if (e.datum < h) liste.push(e);
+    });
+
+    liste = liste.filter(function (x) { return x.datum; })
+                 .sort(function (a, b) { return b.datum.localeCompare(a.datum); });
+
+    if (!liste.length) { $('s-geschehen').hidden = true; return; }
+    $('s-geschehen').hidden = false;
+
+    var zeigen = alleZeigen ? liste : liste.slice(0, ZEIGE);
+    $('geschehenFeed').innerHTML = zeigen.map(function (x) { return eintrag(x); }).join('');
+
+    var mehr = $('mehr');
+    mehr.hidden = liste.length <= ZEIGE;
+    if (!mehr.hidden) {
+      mehr.innerHTML = alleZeigen
+        ? '<span lang="de">Weniger zeigen</span><span lang="en">Show less</span>'
+        : '<span lang="de">Alle ' + liste.length + ' zeigen</span>' +
+          '<span lang="en">Show all ' + liste.length + '</span>';
+    }
   }
 
   /* ---------------- Kennzahlen ---------------- */
@@ -149,18 +371,16 @@
 
   function kennzahlen() {
     var sem = semester();
-    if (!sem.length) { $('s-kpi').hidden = true; return; }
+    if (!sem.length) { $('s-zahlen').hidden = true; return; }
     var letzte = sem[sem.length - 1];
     var vor = sem.length > 1 ? sem[sem.length - 2] : null;
-
     var karten = [];
 
-    function karte(titel, w, vorher, unten) {
-      if (w == null) return;                       // fehlt: kommt nicht vor
-      karten.push(
-        '<div><span class="titel">' + esc(titel) + '</span>' +
+    function karte(titel, w, vorher) {
+      if (w == null) return;
+      karten.push('<div><span class="titel">' + esc(titel) + '</span>' +
         '<span class="wert ' + farbe(w) + '">' + fmt(w, 2) + '</span>' +
-        '<span class="unten">' + (unten || pfeil(w, vorher)) + '</span></div>');
+        '<span class="unten">' + pfeil(w, vorher) + '</span></div>');
     }
 
     karte(lang() === 'en' ? 'Overall average' : 'Gesamtschnitt',
@@ -170,88 +390,58 @@
     karte(lang() === 'en' ? 'Professional knowledge' : 'Berufskenntnisse',
           bereich(letzte, 'bk'), vor != null ? bereich(vor, 'bk') : null);
 
-    // Absenzen nur, wenn sie überhaupt erfasst sind.
     var hatAbs = sem.some(function (s) {
       return typeof z(s).absU === 'number' || typeof z(s).absE === 'number';
     });
     if (hatAbs) {
       var unent = sem.reduce(function (a, s) { return a + (z(s).absU || 0); }, 0);
       var ent = sem.reduce(function (a, s) { return a + (z(s).absE || 0); }, 0);
-      karten.push(
-        '<div><span class="titel">' +
+      karten.push('<div><span class="titel">' +
         (lang() === 'en' ? 'Unexcused absences' : 'Absenzen unentschuldigt') + '</span>' +
         '<span class="wert ' + (unent === 0 ? 'n-gut' : 'n-weg') + '">' + unent +
         '<span class="einheit">' + (lang() === 'en' ? 'lessons' : 'Lektionen') + '</span></span>' +
         '<span class="unten">' + ent + ' ' +
         (lang() === 'en' ? 'excused' : 'entschuldigt') + '</span></div>');
     }
-
     $('kpi').innerHTML = karten.join('');
   }
 
-  /* ---------------- Verlauf ----------------
-     Die Achse beginnt bei 4.0, nicht bei 1.0. Das ist keine
-     Schönfärberei, sondern die Grenze, um die es geht: 4.0 ist
-     genügend. Fällt ein Wert darunter, zieht sich die Achse
-     automatisch nach unten, damit nichts aus dem Bild rutscht.       */
+  /* ---------------- Verlauf ---------------- */
 
   var W = 800, H = 290, PL = 44, PR = 18, PT = 16, PB = 34;
-
-  /** Ist der Schirm zu schmal fuer antippbare Punkte?
-   *
-   *  Bei 375 px staucht sich das Diagramm auf etwa 43 Prozent. Zwei
-   *  Noten, die 0.13 auseinanderliegen — 4.88 und 4.75 —, sind dann
-   *  sechs Pixel voneinander entfernt. Das trifft niemand mit dem
-   *  Finger, und groesser laesst es sich nicht machen, ohne die Achse
-   *  zu strecken, bis sie luegt.
-   *
-   *  Also ist das Diagramm dort ein Bild: keine Punkte zum Antippen,
-   *  dafuer eine Beschreibung fuer Vorleseprogramme. Verloren geht
-   *  nichts — jede Zahl steht in der Tabelle direkt darunter. */
   function schmal() { return window.innerWidth < 640; }
 
   function verlauf() {
     var sem = semester();
-    if (sem.length < 2) { $('s-verlauf').hidden = true; return; }   // eine Linie ist kein Verlauf
+    if (sem.length < 2) { $('s-verlauf').hidden = true; return; }
     $('s-verlauf').hidden = false;
 
     var alle = [];
     sem.forEach(function (s) {
-      REIHEN.forEach(function (r) {
-        var v = wert(s, r.k);
-        if (v != null) alle.push(v);
-      });
+      REIHEN.forEach(function (r) { var v = wert(s, r.k); if (v != null) alle.push(v); });
     });
     var min = Math.min(4, Math.floor(Math.min.apply(null, alle) * 2) / 2);
     var max = 6;
-
     var x = function (i) { return PL + i * (W - PL - PR) / Math.max(1, sem.length - 1); };
     var y = function (v) { return PT + (max - v) / (max - min) * (H - PT - PB); };
-
     var teile = [];
 
-    // Waagrechte Hilfslinien, halbe Noten
     for (var g = min; g <= max + 0.001; g += 0.5) {
-      var yy = y(g);
-      var vier = Math.abs(g - 4) < 0.001;
+      var yy = y(g), vier = Math.abs(g - 4) < 0.001;
       teile.push('<line x1="' + PL + '" y1="' + yy.toFixed(1) + '" x2="' + (W - PR) +
-        '" y2="' + yy.toFixed(1) + '" stroke="' +
-        (vier ? 'var(--alert)' : 'var(--line)') + '" stroke-width="' + (vier ? 1.5 : 1) + '"' +
-        (vier ? ' stroke-dasharray="5 4"' : '') + '/>');
+        '" y2="' + yy.toFixed(1) + '" stroke="' + (vier ? 'var(--alert)' : 'var(--line)') +
+        '" stroke-width="' + (vier ? 1.5 : 1) + '"' + (vier ? ' stroke-dasharray="5 4"' : '') + '/>');
       teile.push('<text x="' + (PL - 8) + '" y="' + (yy + 4).toFixed(1) +
         '" text-anchor="end" font-family="var(--f-data)" font-size="11" fill="' +
         (vier ? 'var(--alert)' : 'var(--muted)') + '">' + g.toFixed(1) + '</text>');
     }
-
-    // Semesterbeschriftung
     sem.forEach(function (s, i) {
       teile.push('<text x="' + x(i).toFixed(1) + '" y="' + (H - 10) +
         '" text-anchor="middle" font-family="var(--f-data)" font-size="11" ' +
         'fill="var(--ink-2)">' + s + '.</text>');
     });
 
-    /* Erst die Linien, je Reihe in ihrer Farbe. */
-    var knoten = {};                 // "Semester|Wert" -> beteiligte Reihen
+    var knoten = {};
     REIHEN.forEach(function (r) {
       if (!an[r.k]) return;
       var pkt = [];
@@ -260,12 +450,10 @@
         if (v != null) pkt.push({ i: i, s: s, v: v });
       });
       if (!pkt.length) return;
-
       if (pkt.length > 1) {
         teile.push('<polyline fill="none" stroke="' + r.c + '" stroke-width="2" ' +
           'stroke-linejoin="round" stroke-linecap="round" points="' +
-          pkt.map(function (p) { return x(p.i).toFixed(1) + ',' + y(p.v).toFixed(1); }).join(' ') +
-          '"/>');
+          pkt.map(function (p) { return x(p.i).toFixed(1) + ',' + y(p.v).toFixed(1); }).join(' ') + '"/>');
       }
       pkt.forEach(function (p) {
         var schl = p.s + '|' + p.v.toFixed(2);
@@ -274,47 +462,25 @@
       });
     });
 
-    /* Dann die Punkte — einer je Stelle, nicht einer je Reihe.
-     *
-     * Warum: im 2. Semester sind Gesamt und Allgemeinbildung beide 5.00.
-     * Vorher lagen dort zwei Punkte exakt uebereinander: der untere war
-     * unsichtbar und nicht anzuklicken, und als Ziel hatten beide den
-     * Abstand null. Ein gemeinsamer Wert ist aber genau das — eine
-     * Stelle, an der zwei Linien zusammenlaufen. Also ein Knoten, und
-     * die Ablesung nennt beide.
-     *
-     * Der sichtbare Kreis misst 13 px; darunter liegt eine unsichtbare
-     * Flaeche von 24 px, die sich auch mit der Maus leichter trifft. */
+    /* Ein Knoten je Stelle, nicht je Reihe: gleiche Werte lägen sonst
+       exakt übereinander — der untere unsichtbar und nicht anklickbar. */
     Object.keys(knoten).forEach(function (schl) {
       var k = knoten[schl];
       var namen = k.reihen.map(function (r) { return lang() === 'en' ? r.en : r.de; });
-      var beschriftung = namen.join(', ') + ' — ' + k.s + '. Semester: ' + k.v.toFixed(2);
       var cx = x(k.i).toFixed(1), cy = y(k.v).toFixed(1);
-      // Ein Knoten mehrerer Reihen bekommt keine Reihenfarbe, sondern
-      // die neutrale: er gehoert keiner allein.
       var strich = k.reihen.length === 1 ? k.reihen[0].c : 'var(--ink-2)';
-      var ringe =
-        '<circle cx="' + cx + '" cy="' + cy + '" r="5" fill="var(--plate)" ' +
-          'stroke="' + strich + '" stroke-width="2.5" pointer-events="none"/>' +
-        (k.reihen.length > 1
-          ? '<circle cx="' + cx + '" cy="' + cy + '" r="8.5" fill="none" ' +
-            'stroke="' + strich + '" stroke-width="1" opacity="0.45" pointer-events="none"/>'
-          : '');
-
-      if (schmal()) { teile.push(ringe); return; }      // nur Bild, kein Ziel
-
-      teile.push(
-        '<g class="punkt" tabindex="0" role="img" ' +
-          'data-reihe="' + esc(namen.join(' · ')) + '" ' +
-          'data-sem="' + k.s + '" data-wert="' + k.v.toFixed(2) + '">' +
-          '<title>' + esc(beschriftung) + '</title>' +
-          '<circle cx="' + cx + '" cy="' + cy + '" r="12" fill="transparent"/>' +
-          ringe +
-        '</g>');
+      var ringe = '<circle cx="' + cx + '" cy="' + cy + '" r="5" fill="var(--plate)" ' +
+        'stroke="' + strich + '" stroke-width="2.5" pointer-events="none"/>' +
+        (k.reihen.length > 1 ? '<circle cx="' + cx + '" cy="' + cy + '" r="8.5" fill="none" ' +
+          'stroke="' + strich + '" stroke-width="1" opacity="0.45" pointer-events="none"/>' : '');
+      if (schmal()) { teile.push(ringe); return; }
+      teile.push('<g class="punkt" tabindex="0" role="img" ' +
+        'data-reihe="' + esc(namen.join(' · ')) + '" data-sem="' + k.s +
+        '" data-wert="' + k.v.toFixed(2) + '">' +
+        '<title>' + esc(namen.join(', ') + ' — ' + k.s + '. Semester: ' + k.v.toFixed(2)) + '</title>' +
+        '<circle cx="' + cx + '" cy="' + cy + '" r="12" fill="transparent"/>' + ringe + '</g>');
     });
 
-    // Ohne antippbare Punkte muss die Beschriftung die Werte selbst
-    // nennen — sonst haetten Vorleseprogramme dort nur ein leeres Bild.
     var beschreibung = lang() === 'en' ? 'Grade trend by semester' : 'Notenverlauf nach Semester';
     if (schmal()) {
       beschreibung += ': ' + Object.keys(knoten).map(function (s) {
@@ -323,20 +489,11 @@
                ' ' + k.s + '. Semester ' + k.v.toFixed(2);
       }).join('; ');
     }
-
-    $('verlauf').innerHTML =
-      '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" ' +
-      'aria-label="' + esc(beschreibung) + '">' + teile.join('') + '</svg>';
-
+    $('verlauf').innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' +
+      esc(beschreibung) + '">' + teile.join('') + '</svg>';
     ablesungLeeren();
   }
 
-  /** Die Schalterleiste wird einmal gebaut, nicht bei jedem Umschalten.
-   *
-   *  Vorher hing sie in verlauf() und wurde mit jedem Klick neu erzeugt —
-   *  damit verlor der eben gedrueckte Knopf den Fokus, und wer die Seite
-   *  mit der Tastatur bedient, stand nach einem Umschalten wieder am
-   *  Anfang. Jetzt aendert sich nur noch aria-pressed. */
   function steuerung() {
     $('vsteuer').innerHTML = REIHEN.map(function (r) {
       return '<button class="reihe" type="button" data-reihe="' + r.k + '" ' +
@@ -348,8 +505,6 @@
   }
 
   function ablesungLeeren() {
-    // Auf dem Handy gibt es nichts anzuzeigen — dort ist das Diagramm
-    // ein Bild, und die Zahlen stehen in der Tabelle.
     $('ablesung').hidden = schmal();
     $('ablesung').innerHTML = lang() === 'en'
       ? 'Point at a marker for the exact value.'
@@ -369,20 +524,15 @@
 
     var zeilen = ROWS.map(function (r) {
       var werte = sem.map(function (s) { return bereich(s, r.k); });
-      // Eine Zeile, die in keinem Semester einen Wert hat, gibt es nicht.
       if (!werte.some(function (v) { return v != null; })) return '';
-
       var vorhanden = werte.filter(function (v) { return v != null; });
       var m = vorhanden.length
         ? vorhanden.reduce(function (a, b) { return a + b; }, 0) / vorhanden.length : null;
-
       return '<tr class="' + (r.gruppe ? 'gruppe' : 'unter') + '"' +
         (r.c ? ' style="--c:' + r.c + '"' : '') + '>' +
         '<td>' + esc(lang() === 'en' ? r.en : r.de) + '</td>' +
         werte.map(function (v, i) {
-          // Sport ohne Note ist im Zeugnis nicht «nichts», sondern
-          // «besucht» — ein Fachausdruck, keine Luecke. Eine leere
-          // Zelle waere hier schlicht falsch.
+          // Sport ohne Note ist keine Lücke, sondern «besucht».
           if (v == null && r.k === 'sport' && z(sem[i]).sportBesucht) {
             return '<td class="zahl" style="font-family:var(--f-ui);color:var(--ink-2)">' +
                    (lang() === 'en' ? 'attended' : 'besucht') + '</td>';
@@ -392,7 +542,6 @@
         '<td class="zahl ' + farbe(m) + '"><b>' + fmt(m, 2) + '</b></td></tr>';
     }).join('');
 
-    // Gesamtzeile
     var g = sem.map(gesamt);
     var gv = g.filter(function (v) { return v != null; });
     var gm = gv.length ? gv.reduce(function (a, b) { return a + b; }, 0) / gv.length : null;
@@ -404,147 +553,79 @@
     $('ztab').innerHTML = kopfz + '<tbody>' + zeilen + '</tbody>';
   }
 
-  /* ---------------- Einzelne Prüfungen ---------------- */
-
-  function pruefungen() {
-    var p = (daten.pruefungen || []).slice()
-      .sort(function (a, b) { return (b.datum || '').localeCompare(a.datum || ''); });
-    if (!p.length) { $('s-pruef').hidden = true; return; }
-    $('s-pruef').hidden = false;
-
-    var laufend = Math.max.apply(null, p.map(function (x) { return x.semester || 0; }));
-    var d = S.data();
-
-    $('p-h').innerHTML =
-      '<span lang="de">Laufendes Semester (' + laufend + '.)</span>' +
-      '<span lang="en">Current semester (' + laufend + ')</span>';
-
-    $('pliste').innerHTML = p.map(function (x) {
-      var fach = d.subjects[x.fach] || {};
-      var lehr = d.teacherById[x.lehrer];
-      var bereichName = (ROWS.filter(function (r) { return r.k === x.bereich; })[0] || {});
-      var datum = x.datum ? S.fmtDate(new Date(x.datum + 'T00:00:00'), lang()) : '';
-
-      var unten = [];
-      if (bereichName.de) {
-        unten.push('<div>' + (lang() === 'en' ? 'Counts towards' : 'Zählt zu') + ': <b>' +
-          esc(lang() === 'en' ? bereichName.en : bereichName.de) + '</b></div>');
-      }
-      if (lehr) {
-        unten.push('<div>' + (lang() === 'en' ? 'Teacher' : 'Lehrperson') + ': ' +
-          esc(lehr.name) + '</div>');
-      }
-      if (typeof x.punkte === 'number' && typeof x.maxPunkte === 'number' && x.maxPunkte > 0) {
-        var q = Math.max(0, Math.min(1, x.punkte / x.maxPunkte));
-        unten.push('<div class="balkenzeile" style="--c:' + (fach.color ? 'var(--s-' + x.fach + ')' : 'var(--rail)') + '">' +
-          '<span>' + x.punkte + ' / ' + x.maxPunkte + '</span>' +
-          '<span class="balken2"><i style="width:' + (q * 100).toFixed(1) + '%"></i></span>' +
-          '<span>' + Math.round(q * 100) + ' %</span></div>');
-      }
-      if (x.themen && x.themen.length) {
-        unten.push('<div class="themen">' + x.themen.map(function (t) {
-          return '<span>' + esc(t) + '</span>';
-        }).join('') + '</div>');
-      }
-
-      return '<details class="pruef s-' + esc(x.fach) + '">' +
-        '<summary>' +
-          '<span class="fuss"></span>' +
-          '<span class="mitte"><b>' + esc(tx(x.titel)) + '</b>' +
-          '<span>' + esc([datum, fach.code].filter(Boolean).join(' · ')) + '</span></span>' +
-          '<span class="note ' + farbe(x.note) + '">' + fmt(x.note) + '</span>' +
-        '</summary>' +
-        (unten.length ? '<div class="pb">' + unten.join('') + '</div>' : '') +
-      '</details>';
-    }).join('');
-  }
-
-  /* ---------------- Fussnote ---------------- */
-
   function fussnote() {
     $('fussnote').innerHTML = lang() === 'en'
       ? 'Generated automatically from the school data of schule.yanikroesti.ch. ' +
-        'Semester grades come from the official BZI semester reports; individual ' +
-        'test results are entered as they are handed back. Sections without data ' +
-        'are not shown.'
+        'Lessons and upcoming dates come from the notes Yanik writes after every ' +
+        'school Friday; semester grades from the official BZI reports. Sections ' +
+        'without data are not shown.'
       : 'Automatisch erzeugt aus den Schuldaten von schule.yanikroesti.ch. ' +
-        'Die Semesternoten stammen aus den offiziellen Semesterzeugnissen des BZI ' +
-        'Interlaken, die einzelnen Prüfungsergebnisse werden eingetragen, sobald ' +
-        'die Arbeit zurückkommt. Abschnitte ohne Daten werden nicht angezeigt.';
+        'Unterricht und Termine stammen aus den Notizen, die Yanik nach jedem ' +
+        'Schulfreitag schreibt; die Semesternoten aus den offiziellen Zeugnissen ' +
+        'des BZI Interlaken. Abschnitte ohne Daten werden nicht angezeigt.';
   }
 
   /* ---------------- Alles zeichnen ---------------- */
 
   function zeichne() {
-    kopf();
-    kennzahlen();
-    steuerung();
-    verlauf();
-    zeugnis();
-    pruefungen();
-    fussnote();
+    kopf(); lage(); warten(); kommend(); geschehen();
+    kennzahlen(); steuerung(); verlauf(); zeugnis(); fussnote();
   }
 
   function bind() {
-    // Reihen ein- und ausschalten
     $('vsteuer').addEventListener('click', function (e) {
       var b = e.target.closest('button[data-reihe]');
       if (!b) return;
       var k = b.dataset.reihe;
-      // Die letzte eingeschaltete Reihe bleibt an — ein leeres Diagramm
-      // ist keine Ansicht, sondern ein Fehler.
       if (an[k] && Object.keys(an).filter(function (x) { return an[x]; }).length === 1) return;
       an[k] = !an[k];
-      b.setAttribute('aria-pressed', an[k] ? 'true' : 'false');   // Fokus bleibt
+      b.setAttribute('aria-pressed', an[k] ? 'true' : 'false');
       verlauf();
     });
 
-    // Ablesung bei Zeigen und bei Tastaturfokus
     $('verlauf').addEventListener('mouseover', zeige);
     $('verlauf').addEventListener('focusin', zeige);
     $('verlauf').addEventListener('mouseleave', ablesungLeeren);
     $('verlauf').addEventListener('focusout', ablesungLeeren);
-
     function zeige(e) {
       var p = e.target.closest ? e.target.closest('.punkt') : null;
       if (!p) return;
-      $('ablesung').innerHTML =
-        '<b>' + esc(p.dataset.reihe) + '</b> · ' + p.dataset.sem + '. ' +
-        (lang() === 'en' ? 'semester' : 'Semester') + ' · <b>' + esc(p.dataset.wert) + '</b>';
+      $('ablesung').innerHTML = '<b>' + esc(p.dataset.reihe) + '</b> · ' + p.dataset.sem +
+        '. ' + (lang() === 'en' ? 'semester' : 'Semester') + ' · <b>' + esc(p.dataset.wert) + '</b>';
     }
 
+    $('mehr').addEventListener('click', function () { alleZeigen = !alleZeigen; geschehen(); });
     $('drucken').addEventListener('click', function () { window.print(); });
+    document.addEventListener('langchange', zeichne);
 
-    // Wer das Handy dreht, wechselt zwischen schmal und breit — dann
-    // muss das Diagramm entscheiden, ob seine Punkte Ziele sind.
     var war = schmal(), timer = null;
     window.addEventListener('resize', function () {
       clearTimeout(timer);
       timer = setTimeout(function () {
         if (schmal() === war) return;
-        war = schmal();
-        verlauf();
+        war = schmal(); verlauf();
       }, 180);
     });
-
-    document.addEventListener('langchange', zeichne);
   }
 
   /* ---------------- Start ---------------- */
+
+  function hol(pfad) {
+    return fetch(pfad).then(function (r) { return r.ok ? r.json() : {}; })
+                      .catch(function () { return {}; });
+  }
 
   S.load()
     .then(function () {
       window.Shell.mount('lehrmeister', S.data().teachers);
       return Promise.all([
-        fetch('data/noten-local.json').then(function (r) { return r.ok ? r.json() : {}; })
-          .catch(function () { return {}; }),
-        fetch('data/pruefungen.json').then(function (r) { return r.ok ? r.json() : {}; })
-          .catch(function () { return {}; })
+        hol('data/noten-local.json'), hol('data/pruefungen.json'), hol('data/agenda.json')
       ]);
     })
-    .then(function (teile) {
-      daten.zeugnis = (teile[0] && teile[0].zeugnis) || {};
-      daten.pruefungen = (teile[1] && teile[1].pruefungen) || [];
+    .then(function (t) {
+      daten.zeugnis = (t[0] && t[0].zeugnis) || {};
+      daten.pruefungen = (t[1] && t[1].pruefungen) || [];
+      daten.agenda = t[2] || {};
       $('laedt').remove();
       $('inhalt').hidden = false;
       zeichne();
