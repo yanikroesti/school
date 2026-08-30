@@ -713,6 +713,27 @@ ebenfalls. Lieber ein Wert weniger als einer, der abgeschnitten ist.
 
 ---
 
+## Lehrmeisterbericht: Lage vor Zahlen
+
+Die Lehrmeisterseite ist kein zweites Noten-Dashboard. Sie beantwortet zuerst
+«Was läuft gerade, was steht an, worauf wartet jemand?» und zeigt die Zahlen
+danach als Beleg. Deshalb besteht sie aus einem Ereignisstrom und seit
+30.08.2026 aus dem **Fachstand**: vier native `details`-Dossiers entlang einer
+gemeinsamen Schiene.
+
+Geschlossen trägt jede Zeile nur die Fach-Klemme, Lehrperson, aktuelle Einheit
+und den Stand. Offen stehen drei bis vier prüfbare Stichpunkte, ein klarer
+nächster Termin und die Vault-Quelle. Das spart eine Kartenwand, funktioniert
+ohne JavaScript-Sonderlogik und ist auf dem Handy derselbe Ablauf wie auf dem
+Desktop. Die Fachfarbe bleibt eine **Markierung**, nicht die Textfarbe.
+
+Die Daten liegen in `data/agenda.json → fachstand`; die Pflege- und
+Quellenregel steht in `Career/Apprenticeship/Lehrmeisterseite — Daten und Aufbau.md`.
+Ein geplanter Unterricht wird dort mit `geplant` markiert und nie als bereits
+behandelter Stoff ausgegeben.
+
+---
+
 ## Do's and Don'ts
 
 ### Do:

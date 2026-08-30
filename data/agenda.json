@@ -3,6 +3,113 @@
   "_quelle": "Gepflegt aus Yaniks Freitagsnotizen unter Career/Apprenticeship/Fächer/<FACH>/<Thema>/notes/. Jede Zeile nennt die Notiz, aus der sie stammt.",
   "_arten": "test = angekündigte Prüfung · kurztest = wöchentlicher Kurztest · unterricht = behandelter Stoff · termin = sonstiges",
 
+  "fachstand": [
+    {
+      "fach": "abu",
+      "aktualisiert": "2026-08-30",
+      "geplant": "2026-08-31",
+      "lehrer": "laedrach",
+      "aktuell": {
+        "de": "Risiko und Sicherheit — Sozialversicherungen",
+        "en": "Risk and safety — social insurance"
+      },
+      "fokus": {
+        "de": [
+          "Das Schweizer Vorsorgeprinzip: 3-Säulen-Modell",
+          "Sach- und Haftpflichtversicherung wiederholen",
+          "Plakat zu einer Sozialversicherung; Start der Projektarbeit zu einem sozialen Risiko"
+        ],
+        "en": [
+          "The Swiss three-pillar pension model",
+          "Review of property and liability insurance",
+          "Poster about one social insurance; project on a Swiss social risk begins"
+        ]
+      },
+      "naechstes": {
+        "datum": "2026-09-07",
+        "de": "Test Gross- und Kleinschreibung",
+        "en": "Capitalisation test"
+      },
+      "quelle": "ABU-Plan 31.08.2026 · Notiz Sozialversicherungen 31.08.2026"
+    },
+    {
+      "fach": "abt",
+      "aktualisiert": "2026-08-28",
+      "lehrer": "waefler",
+      "aktuell": {
+        "de": "NIN — Arbeitsmethoden, PSA und Gefahren der Elektrizität",
+        "en": "NIN — working methods, PPE and electrical hazards"
+      },
+      "fokus": {
+        "de": [
+          "Drei anerkannte Arbeitsmethoden und AuS",
+          "PSA-Stufen und Schutz gegen Störlichtbogen",
+          "Wirkung des Stroms auf den Körper; ESTI"
+        ],
+        "en": [
+          "Three recognised working methods and live working",
+          "PPE levels and arc-flash protection",
+          "Effects of current on the body; ESTI"
+        ]
+      },
+      "naechstes": {
+        "datum": "2026-09-04",
+        "de": "NIN-Kurztest; Grosstest am 11.09.",
+        "en": "NIN short test; major test on 11 September"
+      },
+      "quelle": "Notiz NIN 28.08.2026"
+    },
+    {
+      "fach": "atd",
+      "aktualisiert": "2026-08-28",
+      "lehrer": "aeschlimann",
+      "aktuell": {
+        "de": "Telekommunikation — Signale, Schall und Mikrofone",
+        "en": "Telecommunications — signals, sound and microphones"
+      },
+      "fokus": {
+        "de": [
+          "DTMF mit vollständiger Kombinationstabelle",
+          "Schalldruck, zulässige Einwirkungsdauer und Schallgeschwindigkeit",
+          "Fünf Mikrofonarten"
+        ],
+        "en": [
+          "DTMF with the complete combination table",
+          "Sound pressure, permitted exposure time and speed of sound",
+          "Five microphone types"
+        ]
+      },
+      "naechstes": {
+        "datum": "2026-09-04",
+        "de": "Test Systemübersicht und Grundlagen, Kapitel 1–2",
+        "en": "Test on system overview and fundamentals, chapters 1–2"
+      },
+      "quelle": "Notiz Telekommunikation 28.08.2026"
+    },
+    {
+      "fach": "htog",
+      "aktualisiert": "2026-08-27",
+      "lehrer": "berisha",
+      "aktuell": {
+        "de": "Arbeitssicherheit — AuS, PSA und Arbeitsmethoden",
+        "en": "Occupational safety — live working, PPE and working methods"
+      },
+      "fokus": {
+        "de": [
+          "Unterschied AuS 1 und AuS 2",
+          "PSA gegen Störlichtbogen und Durchströmung",
+          "Fünf Sicherheitsregeln und Annäherungszone"
+        ],
+        "en": [
+          "Difference between live working levels 1 and 2",
+          "PPE against arc flash and electric shock",
+          "Five safety rules and the proximity zone"
+        ]
+      },
+      "quelle": "Fachnotiz Arbeitssicherheit und Chemie, bestätigt 27.08.2026"
+    }
+  ],
+
   "erwartet": [
     {
       "id": "uek-aufgebot",
@@ -24,6 +131,21 @@
   ],
 
   "kommend": [
+    {
+      "datum": "2026-08-31",
+      "art": "unterricht",
+      "fach": "abu",
+      "lehrer": "laedrach",
+      "titel": {
+        "de": "Sozialversicherungen — 3-Säulen-Prinzip und Projektstart",
+        "en": "Social insurance — three-pillar model and project start"
+      },
+      "detail": {
+        "de": "Wiederholung Sach-/Haftpflicht, Gross- und Kleinschreibung, 3-Säulen-Prinzip, Plakatauftrag und Einführung der Projektarbeit «Ein soziales Risiko in der Schweiz».",
+        "en": "Review of property/liability insurance, capitalisation, the three-pillar model, poster assignment and introduction to the project on a Swiss social risk."
+      },
+      "quelle": "ABU-Plan 31.08.2026 · Notiz Sozialversicherungen 31.08.2026"
+    },
     {
       "datum": "2026-09-04",
       "art": "test",

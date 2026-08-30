@@ -52,6 +52,8 @@
     termin:     { de: 'Termin',    en: 'Event' }
   };
 
+  var FACHCODES = { abu: 'ABU', abt: 'ABT', atd: 'ATD', htog: 'HTOG' };
+
   var daten = { zeugnis: {}, pruefungen: [], agenda: {} };
   var an = { gesamt: true, ab: true, bk: true };
   var alleZeigen = false;
@@ -232,6 +234,60 @@
 
     $('lage').innerHTML = teile.join('');
     $('lage').hidden = !teile.length;
+  }
+
+  /* ---------------- Fachstand ----------------
+     Ein Fachstand ist bewusst etwas anderes als der Stundenplan: Er hält
+     fest, woran gerade gearbeitet wird, was dabei konkret zählt und was
+     als Nächstes kommt. Die Daten liegen in agenda.json, mit einer Quelle
+     aus dem Vault an jeder Zeile. So bleibt dieser Bericht lesbar, ohne
+     Inhalte zu erfinden oder einen leeren Fachkasten zu zeigen. */
+
+  function fachstand() {
+    var liste = (daten.agenda.fachstand || []).filter(function (x) {
+      return x && x.fach && x.aktuell;
+    });
+    if (!liste.length) { $('s-fachstand').hidden = true; return; }
+    $('s-fachstand').hidden = false;
+
+    var h = heuteIso();
+    $('fachstandListe').innerHTML = liste.map(function (x) {
+      var D = S.data();
+      var lehr = x.lehrer ? D.teacherById[x.lehrer] : null;
+      var fokus = (x.fokus && (x.fokus[lang()] || x.fokus.de || x.fokus.en)) || [];
+      var code = FACHCODES[x.fach] || x.fach.toUpperCase();
+      var status;
+
+      if (x.geplant && x.geplant >= h) {
+        status = lang() === 'en' ? 'Planned ' + datumKurz(x.geplant) :
+          'Geplant ' + datumKurz(x.geplant);
+      } else if (x.aktualisiert) {
+        status = lang() === 'en' ? 'Status ' + datumKurz(x.aktualisiert) :
+          'Stand ' + datumKurz(x.aktualisiert);
+      } else status = '';
+
+      var naechstes = '';
+      if (x.naechstes && x.naechstes.datum) {
+        var was = x.naechstes[lang()] || x.naechstes.de || x.naechstes.en || '';
+        naechstes = '<div class="fachkommend"><b>' +
+          (lang() === 'en' ? 'Next:' : 'Als Nächstes:') + '</b><span>' +
+          esc(datumKurz(x.naechstes.datum) + ' · ' + was) + '</span></div>';
+      }
+
+      return '<details class="fach" style="--c:' + fachFarbe(x.fach) + '">' +
+        '<summary>' +
+          '<i class="leiter" aria-hidden="true"></i>' +
+          '<span class="fachkopf"><span class="fachmeta"><span class="fachcode">' + esc(code) +
+          '</span>' + (lehr ? '<span class="fachlehrer">' + esc(lehr.name) + '</span>' : '') +
+          '</span><span class="fachtitel">' + esc(tx(x.aktuell)) + '</span></span>' +
+          '<span class="status">' + esc(status) + '</span><span class="pfeilfach" aria-hidden="true">›</span>' +
+        '</summary>' +
+        '<div class="fachinhalt"><ul>' + fokus.map(function (p) {
+          return '<li>' + esc(p) + '</li>';
+        }).join('') + '</ul>' + naechstes +
+          (x.quelle ? '<div class="fachquelle">' + esc(x.quelle) + '</div>' : '') +
+        '</div></details>';
+    }).join('');
   }
 
   /* ---------------- Offen ---------------- */
@@ -568,7 +624,7 @@
   /* ---------------- Alles zeichnen ---------------- */
 
   function zeichne() {
-    kopf(); lage(); warten(); kommend(); geschehen();
+    kopf(); lage(); fachstand(); warten(); kommend(); geschehen();
     kennzahlen(); steuerung(); verlauf(); zeugnis(); fussnote();
   }
 
