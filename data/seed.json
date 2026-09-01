@@ -1,6 +1,5 @@
 {
-  "_comment": "Startdaten, solange Supabase noch nicht verbunden ist. Sobald der Bot läuft, kommen Prüfungen und Hausaufgaben live aus Supabase und diese Datei wird nur noch für die wiederkehrenden Termine gebraucht.",
-
+  "_comment": "Startdaten fuer Kontrollzentrum, Plan und Kalender. ACHTUNG: dieselben Pruefungen stehen zusaetzlich in agenda.json, das der Bericht fuer den Lehrbetrieb liest — beide pflegen. Siehe 'Ablauf — was wo nachgefuehrt werden muss.md' im Vault.",
   "recurring": [
     {
       "id": "nin-kurztest",
@@ -8,13 +7,19 @@
       "teacher": "waefler",
       "subject": "abt",
       "rrule": "weekly:5",
-      "title": { "de": "NIN-Kurztest", "en": "NIN short test" },
-      "detail": { "de": "5 Fragen · 5 Minuten · alle Kurzteste zusammen = 1 Note",
-                  "en": "5 questions · 5 minutes · all short tests together = 1 grade" },
-      "remindDaysBefore": [1]
+      "title": {
+        "de": "NIN-Kurztest",
+        "en": "NIN short test"
+      },
+      "detail": {
+        "de": "5 Fragen · 5 Minuten · alle Kurzteste zusammen = 1 Note",
+        "en": "5 questions · 5 minutes · all short tests together = 1 grade"
+      },
+      "remindDaysBefore": [
+        1
+      ]
     }
   ],
-
   "tests": [
     {
       "id": "abu-kk-2026-08-17",
@@ -22,13 +27,186 @@
       "teacher": "laedrach",
       "subject": "abu",
       "date": "2026-08-17",
-      "title": { "de": "Test Krankenkasse und Unfallversicherung",
-                 "en": "Test — health and accident insurance" },
-      "detail": { "de": "40 Minuten · 3. Block der Lektion · G03 Risiko und Sicherheit",
-                  "en": "40 minutes · third block of the lesson · G03 Risk and safety" },
+      "title": {
+        "de": "Test Krankenkasse und Unfallversicherung",
+        "en": "Test — health and accident insurance"
+      },
+      "detail": {
+        "de": "40 Minuten · 3. Block der Lektion · G03 Risiko und Sicherheit",
+        "en": "40 minutes · third block of the lesson · G03 Risk and safety"
+      },
       "source": "ABU-Unterrichtsplanung ST02, 17.08.2026 — bestätigt"
+    },
+    {
+      "id": "atd-telekom-2026-09-04",
+      "kind": "test",
+      "teacher": "aeschlimann",
+      "subject": "atd",
+      "date": "2026-09-04",
+      "title": {
+        "de": "Test Telekommunikation",
+        "en": "Telecoms test"
+      },
+      "detail": {
+        "de": "Systemübersicht und Grundlagen · Kapitel 1 und 2, Seiten 1.1–2.7",
+        "en": "System overview and fundamentals · chapters 1 and 2, pages 1.1–2.7"
+      },
+      "source": "Notiz Telekommunikation 28.08.2026"
+    },
+    {
+      "id": "abu-rechtschreibung-2026-09-07",
+      "kind": "test",
+      "teacher": "laedrach",
+      "subject": "abu",
+      "date": "2026-09-07",
+      "title": {
+        "de": "Test Gross- und Kleinschreibung",
+        "en": "Test — German capitalisation"
+      },
+      "detail": {
+        "de": "Handbuch Kompetenzen S. 120 plus die Arbeitsblätter · zählt zu Sprache und Kommunikation",
+        "en": "Handbook p. 120 plus worksheets · counts towards Language and Communication"
+      },
+      "source": "ABU-Unterrichtsplanung 31.08.2026"
+    },
+    {
+      "id": "abt-nin-grosstest-2026-09-11",
+      "kind": "test",
+      "teacher": "waefler",
+      "subject": "abt",
+      "date": "2026-09-11",
+      "title": {
+        "de": "Grosser Test Nr. 1 — NIN",
+        "en": "Major test no. 1 — NIN"
+      },
+      "detail": {
+        "de": "Alles seit August: N1–N8, 5+5 Regeln, drei Arbeitsmethoden, AuS 1 und 2, PSA und Schutzstufen, Gefahren der Elektrizität, ESTI",
+        "en": "Everything since August"
+      },
+      "source": "Notiz NIN 28.08.2026"
+    },
+    {
+      "id": "htog-moser-2026-09-14",
+      "kind": "test",
+      "teacher": "moser",
+      "subject": "htog",
+      "date": "2026-09-14",
+      "title": {
+        "de": "Test Elektrotechnik und Physik",
+        "en": "Test — electrical engineering and physics"
+      },
+      "detail": {
+        "de": "Messbereichserweiterung (Vorwiderstand, Shunt) · Spannungsfehler- und Stromfehlerschaltung · Wärmeenergie und Längenausdehnung · zwei Formeln umstellen · eine Brückenschaltung · der Hebelgesetz-Auftrag zählt 4 Punkte",
+        "en": "Measuring-range extension, error circuits, thermal energy and expansion, formula rearrangement, one bridge circuit"
+      },
+      "source": "Blatt Moser W4 31.8.26"
     }
   ],
-
-  "homework": []
+  "homework": [
+    {
+      "id": "ha-physik-hebel-2026-09-07",
+      "subject": "atd",
+      "teacher": "moser",
+      "due": "2026-09-07",
+      "done": false,
+      "title": {
+        "de": "Physik: Hebelgesetz auf A4 — zählt 4 Punkte",
+        "en": "Physik: Hebelgesetz auf A4 — zählt 4 Punkte"
+      },
+      "detail": {
+        "de": "Zwei Anwendungen suchen, skizzieren, Drehmomente und Kräfte berechnen. Beide auf EINER A4-Seite abgeben. Zählt 4 Punkte beim Test vom 14.09.",
+        "en": "Zwei Anwendungen suchen, skizzieren, Drehmomente und Kräfte berechnen. Beide auf EINER A4-Seite abgeben. Zählt 4 Punkte beim Test vom 14.09."
+      }
+    },
+    {
+      "id": "ha-elektro-2026-09-07",
+      "subject": "htog",
+      "teacher": "moser",
+      "due": "2026-09-07",
+      "done": false,
+      "title": {
+        "de": "Elektrotechnik: 3.11a 1–4 und 3.13a 2, 4",
+        "en": "Elektrotechnik: 3.11a 1–4 und 3.13a 2, 4"
+      },
+      "detail": {
+        "de": "Brückenschaltung und Leistungsmessung. Kontrolle mit Falstad möglich.",
+        "en": "Brückenschaltung und Leistungsmessung. Kontrolle mit Falstad möglich."
+      }
+    },
+    {
+      "id": "ha-td-relais-2026-09-07",
+      "subject": "atd",
+      "teacher": "moser",
+      "due": "2026-09-07",
+      "done": false,
+      "title": {
+        "de": "Technische Dokumentation: Seiten 43–50",
+        "en": "Technische Dokumentation: Seiten 43–50"
+      },
+      "detail": {
+        "de": "Schwachstromanlagen — wie ein Relais funktioniert und wie man es im Schema zeichnet.",
+        "en": "Schwachstromanlagen — wie ein Relais funktioniert und wie man es im Schema zeichnet."
+      }
+    },
+    {
+      "id": "ha-math-2026-09-07",
+      "subject": "htog",
+      "teacher": "moser",
+      "due": "2026-09-07",
+      "done": false,
+      "title": {
+        "de": "Mathematik: Aufgaben 126, 130, 133, 138, 139",
+        "en": "Mathematik: Aufgaben 126, 130, 133, 138, 139"
+      },
+      "detail": {
+        "de": "",
+        "en": ""
+      }
+    },
+    {
+      "id": "ha-formeln-2026-09-07",
+      "subject": "htog",
+      "teacher": "moser",
+      "due": "2026-09-07",
+      "done": false,
+      "title": {
+        "de": "HTOG 3.7: zwölf Aufgaben aus 170–178",
+        "en": "HTOG 3.7: zwölf Aufgaben aus 170–178"
+      },
+      "detail": {
+        "de": "Umstellen schwieriger Formeln. Kommt am 14.09. in die Prüfung.",
+        "en": "Umstellen schwieriger Formeln. Kommt am 14.09. in die Prüfung."
+      }
+    },
+    {
+      "id": "ha-lernjournal-2026-09-07",
+      "subject": "htog",
+      "teacher": "moser",
+      "due": "2026-09-07",
+      "done": false,
+      "title": {
+        "de": "Lernjournal: Austausch Deutschland abklären",
+        "en": "Lernjournal: Austausch Deutschland abklären"
+      },
+      "detail": {
+        "de": "Movebzi — mit Eltern und Betrieb besprechen.",
+        "en": "Movebzi — mit Eltern und Betrieb besprechen."
+      }
+    },
+    {
+      "id": "ha-abu-lernen-2026-09-07",
+      "subject": "abu",
+      "teacher": "laedrach",
+      "due": "2026-09-07",
+      "done": false,
+      "title": {
+        "de": "Für den ABU-Test lernen: Gross- und Kleinschreibung",
+        "en": "Für den ABU-Test lernen: Gross- und Kleinschreibung"
+      },
+      "detail": {
+        "de": "Handbuch Kompetenzen S. 120 plus die Arbeitsblätter.",
+        "en": "Handbuch Kompetenzen S. 120 plus die Arbeitsblätter."
+      }
+    }
+  ]
 }
