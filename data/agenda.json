@@ -2,7 +2,6 @@
   "_hinweis": "Was ansteht, was offen ist und was zuletzt war. Speist den Bericht für den Lehrbetrieb (lehrmeister.html). Noten kommen NICHT hierher — die stehen in pruefungen.json und noten-local.json und werden dort gelesen.",
   "_quelle": "Gepflegt aus Yaniks Freitagsnotizen unter Career/Apprenticeship/Fächer/<FACH>/<Thema>/notes/. Jede Zeile nennt die Notiz, aus der sie stammt.",
   "_arten": "test = angekündigte Prüfung · kurztest = wöchentlicher Kurztest · unterricht = behandelter Stoff · termin = sonstiges",
-
   "fachstand": [
     {
       "fach": "abu",
@@ -109,7 +108,6 @@
       "quelle": "Fachnotiz Arbeitssicherheit und Chemie, bestätigt 27.08.2026"
     }
   ],
-
   "erwartet": [
     {
       "id": "uek-aufgebot",
@@ -117,7 +115,10 @@
         "de": "Aufgebot zum überbetrieblichen Kurs",
         "en": "Call-up for the inter-company course"
       },
-      "von": { "de": "Lehrbetrieb", "en": "Training company" },
+      "von": {
+        "de": "Lehrbetrieb",
+        "en": "Training company"
+      },
       "offenSeit": "2026-08-17",
       "detail": {
         "de": "Der überbetriebliche Kurs (ÜK) wird vom Lehrbetrieb aufgeboten. Datum und Kursort sind noch nicht bekannt.",
@@ -129,23 +130,7 @@
       }
     }
   ],
-
   "kommend": [
-    {
-      "datum": "2026-08-31",
-      "art": "unterricht",
-      "fach": "abu",
-      "lehrer": "laedrach",
-      "titel": {
-        "de": "Sozialversicherungen — 3-Säulen-Prinzip und Projektstart",
-        "en": "Social insurance — three-pillar model and project start"
-      },
-      "detail": {
-        "de": "Wiederholung Sach-/Haftpflicht, Gross- und Kleinschreibung, 3-Säulen-Prinzip, Plakatauftrag und Einführung der Projektarbeit «Ein soziales Risiko in der Schweiz».",
-        "en": "Review of property/liability insurance, capitalisation, the three-pillar model, poster assignment and introduction to the project on a Swiss social risk."
-      },
-      "quelle": "ABU-Plan 31.08.2026 · Notiz Sozialversicherungen 31.08.2026"
-    },
     {
       "datum": "2026-09-04",
       "art": "test",
@@ -166,7 +151,10 @@
       "art": "kurztest",
       "fach": "abt",
       "lehrer": "waefler",
-      "titel": { "de": "NIN — wöchentlicher Kurztest", "en": "NIN — weekly short test" },
+      "titel": {
+        "de": "NIN — wöchentlicher Kurztest",
+        "en": "NIN — weekly short test"
+      },
       "detail": {
         "de": "Stoff der letzten Lektion: PSA-Stufen, Gefahren der Elektrizität, Wirkung auf den Körper",
         "en": "Last lesson's material: PPE levels, electrical hazards, effects on the body"
@@ -174,27 +162,123 @@
       "quelle": "Notiz NIN 28.08.2026 — «Nächstes Mal: Kurztest»"
     },
     {
+      "datum": "2026-09-07",
+      "art": "test",
+      "fach": "abu",
+      "lehrer": "laedrach",
+      "titel": {
+        "de": "ABU — Gross- und Kleinschreibung",
+        "en": "General education — German capitalisation"
+      },
+      "detail": {
+        "de": "Theorie im Handbuch Kompetenzen S. 120 plus die Arbeitsblätter aus der Lektion. Zählt im Zeugnis zu Sprache und Kommunikation.",
+        "en": "Handbook p. 120 plus the worksheets. Counts towards Language and Communication."
+      },
+      "quelle": "ABU-Unterrichtsplanung 31.08.2026"
+    },
+    {
       "datum": "2026-09-11",
       "art": "test",
       "fach": "abt",
       "lehrer": "waefler",
       "gross": true,
-      "titel": { "de": "Grosser Test Nr. 1 — NIN", "en": "Major test no. 1 — NIN" },
+      "titel": {
+        "de": "Grosser Test Nr. 1 — NIN",
+        "en": "Major test no. 1 — NIN"
+      },
       "detail": {
         "de": "Erster Grosstest im Semester. Stoff bisher: Kapitelaufbau N1–N8, 5+5 Regeln, die drei Arbeitsmethoden, AuS 1 und AuS 2, PSA und Schutzstufen, Gefahren der Elektrizität, Körperimpedanz, ESTI.",
         "en": "First major test of the semester, covering everything since August."
       },
       "quelle": "Notiz NIN 28.08.2026 — «Grosser Test Nr. 1 — 11.09.2026»"
+    },
+    {
+      "datum": "2026-09-14",
+      "art": "test",
+      "fach": "htog",
+      "lehrer": "moser",
+      "gross": true,
+      "titel": {
+        "de": "Elektrotechnik und Physik — Test bei Moser",
+        "en": "Electrical engineering and physics — test"
+      },
+      "detail": {
+        "de": "Messbereichserweiterung mit Vorwiderstand und Shunt · Spannungsfehler- und Stromfehlerschaltung · Wärmeenergie und Längenausdehnung · zwei schwierige Formeln umstellen · eine Brückenschaltung berechnen. Der Physik-Arbeitsauftrag zum Hebelgesetz zählt hier 4 Punkte.",
+        "en": "Measuring-range extension, voltage/current error circuits, thermal energy and expansion, formula rearrangement, one bridge circuit. The lever-law assignment counts 4 points here."
+      },
+      "quelle": "Blatt Moser W4 31.8.26"
     }
   ],
-
   "geschehen": [
+    {
+      "datum": "2026-08-31",
+      "art": "unterricht",
+      "fach": "abu",
+      "lehrer": "laedrach",
+      "titel": {
+        "de": "ABU — Sozialversicherungen, 3-Säulen-Prinzip und Projektstart",
+        "en": "General education — social insurance, three-pillar system, project start"
+      },
+      "detail": {
+        "de": "Gross- und Kleinschreibung (HbKo S. 120) mit Arbeitsblättern · Repetition Sach- und Haftpflichtversicherung · 3-Säulen-Modell der Vorsorge, Filmbeitrag «Vorsorgen» · Theorie Plakatgestaltung, Zuteilung einer Sozialversicherung · Einführung Projektarbeit «Ein soziales Risiko in der Schweiz».",
+        "en": "Capitalisation rules, insurance revision, the three-pillar pension system, poster design, and the start of the social-risk project."
+      },
+      "quelle": "ABU-Unterrichtsplanung 31.08.2026"
+    },
+    {
+      "datum": "2026-08-31",
+      "art": "unterricht",
+      "fach": "atd",
+      "lehrer": "moser",
+      "titel": {
+        "de": "Physik — Drehmoment und Hebelgesetz",
+        "en": "Physics — torque and the law of the lever"
+      },
+      "detail": {
+        "de": "Versuche mit der PhET-Simulation «Balancing Act» samt Quiz. Benoteter Arbeitsauftrag: zwei eigene Anwendungen skizzieren und berechnen, auf A4 — zählt 4 Punkte beim Test vom 14.09.",
+        "en": "PhET Balancing Act experiments and quiz. Graded assignment worth 4 points in the 14 Sept test."
+      },
+      "quelle": "Blatt Moser W4 31.8.26"
+    },
+    {
+      "datum": "2026-08-31",
+      "art": "unterricht",
+      "fach": "atd",
+      "lehrer": "moser",
+      "titel": {
+        "de": "Technische Dokumentation — Relais in Schwachstromanlagen",
+        "en": "Technical documentation — relays in low-voltage systems"
+      },
+      "detail": {
+        "de": "Wie ein Relais funktioniert und wie es im Schema gezeichnet wird. Auftrag: Seiten 43–50 bearbeiten.",
+        "en": "How a relay works and how it is drawn in a schematic. Pages 43–50 to work through."
+      },
+      "quelle": "Blatt Moser W4 31.8.26"
+    },
+    {
+      "datum": "2026-08-31",
+      "art": "unterricht",
+      "fach": "htog",
+      "lehrer": "moser",
+      "titel": {
+        "de": "Elektrotechnik — Brückenschaltung und Leistungsmessung",
+        "en": "Electrical engineering — bridge circuit and power measurement"
+      },
+      "detail": {
+        "de": "Wheatstone-Brücke, Leistungsmessung 3.15–3.17 mit Experiment. In Zweierteams Spannungsfehler- gegen Stromfehlerschaltung, Kontrolle mit Falstad. Dazu Umstellen schwieriger Formeln (3.7).",
+        "en": "Wheatstone bridge, power measurement with experiment, voltage vs. current error circuits in pairs, checked in Falstad."
+      },
+      "quelle": "Blatt Moser W4 31.8.26"
+    },
     {
       "datum": "2026-08-28",
       "art": "unterricht",
       "fach": "abt",
       "lehrer": "waefler",
-      "titel": { "de": "NIN — Arbeitsmethoden, PSA, Gefahren der Elektrizität", "en": "NIN — working methods, PPE, electrical hazards" },
+      "titel": {
+        "de": "NIN — Arbeitsmethoden, PSA, Gefahren der Elektrizität",
+        "en": "NIN — working methods, PPE, electrical hazards"
+      },
       "detail": {
         "de": "Kurztest 5-5-5 geschrieben und besprochen. Theorie zu Arbeitsmethoden und AuS abgeschlossen, PSA-Stufen, Gefahren der Elektrizität, Wirkung des Stroms auf den Körper (Gruppenarbeit), ESTI.",
         "en": "Short test written and reviewed. Theory on working methods and live working completed, PPE levels, electrical hazards, effects of current on the body, ESTI."
@@ -206,7 +290,10 @@
       "art": "unterricht",
       "fach": "abt",
       "lehrer": "waefler",
-      "titel": { "de": "Werkstoffkunde — thermische, elektrische und chemische Eigenschaften", "en": "Materials science — thermal, electrical and chemical properties" },
+      "titel": {
+        "de": "Werkstoffkunde — thermische, elektrische und chemische Eigenschaften",
+        "en": "Materials science — thermal, electrical and chemical properties"
+      },
       "detail": {
         "de": "Aggregatszustände und alle sechs Übergänge, Wärmekapazität und Wärmeausdehnung, Durchschlagsfestigkeit, Magnetismus, Korrosionsbeständigkeit und elektrochemische Spannungsreihe.",
         "en": "States of matter and all six transitions, heat capacity and expansion, dielectric strength, magnetism, corrosion resistance."
@@ -218,7 +305,10 @@
       "art": "unterricht",
       "fach": "atd",
       "lehrer": "aeschlimann",
-      "titel": { "de": "Telekommunikation — DTMF, Schalldruck, Mikrofonarten", "en": "Telecoms — DTMF, sound pressure, microphone types" },
+      "titel": {
+        "de": "Telekommunikation — DTMF, Schalldruck, Mikrofonarten",
+        "en": "Telecoms — DTMF, sound pressure, microphone types"
+      },
       "detail": {
         "de": "Mehrfrequenzwahlverfahren mit vollständiger Kombinationstabelle, Zusammenhang zwischen Schalldruck und zulässiger Einwirkungsdauer, Schallgeschwindigkeit, fünf Mikrofonarten.",
         "en": "Dual-tone multi-frequency dialling, sound pressure and exposure time, speed of sound, five microphone types."
@@ -230,7 +320,10 @@
       "art": "unterricht",
       "fach": "abt",
       "lehrer": "waefler",
-      "titel": { "de": "Apparatekunde — Kochstellen", "en": "Equipment studies — cooktops" },
+      "titel": {
+        "de": "Apparatekunde — Kochstellen",
+        "en": "Equipment studies — cooktops"
+      },
       "detail": {
         "de": "Guss-Kochplatten (Normal und Blitz), Glaskeramik und Induktion: Leistungen, Durchmesser, Schaltprinzip und Überhitzungsschutz.",
         "en": "Cast hotplates, ceramic and induction cooktops: power, diameters, switching and overheat protection."
@@ -242,7 +335,10 @@
       "art": "unterricht",
       "fach": "abt",
       "lehrer": "waefler",
-      "titel": { "de": "NIN — Kapitelaufbau N1 bis N8", "en": "NIN — structure, chapters N1 to N8" },
+      "titel": {
+        "de": "NIN — Kapitelaufbau N1 bis N8",
+        "en": "NIN — structure, chapters N1 to N8"
+      },
       "detail": {
         "de": "Grobstruktur des Nachschlagewerks, Schutzmassnahmen N4, Auswahl der Betriebsmittel N5, dazu die 5+5 lebenswichtigen Regeln und die drei anerkannten Arbeitsmethoden.",
         "en": "Structure of the reference work, protective measures, equipment selection, the 5+5 vital rules and the three recognised working methods."
