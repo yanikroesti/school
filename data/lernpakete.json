@@ -52,6 +52,30 @@
       ]
     },
     {
+      "id": "rechtschreibung",
+      "file": "rechtschreibung_lernpaket.html",
+      "subject": "abu",
+      "teacher": "laedrach",
+      "status": "aktiv",
+      "forTest": "abu-rechtschreibung-2026-09-07",
+      "archiveAfter": "2026-09-07",
+      "title": {
+        "de": "Gross- und Kleinschreibung",
+        "en": "Capitalisation rules"
+      },
+      "detail": {
+        "de": "Handbuch Kompetenzen S. 120 · Übungsdossier · zum Test vom 07.09.",
+        "en": "Handbuch Kompetenzen p.120 · Übungsdossier · for the 7 Sep test"
+      },
+      "tabs": [
+        "Theorie",
+        "Begriffe",
+        "Karteikarten",
+        "Quiz",
+        "Lernplan"
+      ]
+    },
+    {
       "id": "krankenkasse-unfall",
       "file": "krankenkasse_unfall_lernpaket.html",
       "subject": "abu",
