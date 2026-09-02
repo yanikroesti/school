@@ -70,18 +70,18 @@
       "source": "ABU-Unterrichtsplanung 31.08.2026"
     },
     {
-      "id": "htog-nin-grosstest-2026-09-11",
+      "id": "abt-nin-grosstest-2026-09-11",
       "kind": "test",
-      "teacher": "berisha",
-      "subject": "htog",
+      "teacher": "waefler",
+      "subject": "abt",
       "date": "2026-09-11",
       "title": {
         "de": "Grosser Test Nr. 1 — NIN",
         "en": "Major test no. 1 — NIN"
       },
       "detail": {
-        "de": "Alles seit August: N1–N8, 5+5 Regeln, drei Arbeitsmethoden, AuS 1 und 2, PSA und Schutzstufen, Gefahren der Elektrizität, Wirkung des Stroms auf den Körper, Körperimpedanz, ESTI",
-        "en": "Everything since August: NIN structure, the 5+5 rules, the three working methods, live working levels 1 and 2, PPE levels, electrical hazards, effects of current on the body, body impedance, ESTI"
+        "de": "Alles seit August: N1–N8, 5+5 Regeln, drei Arbeitsmethoden, AuS 1 und 2, PSA und Schutzstufen, Gefahren der Elektrizität, Wirkung des Stroms auf den Körper, Körperimpedanz, ESTI · OFFEN: Berisha hat den Test auf seinem Blatt angekündigt, die Note läuft laut Stundenplan.md aber unter ABT bei Wäfler. Hier unter ABT geführt — bitte bei Wäfler oder Berisha nachfragen.",
+        "en": "Everything since August: NIN structure, the 5+5 rules, the three working methods, live working levels 1 and 2, PPE levels, electrical hazards, effects of current on the body, body impedance, ESTI · OPEN: Berisha announced this test on his sheet, but per Stundenplan.md the grade counts under ABT with Wäfler. Filed under ABT here — worth asking."
       },
       "source": "Unterrichtsblatt NIN vom 04.09.2026 (Berisha, Zimmer 2.12/2.16) · erstmals angekündigt in der Notiz NIN 28.08.2026"
     },
@@ -225,8 +225,8 @@
     },
     {
       "id": "ha-nin-repetieren-2026-09-11",
-      "subject": "htog",
-      "teacher": "berisha",
+      "subject": "abt",
+      "teacher": "waefler",
       "due": "2026-09-11",
       "done": false,
       "title": {

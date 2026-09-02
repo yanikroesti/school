@@ -187,16 +187,16 @@
     {
       "datum": "2026-09-11",
       "art": "test",
-      "fach": "htog",
-      "lehrer": "berisha",
+      "fach": "abt",
+      "lehrer": "waefler",
       "gross": true,
       "titel": {
         "de": "Grosser Test Nr. 1 — NIN",
         "en": "Major test no. 1 — NIN"
       },
       "detail": {
-        "de": "Erster Grosstest im Semester. Stoff bisher: Kapitelaufbau N1–N8, 5+5 Regeln, die drei Arbeitsmethoden, AuS 1 und AuS 2, PSA und Schutzstufen, Gefahren der Elektrizität, Wirkung des Stroms auf den Körper, Körperimpedanz, ESTI.",
-        "en": "First major test of the semester: NIN structure N1–N8, the 5+5 rules, the three working methods, live working levels 1 and 2, PPE and protection levels, electrical hazards, effects of current on the body, body impedance, ESTI."
+        "de": "Erster Grosstest im Semester. Stoff bisher: Kapitelaufbau N1–N8, 5+5 Regeln, die drei Arbeitsmethoden, AuS 1 und AuS 2, PSA und Schutzstufen, Gefahren der Elektrizität, Wirkung des Stroms auf den Körper, Körperimpedanz, ESTI. · OFFEN: Berisha hat den Test auf seinem Blatt angekündigt, die Note läuft laut Stundenplan.md aber unter ABT bei Wäfler. Hier unter ABT geführt — bitte bei Wäfler oder Berisha nachfragen.",
+        "en": "First major test of the semester: NIN structure N1–N8, the 5+5 rules, the three working methods, live working levels 1 and 2, PPE and protection levels, electrical hazards, effects of current on the body, body impedance, ESTI. · OPEN: Berisha announced this test on his sheet, but per Stundenplan.md the grade counts under ABT with Wäfler. Filed under ABT here — worth asking."
       },
       "quelle": "Unterrichtsblatt NIN vom 04.09.2026 (Berisha, ELI 25a/b, Zimmer 2.12/2.16) — «Am 11.09.2026 grosser Test Nr. 1» · erstmals angekündigt in der Notiz NIN 28.08.2026"
     },
