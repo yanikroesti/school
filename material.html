@@ -18,6 +18,14 @@
   border: 1px solid var(--line); padding: .12rem .4rem; border-radius: var(--r-s); color: var(--ink-2); }
 .count { font-family: var(--f-data); font-size: var(--t-xs); color: var(--muted); margin-left: auto; }
 .topic .thead { justify-content: flex-start; }
+/* Die Reiter eines Lernpakets: dieselbe Pille wie .wk in page.css, nur
+   in eine umbrechende Reihe gelegt. Reine Anordnung, keine zweite Optik. */
+.tabs { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.topic > .ph .lp-state { margin-left: auto; }
+/* Die Gruppen im Lernpaket-Abschnitt tragen ihren Abstand selbst
+   (.wkgroup aus page.css) — die letzte braucht ihn nicht mehr. */
+#lp > .err { margin-bottom: 1.6rem; }
+#lp .wkgroup:last-child { margin-bottom: 0; }
 </style>
 </head>
 <body>
@@ -68,16 +76,28 @@
     <div class="topics" id="mat"></div>
   </section>
 
+  <section class="sect" aria-labelledby="lp-h">
+    <div class="sect-h">
+      <h2 id="lp-h"><span lang="de">Lernpakete</span><span lang="en">Study packs</span></h2>
+      <span class="count" id="lp-n"></span><span class="spacer"></span>
+    </div>
+    <div id="lp"></div>
+  </section>
+
   <section class="sect">
     <div class="panel openbox">
       <div class="ph"><span lang="de">Warum nicht direkt hier</span><span lang="en">Why not served here</span></div>
       <div class="pb"><p>
         <span lang="de">Das Material sind Word-, PowerPoint- und PDF-Dateien der Schule — darunter
-          sämtliche Lösungen. Die gehören nicht auf eine öffentliche Seite. Wenn du einzelne
-          Sachen online brauchst, leg sie in <code>material/</code> im Repo ab, dann verlinke ich sie hier.</span>
+          sämtliche Lösungen. Die gehören nicht auf eine öffentliche Seite. Online steht deshalb nur,
+          was oben unter Lernpakete verlinkt ist: selbst geschriebene Zusammenfassungen auf
+          <code>dump.yanikroesti.ch</code>, ohne Schulunterlagen darin. Soll noch etwas dazukommen,
+          leg es in <code>material/</code> im Repo ab, dann verlinke ich es hier.</span>
         <span lang="en">The material consists of the school's Word, PowerPoint and PDF files, including
-          all the solutions. Those do not belong on a public page. If you need individual items online,
-          drop them into <code>material/</code> in the repo and I will link them here.</span>
+          all the solutions. Those do not belong on a public page. So the only things online are the ones
+          linked under Study packs above: self-written summaries on <code>dump.yanikroesti.ch</code>,
+          with no school documents inside them. If something else should join them, drop it into
+          <code>material/</code> in the repo and I will link it here.</span>
       </p></div>
     </div>
   </section>
@@ -90,12 +110,18 @@
 <script src="assets/app.js"></script>
 <script src="assets/rail.js"></script>
 <script src="assets/shell.js"></script>
+<script src="assets/lernpakete.js"></script>
 <script>
 (function () {
   'use strict';
   var S = window.Schule;
   function lang() { return document.documentElement.getAttribute('data-l') || 'de'; }
-  function tx(o) { return o[lang()] || o.de; }
+  function tx(o) { return o ? (o[lang()] || o.de || o.en || '') : ''; }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
 
   var M = [
     { s: 'abt', path: 'Fächer/ABT/', n: 3,
@@ -116,38 +142,170 @@
       items: ['Unihockey/', 'Disk-Golf/', 'Jonglieren/', 'Schneesporttag/'] }
   ];
 
-  function render() {
-    var D = S.data();
-    document.getElementById('mat').innerHTML = M.map(function (m, i) {
-      return '<article class="panel topic">' +
-        '<div class="ph">' +
-          '<span class="mark s-' + m.s + '">' + D.subjects[m.s].code + '</span>' +
-          '<span class="t">' + tx(m.t) + '</span>' +
-          '<span class="count" style="margin-left:auto">' + m.n +
-            (lang() === 'en' ? ' files' : ' Dateien') + '</span>' +
-        '</div>' +
-        '<div class="pb">' +
-          '<p><code>' + m.path + '</code></p>' +
-          '<ul class="bul">' + m.items.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' +
-        '</div>' +
-      '</article>';
-    }).join('');
+  /* ---------- Lernpakete ----------
+     Die Pakete liegen auf dump.yanikroesti.ch; data/lernpakete.json haelt
+     nur die Verweise, und assets/lernpakete.js kennt die Regel, nach der
+     ein Paket nach seinem Pruefungsdatum von selbst ins Archiv rutscht.
+     Beides wird hier wiederverwendet — anders ist nur die Darstellung:
+     auf dieser Seite ist ein Lernpaket ein Themenblock wie ein Fachordner
+     eine Zeile weiter oben, keine Klemme auf der Schiene.               */
+
+  // Spiegelt die Beschriftung aus assets/lernpakete.js. Das Modul haelt
+  // sie privat; sie hier noch einmal zu schreiben ist billiger, als das
+  // Modul fuer diese eine Seite umzubauen.
+  var LABEL = {
+    aktiv:   { de: 'aktiv',   en: 'active' },
+    archiv:  { de: 'Archiv',  en: 'archive' },
+    geplant: { de: 'geplant', en: 'planned' }
+  };
+
+  /* Kein Lernpaket, sondern ein Blatt zum Ausdrucken — deshalb steht es
+     hier als Literal und nicht in data/lernpakete.json: jene Datei
+     beschreibt Pakete mit Reitern und Pruefungsdatum, und sie wird
+     gerade von einem anderen Lauf geschrieben. Die Zeile wandert dorthin,
+     sobald es ein richtiges Paket zum Hebelgesetz gibt. */
+  var DRUCK = [
+    { s: 'atd',
+      href: 'https://dump.yanikroesti.ch/artifacts/hebelgesetz_a4.html',
+      t: { de: 'Arbeitsauftrag Hebelgesetz — A4-Entwurf',
+           en: 'Lever-law assignment — A4 draft' },
+      d: { de: 'zum Ausdrucken · Abgabe 07.09. · benotet, 4 Punkte am Test vom 14.09.',
+           en: 'to print · due 7 Sep · graded, 4 points on the 14 Sep test' } }
+  ];
+
+  var LPD = null;   // { base, pakete } aus lernpakete.json, oder false
+
+  // Ohne Fachdaten gibt es keine Kuerzel-Tabelle. Dann steht eben das
+  // Kuerzel selbst da — die Farbe kommt ohnehin aus der Klasse s-<fach>.
+  function code(D, s) {
+    return (D && D.subjects && D.subjects[s]) ? D.subjects[s].code : s.toUpperCase();
   }
 
-  S.load().then(function () {
-    Shell.mount('material', S.data().teachers);
+  function block(o) {
+    return '<article class="panel topic">' +
+      '<div class="ph">' +
+        '<span class="mark s-' + esc(o.s) + '">' + esc(o.code) + '</span>' +
+        '<span class="t">' + (o.href
+          ? '<a href="' + esc(o.href) + '" target="_blank" rel="noopener">' + esc(o.title) + '</a>'
+          : esc(o.title)) + '</span>' +
+        (o.state
+          ? '<span class="lp-state ' + esc(o.state) + '">' + esc(tx(LABEL[o.state])) + '</span>'
+          : '') +
+      '</div>' +
+      '<div class="pb">' +
+        '<p>' + esc(o.detail) + '</p>' +
+        ((o.tabs && o.tabs.length)
+          ? '<ul class="tabs">' + o.tabs.map(function (t) {
+              return '<li class="wk">' + esc(t) + '</li>';
+            }).join('') + '</ul>'
+          : '') +
+      '</div>' +
+    '</article>';
+  }
+
+  // Eine Gruppe mit optionaler Zwischenzeile — dieselbe Kopfzeile, mit der
+  // plan.html seine Kalenderwochen trennt.
+  function grp(de, en, blocks) {
+    return '<div class="wkgroup">' +
+      (de ? '<div class="wkhead"><h3><span lang="de">' + de + '</span>' +
+            '<span lang="en">' + en + '</span></h3><span class="rule"></span></div>' : '') +
+      '<div class="topics">' + blocks.join('') + '</div></div>';
+  }
+
+  function renderLP(D) {
+    var out = [], akt = [], arc = [], total = DRUCK.length;
+
+    if (!LPD || !LPD.pakete) {
+      // Die Verweise fehlen. Die Zeile zum Ausdrucken steht im Skript
+      // dieser Seite und erscheint trotzdem — der Abschnitt bleibt nutzbar.
+      out.push('<div class="err"><b><span lang="de">Lernpakete nicht geladen</span>' +
+        '<span lang="en">Study packs did not load</span></b>' +
+        '<span lang="de">Die Liste steht in <code>data/lernpakete.json</code>. Neu laden hilft ' +
+          'meistens; die Pakete selbst liegen unverändert auf dump.yanikroesti.ch.</span>' +
+        '<span lang="en">The list lives in <code>data/lernpakete.json</code>. A reload usually ' +
+          'fixes it; the packs themselves are unchanged on dump.yanikroesti.ch.</span></div>');
+    } else {
+      LPD.pakete.forEach(function (p) {
+        var st = (window.Lernpakete && window.Lernpakete.effectiveStatus)
+          ? window.Lernpakete.effectiveStatus(p) : p.status;
+        var o = {
+          s: p.subject,
+          code: code(D, p.subject),
+          href: p.file ? LPD.base + p.file : '',
+          title: tx(p.title),
+          detail: tx(p.detail),
+          tabs: p.tabs,
+          // Unter der Zwischenzeile "Archiv" waere die Marke "Archiv"
+          // dasselbe Wort zweimal. Dort traegt die Gruppe den Zustand.
+          state: st === 'archiv' ? '' : st
+        };
+        (st === 'archiv' ? arc : akt).push(o);
+      });
+      total += akt.length + arc.length;
+      if (akt.length) out.push(grp(null, null, akt.map(block)));
+    }
+
+    out.push(grp('Zum Ausdrucken', 'To print', DRUCK.map(function (x) {
+      return block({ s: x.s, code: code(D, x.s), href: x.href,
+                     title: tx(x.t), detail: tx(x.d) });
+    })));
+
+    if (arc.length) out.push(grp('Archiv', 'Archive', arc.map(block)));
+
+    document.getElementById('lp').innerHTML = out.join('');
+    document.getElementById('lp-n').textContent = total;
+  }
+
+  function render() {
+    var D = S.data();
+    // Ohne Fachdaten steht im Kasten oben bereits der Fehler; ihn hier
+    // zu ueberschreiben waere schlimmer als die fehlende Liste.
+    if (D) {
+      document.getElementById('mat').innerHTML = M.map(function (m, i) {
+        return '<article class="panel topic">' +
+          '<div class="ph">' +
+            '<span class="mark s-' + m.s + '">' + D.subjects[m.s].code + '</span>' +
+            '<span class="t">' + tx(m.t) + '</span>' +
+            '<span class="count" style="margin-left:auto">' + m.n +
+              (lang() === 'en' ? ' files' : ' Dateien') + '</span>' +
+          '</div>' +
+          '<div class="pb">' +
+            '<p><code>' + m.path + '</code></p>' +
+            '<ul class="bul">' + m.items.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul>' +
+          '</div>' +
+        '</article>';
+      }).join('');
+    }
+    renderLP(D);
+  }
+
+  /* Fachdaten und Lernpakete haengen nicht aneinander. Beide Fehlschlaege
+     werden deshalb einzeln abgefangen, damit der eine Abschnitt stehen
+     bleibt, wenn der andere ausfaellt. */
+  var subj = S.load().catch(function (e) { console.error(e); return false; });
+  var lp = (window.Lernpakete && window.Lernpakete.load)
+    ? window.Lernpakete.load(S.base()).catch(function (e) {
+        console.error(e); return false;
+      })
+    : Promise.resolve(false);
+
+  Promise.all([subj, lp]).then(function (p) {
+    LPD = p[1] || null;
+    var ok = p[0] !== false;
+    // Der Inhalt dieser Seite steht im Markup; die Daten liefern nur die
+    // fuenf Fachkuerzel. Ein Fehlschlag darf sie nicht leer lassen.
+    try { Shell.mount('material', ok ? S.data().teachers : []); } catch (x) { console.error(x); }
+    if (!ok) {
+      document.getElementById('mat').innerHTML =
+        '<div class="err"><b><span lang="de">Fachdaten nicht geladen</span>' +
+        '<span lang="en">Subject data did not load</span></b>' +
+        '<span lang="de">Die Ordnerübersicht unten stimmt trotzdem.</span>' +
+        '<span lang="en">The folder overview below is still accurate.</span></div>';
+    }
     render();
     document.addEventListener('langchange', render);
   }).catch(function (e) {
     console.error(e);
-    // Der Inhalt dieser Seite steht im Markup; die Daten liefern nur die
-    // fuenf Fachkuerzel. Ein Fehlschlag darf sie nicht leer lassen.
-    try { Shell.mount('material', []); } catch (x) {}
-    document.getElementById('mat').innerHTML =
-      '<div class="err"><b><span lang="de">Fachdaten nicht geladen</span>' +
-      '<span lang="en">Subject data did not load</span></b>' +
-      '<span lang="de">Die Ordnerübersicht unten stimmt trotzdem.</span>' +
-      '<span lang="en">The folder overview below is still accurate.</span></div>';
   });
 })();
 </script>
