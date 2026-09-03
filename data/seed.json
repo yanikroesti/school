@@ -54,6 +54,22 @@
       "source": "Notiz Telekommunikation 28.08.2026 · Unterrichtsplanung Kommunikation 04.09.2026"
     },
     {
+      "id": "abt-apparatekunde-2026-09-04",
+      "kind": "test",
+      "teacher": "waefler",
+      "subject": "abt",
+      "date": "2026-09-04",
+      "title": {
+        "de": "Grosstest Apparatekunde",
+        "en": "Major test — appliance technology"
+      },
+      "detail": {
+        "de": "Wärmeformel Q = m · c · ΔT (Schwerpunkt) · Wärmeausdehnung · die drei Wärmeübertragungsarten · Heizungsmöglichkeiten im Badezimmer · Guss-, Glaskeramik- und Induktionskochstellen mit Leistungen, Durchmessern und Vergleich · Siebentaktschaltung · Keramik-Kochfeld und 5-Takt-Kochherdschalter · Wirkungsgrad",
+        "en": "Heat formula Q = m · c · ΔT (main focus) · thermal expansion · the three modes of heat transfer · bathroom heating options · cast-iron, ceramic and induction hobs with ratings, diameters and comparison · seven-step switch · efficiency"
+      },
+      "source": "Yanik am 03.09.2026: «Test ist morgen … schau in Apparatekunde-Notizen was wir letztens so hatten, das alles kommt im Test. Vor allem die Wärmeformel ist wichtig und Wärmeausdehnung wird auch drin sein.» · Notizen 21.08. und 28.08. · Unterrichtsblatt Moser (Kochfeld, 5-Takt, Q = m·c·ΔT)"
+    },
+    {
       "id": "abu-rechtschreibung-2026-09-07",
       "kind": "test",
       "teacher": "laedrach",
