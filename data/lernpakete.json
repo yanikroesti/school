@@ -102,6 +102,32 @@
       ]
     },
     {
+      "id": "moser-et-physik",
+      "file": "moser_et_physik_lernpaket.html",
+      "subject": "htog",
+      "teacher": "moser",
+      "status": "aktiv",
+      "forTest": "htog-moser-2026-09-14",
+      "archiveAfter": "2026-09-14",
+      "title": {
+        "de": "Elektrotechnik & Physik",
+        "en": "Electrical engineering & physics"
+      },
+      "detail": {
+        "de": "Messbereich, Brücke, Wärme, Hebel · 4 Rechner · 25 Musterlösungen · zum Test vom 14.09.",
+        "en": "Meter range, bridge, heat, levers · 4 calculators · 25 worked examples · for the 14 Sep test"
+      },
+      "tabs": [
+        "Theorie",
+        "Rechner",
+        "Beispiele",
+        "Begriffe",
+        "Karteikarten",
+        "Quiz",
+        "Lernplan"
+      ]
+    },
+    {
       "id": "kaufvertrag",
       "file": "kaufvertrag_lernpaket.html",
       "subject": "abu",
