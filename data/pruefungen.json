@@ -5,6 +5,21 @@
 
   "pruefungen": [
     {
+      "id": "2026-08-28-abt-nin-kurztest-5plus5",
+      "datum": "2026-08-28",
+      "semester": 3,
+      "fach": "abt",
+      "bereich": "tg",
+      "lehrer": "waefler",
+      "art": "kurztest",
+      "titel": {
+        "de": "NIN-Kurztest — 5+5 lebenswichtige Regeln",
+        "en": "NIN short test — 5+5 life-saving rules"
+      },
+      "themen": ["5 technische Sicherheitsregeln", "5 organisatorische Regeln"],
+      "note": 6
+    },
+    {
       "id": "2026-08-13-abu-krankenkasse",
       "datum": "2026-08-13",
       "semester": 3,
