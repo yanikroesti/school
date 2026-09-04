@@ -3,6 +3,32 @@
   "base": "https://dump.yanikroesti.ch/artifacts/",
   "pakete": [
     {
+      "id": "apparatekunde",
+      "file": "apparatekunde_lernpaket.html",
+      "subject": "abt",
+      "teacher": "waefler",
+      "status": "aktiv",
+      "forTest": "abt-apparatekunde-2026-09-04",
+      "archiveAfter": "2026-09-04",
+      "title": {
+        "de": "Apparatekunde",
+        "en": "Appliance technology"
+      },
+      "detail": {
+        "de": "Wärmeformel und Ausdehnung · Kochstellen im Vergleich · 3 Rechner · zum Grosstest vom 04.09.",
+        "en": "Heat formula and expansion · hobs compared · 3 calculators · for the 4 Sep major test"
+      },
+      "tabs": [
+        "Theorie",
+        "Rechner",
+        "Vergleich",
+        "Begriffe",
+        "Karteikarten",
+        "Quiz",
+        "Heute Abend"
+      ]
+    },
+    {
       "id": "aus-psa",
       "file": "aus_psa_lernpaket.html",
       "subject": "htog",
