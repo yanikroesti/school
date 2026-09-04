@@ -3,6 +3,29 @@
   "base": "https://dump.yanikroesti.ch/artifacts/",
   "pakete": [
     {
+      "id": "werkstoffkunde",
+      "file": "werkstoffkunde_lernpaket.html",
+      "subject": "abt",
+      "teacher": "waefler",
+      "status": "aktiv",
+      "title": {
+        "de": "Werkstoffkunde — visuelles Lernpaket",
+        "en": "Materials science — visual study pack"
+      },
+      "detail": {
+        "de": "Werkstoffgruppen, Eigenschaften, Zustandsänderungen und Werkstoffkunde aus drei Wochen · Redox/Korrosion als Vertiefung · Säuren und Basen als Zusatz.",
+        "en": "Material groups, properties, state changes and three weeks of materials science · redox/corrosion as enrichment · acids and bases as an extra."
+      },
+      "tabs": [
+        "Theorie",
+        "Visuals",
+        "Begriffe",
+        "Karteikarten",
+        "Quiz",
+        "Lernplan"
+      ]
+    },
+    {
       "id": "apparatekunde",
       "file": "apparatekunde_lernpaket.html",
       "subject": "abt",
