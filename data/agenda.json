@@ -33,22 +33,22 @@
     },
     {
       "fach": "abt",
-      "aktualisiert": "2026-09-02",
+      "aktualisiert": "2026-09-04",
       "lehrer": "waefler",
       "aktuell": {
-        "de": "NIN — PSA, Gefahren der Elektrizität und die Folgen eines Stromunfalls",
-        "en": "NIN — PPE, electrical hazards and the consequences of an electric accident"
+        "de": "NIN — Wirkung des elektrischen Stroms auf den Körper; Apparatekunde — Induktionskochfeld und Schaltstufen",
+        "en": "Electrical installations — effects of electric current on the body; appliance technology — induction hobs and switch stages"
       },
       "fokus": {
         "de": [
-          "Theorie Arbeitsmethoden und AuS abschliessen",
-          "PSA-Stufen und Schutz gegen Störlichtbogen",
-          "Gruppenarbeit zu den Folgen eines Stromunfalls; elektrische Wirkung auf den Körper und Körperimpedanz; ESTI"
+          "Thermische, chemische und muskelreizende Wirkung von Strom",
+          "Gefährdungsfaktoren: Stromstärke, Einwirkdauer, Strombahn, Frequenz und Körperimpedanz",
+          "Induktionskochfeld: Grundlagen; 7-Stufen-Schaltung reguliert feiner als 5-Stufen-Schaltung"
         ],
         "en": [
-          "Completing the theory on working methods and live working",
-          "PPE levels and arc-flash protection",
-          "Group work on the consequences of an electric accident; effects of current on the body, body impedance, ESTI"
+          "Thermal, chemical and muscle-stimulating effects of electric current",
+          "Risk factors: current, exposure duration, current path, frequency and body impedance",
+          "Induction hob basics; seven-stage switching gives finer control than five-stage switching"
         ]
       },
       "naechstes": {
@@ -56,55 +56,48 @@
         "de": "Grosser Test Nr. 1 und wieder ein Kurztest",
         "en": "Major test no. 1 and another short test"
       },
-      "quelle": "Notiz NIN 28.08.2026 · Unterrichtsblatt NIN vom 04.09.2026",
-      "geplant": "2026-09-04"
+      "quelle": "Notiz NIN 04.09.2026 · Notiz Apparatekunde 04.09.2026"
     },
     {
       "fach": "atd",
-      "aktualisiert": "2026-09-02",
+      "aktualisiert": "2026-09-04",
       "lehrer": "aeschlimann",
       "aktuell": {
-        "de": "Telekommunikation — Kapitel 2: Grundlagen der Telekommunikation",
-        "en": "Telecommunications — chapter 2: fundamentals of telecommunications"
+        "de": "Telekommunikation — Kapitel 3: Internettelefonie (VoIP)",
+        "en": "Telecommunications — chapter 3: internet telephony (VoIP)"
       },
       "fokus": {
         "de": [
-          "Bilder des Anschlusskastens besprechen und in den Ordner Telekommunikation auf Teams hochladen",
-          "Abschluss Kapitel 2 und Besprechung des letzten Tests",
-          "Üben für den Test über Kapitel 1 und 2"
+          "Analoges Sprachsignal digitalisieren, codieren und als IP-Pakete übertragen",
+          "SIP baut ein Gespräch auf; RTP/SRTP transportiert die Sprachdaten",
+          "Latenz, Jitter, Paketverlust und QoS beeinflussen die Gesprächsqualität"
         ],
         "en": [
-          "Discussing the photos of the connection box and uploading them to the Telekommunikation folder in Teams",
-          "Finishing chapter 2 and reviewing the last test",
-          "Practising for the test on chapters 1 and 2"
+          "Digitising and coding an analogue voice signal before sending it as IP packets",
+          "SIP sets up a call; RTP/SRTP carries the voice data",
+          "Latency, jitter, packet loss and QoS affect call quality"
         ]
       },
-      "naechstes": {
-        "datum": "2026-09-04",
-        "de": "Test Systemübersicht und Grundlagen, Kapitel 1–2, Seiten 1.1–2.7",
-        "en": "Test on system overview and fundamentals, chapters 1–2, pages 1.1–2.7"
-      },
-      "quelle": "Notiz Telekommunikation 28.08.2026 · Unterrichtsplanung Kommunikation 04.09.2026",
-      "geplant": "2026-09-04"
+      "quelle": "Notiz Telekommunikation 04.09.2026"
     },
     {
       "fach": "htog",
-      "aktualisiert": "2026-09-02",
+      "aktualisiert": "2026-09-04",
       "lehrer": "berisha",
       "aktuell": {
-        "de": "Arbeitssicherheit — AuS, PSA und Arbeitsmethoden",
-        "en": "Occupational safety — live working, PPE and working methods"
+        "de": "NIN — Wirkung des elektrischen Stroms auf den Körper",
+        "en": "Electrical installations — effects of electric current on the body"
       },
       "fokus": {
         "de": [
-          "Unterschied AuS 1 und AuS 2",
-          "PSA gegen Störlichtbogen und Durchströmung",
-          "Fünf Sicherheitsregeln und Annäherungszone"
+          "Thermische, chemische und muskelreizende Wirkung von Strom",
+          "Stromstärke, Einwirkdauer, Strombahn, Frequenz und Körperimpedanz als Gefährdungsfaktoren",
+          "Ohmsches Gesetz: Bei 230 V und 1000 Ω fliessen rechnerisch 230 mA"
         ],
         "en": [
-          "Difference between live working levels 1 and 2",
-          "PPE against arc flash and electric shock",
-          "Five safety rules and the proximity zone"
+          "Thermal, chemical and muscle-stimulating effects of electric current",
+          "Current, exposure duration, current path, frequency and body impedance as risk factors",
+          "Ohm’s law: at 230 V and 1000 Ω, the calculated current is 230 mA"
         ]
       },
       "naechstes": {
@@ -112,8 +105,7 @@
         "de": "Grosser Test Nr. 1 — NIN, dazu wieder ein Kurztest",
         "en": "Major test no. 1 — NIN, plus another short test"
       },
-      "quelle": "Fachnotiz Arbeitssicherheit und Chemie, bestätigt 27.08.2026 · Unterrichtsblatt NIN (Berisha) vom 04.09.2026",
-      "geplant": "2026-09-04"
+      "quelle": "Notiz NIN 04.09.2026 · Unterrichtsblatt NIN (Berisha) vom 04.09.2026"
     }
   ],
   "erwartet": [
@@ -234,6 +226,66 @@
     }
   ],
   "geschehen": [
+    {
+      "datum": "2026-09-04",
+      "art": "unterricht",
+      "fach": "abt",
+      "lehrer": "waefler",
+      "titel": {
+        "de": "Apparatekunde — Induktionskochfeld und Schaltstufen",
+        "en": "Appliance technology — induction hobs and switch stages"
+      },
+      "detail": {
+        "de": "Unterschied zwischen 5- und 7-Stufen-Schaltung: Bei der Fünfstufenschaltung ist der Sprung zwischen Stufe 2 und 3 gross; sieben Stufen erlauben eine feinere Regelung. Hausaufgabe: Grundlagen zum Induktionskochfeld anschauen.",
+        "en": "Comparison of five- and seven-stage switching: the jump between stages 2 and 3 is large on a five-stage switch; seven stages permit finer control. Homework: review induction-hob basics."
+      },
+      "quelle": "Notiz Apparatekunde 04.09.2026"
+    },
+    {
+      "datum": "2026-09-04",
+      "art": "unterricht",
+      "fach": "htog",
+      "lehrer": "berisha",
+      "titel": {
+        "de": "NIN — Wirkung des elektrischen Stroms auf den Körper",
+        "en": "Electrical installations — effects of electric current on the body"
+      },
+      "detail": {
+        "de": "Thermische, chemische und muskelreizende Wirkung; Gefährdungsfaktoren Stromstärke, Einwirkdauer, Strombahn, Frequenz und Körperimpedanz. Bei 230 V und angenommener Körperimpedanz von 1000 Ω ergeben sich rechnerisch 230 mA.",
+        "en": "Thermal, chemical and muscle-stimulating effects; risk factors are current, exposure duration, current path, frequency and body impedance. At 230 V and an assumed body impedance of 1000 Ω, the calculated current is 230 mA."
+      },
+      "quelle": "Notiz NIN 04.09.2026 · Unterrichtsblatt NIN (Berisha) vom 04.09.2026"
+    },
+    {
+      "datum": "2026-09-04",
+      "art": "unterricht",
+      "fach": "abt",
+      "lehrer": "waefler",
+      "titel": {
+        "de": "Werkstoffkunde — Werkstoffgruppen, Eigenschaften und Oxidation",
+        "en": "Materials science — material groups, properties and oxidation"
+      },
+      "detail": {
+        "de": "Guss und Stahl über die Kohlenstoffgrenze von 2,06 % unterscheiden; Werkstoffe nach mechanischen, elektrischen, thermischen und chemischen Eigenschaften beurteilen. Oxidation und Reduktion laufen als Redoxreaktion zusammen ab; Korrosion bleibt ein wichtiger Lernpunkt.",
+        "en": "Distinguishing cast iron and steel at the 2.06% carbon threshold; assessing materials by mechanical, electrical, thermal and chemical properties. Oxidation and reduction occur together in a redox reaction; corrosion remains an important learning point."
+      },
+      "quelle": "Notiz Werkstoffkunde 04.09.2026"
+    },
+    {
+      "datum": "2026-09-04",
+      "art": "unterricht",
+      "fach": "atd",
+      "lehrer": "aeschlimann",
+      "titel": {
+        "de": "Telekommunikation — Start Kapitel 3: Internettelefonie (VoIP)",
+        "en": "Telecommunications — start of chapter 3: internet telephony (VoIP)"
+      },
+      "detail": {
+        "de": "Nach Abschluss von Kapitel 2 begann VoIP: Sprache wird digitalisiert, codiert und in IP-Paketen übertragen. SIP organisiert den Gesprächsaufbau, RTP/SRTP transportiert die Sprachdaten; Latenz, Jitter und Paketverlust beeinflussen die Qualität.",
+        "en": "After completing chapter 2, VoIP began: voice is digitised, coded and sent in IP packets. SIP handles call setup, RTP/SRTP carries voice data; latency, jitter and packet loss affect quality."
+      },
+      "quelle": "Notiz Telekommunikation 04.09.2026"
+    },
     {
       "datum": "2026-08-31",
       "art": "unterricht",

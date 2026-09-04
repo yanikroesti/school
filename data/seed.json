@@ -240,6 +240,21 @@
       }
     },
     {
+      "id": "ha-apparatekunde-induktion-2026-09-04",
+      "subject": "abt",
+      "teacher": "waefler",
+      "due": "",
+      "done": false,
+      "title": {
+        "de": "Apparatekunde: Grundlagen zum Induktionskochfeld anschauen",
+        "en": "Appliance technology: review induction-hob basics"
+      },
+      "detail": {
+        "de": "Fälligkeitsdatum wurde nicht genannt.",
+        "en": "No due date was stated."
+      }
+    },
+    {
       "id": "ha-nin-repetieren-2026-09-11",
       "subject": "abt",
       "teacher": "waefler",
