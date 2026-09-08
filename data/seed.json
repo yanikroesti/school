@@ -80,10 +80,10 @@
         "en": "Test — German capitalisation"
       },
       "detail": {
-        "de": "Handbuch Kompetenzen S. 120 plus die Arbeitsblätter · zählt zu Sprache und Kommunikation",
-        "en": "Handbook p. 120 plus worksheets · counts towards Language and Communication"
+        "de": "Handbuch Kompetenzen S. 120 plus die Arbeitsblätter · zählt zu Sprache und Kommunikation · am 07.09.2026 abgeschlossen, Note noch unbekannt",
+        "en": "Handbook p. 120 plus worksheets · counts towards Language and Communication · completed on 7 Sep 2026; grade not yet known"
       },
-      "source": "ABU-Unterrichtsplanung 31.08.2026"
+      "source": "ABU-Unterrichtsplanung 31.08.2026 · Bestätigung Yanik 07.09.2026, Notiz Elektrotechnik und Physik 07.09.2026"
     },
     {
       "id": "abt-nin-grosstest-2026-09-11",
@@ -112,10 +112,10 @@
         "en": "Test — electrical engineering and physics"
       },
       "detail": {
-        "de": "Messbereichserweiterung (Vorwiderstand, Shunt) · Spannungsfehler- und Stromfehlerschaltung · Wärmeenergie und Längenausdehnung · zwei Formeln umstellen · eine Brückenschaltung · der Hebelgesetz-Auftrag zählt 4 Punkte",
-        "en": "Measuring-range extension, error circuits, thermal energy and expansion, formula rearrangement, one bridge circuit"
+        "de": "Übungstest: 12 Aufgaben zu Messfehlern (inkl. beider U-/I-Anzeigen), Wheatstone-Brücke, Vorwiderstand, Shunt, Längenausdehnung, Boiler mit Wirkungsgrad, Rθ nach α und FA nach l₁ umstellen sowie Textgleichung. Zwei vollständige Probetests A/B im Lernpaket. Einzelpunkte der Vorlage ergeben 25 statt der 20 im Kopf; keine offizielle Bewertung abgeleitet. Hebelgesetz-A4 zählt separat laut Ankündigung 4 Punkte; Abgabe unbestätigt.",
+        "en": "Practice sheet: 12 tasks covering measuring errors (both U/I readings), Wheatstone bridge, series resistor, shunt, expansion, boiler with efficiency, rearranging Rθ for α and FA for l₁, and a word equation. Two complete practice variants A/B in the study pack. Individual points total 25, not the header’s 20; no official grading inferred. Lever-law A4 assignment separately announced as worth 4 points; submission unconfirmed."
       },
-      "source": "Blatt Moser W4 31.8.26"
+      "source": "Notiz Elektrotechnik und Physik 07.09.2026 · Übungstest von Yanik am 07.09.2026 · Blatt Moser W4 31.8.26"
     }
   ],
   "homework": [

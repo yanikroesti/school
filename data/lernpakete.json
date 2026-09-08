@@ -106,7 +106,7 @@
       "file": "rechtschreibung_lernpaket.html",
       "subject": "abu",
       "teacher": "laedrach",
-      "status": "aktiv",
+      "status": "archiv",
       "forTest": "abu-rechtschreibung-2026-09-07",
       "archiveAfter": "2026-09-07",
       "title": {
@@ -163,8 +163,8 @@
         "en": "Electrical engineering & physics"
       },
       "detail": {
-        "de": "Messbereich, Brücke, Wärme, Hebel · 4 Rechner · 25 Musterlösungen · zum Test vom 14.09.",
-        "en": "Meter range, bridge, heat, levers · 4 calculators · 25 worked examples · for the 14 Sep test"
+        "de": "Mit dem vollständigen Übungstest abgeglichen · Probetests A/B mit je 12 Aufgaben, neuen Zahlen, Schaltskizzen und Lösungen · Blankodruck · 4 Rechner · zum Test vom 14.09.",
+        "en": "Checked against the complete practice sheet · variants A/B with 12 tasks each, new numbers, circuit diagrams and full solutions · blank print mode · 4 calculators · for the 14 Sep test"
       },
       "tabs": [
         "Theorie",
@@ -173,6 +173,7 @@
         "Begriffe",
         "Karteikarten",
         "Quiz",
+        "Probetest",
         "Lernplan"
       ]
     },

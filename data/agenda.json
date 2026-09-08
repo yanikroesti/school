@@ -16,20 +16,17 @@
         "de": [
           "Das Schweizer Vorsorgeprinzip: 3-Säulen-Modell",
           "Sach- und Haftpflichtversicherung wiederholen",
-          "Plakat zu einer Sozialversicherung; Start der Projektarbeit zu einem sozialen Risiko"
+          "Plakat zu einer Sozialversicherung; Start der Projektarbeit zu einem sozialen Risiko",
+          "Test Gross-/Kleinschreibung am 07.09. abgeschlossen; Note noch unbekannt. Kein weiterer neuer ABU-Stoff gemeldet."
         ],
         "en": [
           "The Swiss three-pillar pension model",
           "Review of property and liability insurance",
-          "Poster about one social insurance; project on a Swiss social risk begins"
+          "Poster about one social insurance; project on a Swiss social risk begins",
+          "Capitalisation test completed on 7 Sep; grade not yet known. No further new general-education content reported."
         ]
       },
-      "naechstes": {
-        "datum": "2026-09-07",
-        "de": "Test Gross- und Kleinschreibung",
-        "en": "Capitalisation test"
-      },
-      "quelle": "ABU-Plan 31.08.2026 · Notiz Sozialversicherungen 31.08.2026"
+      "quelle": "ABU-Plan 31.08.2026 · Notiz Sozialversicherungen 31.08.2026 · Bestätigung Yanik 07.09.2026, Notiz Elektrotechnik und Physik 07.09.2026"
     },
     {
       "fach": "abt",
@@ -106,6 +103,55 @@
         "en": "Major test no. 1 — NIN, plus another short test"
       },
       "quelle": "Notiz NIN 04.09.2026 · Unterrichtsblatt NIN (Berisha) vom 04.09.2026"
+    },
+    {
+      "fach": "htog",
+      "lehrer": "moser",
+      "aktualisiert": "2026-09-07",
+      "aktuell": {
+        "de": "Elektrotechnik und Physik — vollständiger Übungstest für den 14.09.",
+        "en": "Electrical engineering and physics — complete practice sheet for 14 Sep"
+      },
+      "fokus": {
+        "de": [
+          "Laut Yanik wenig neuer Stoff; Übungstest mit zwölf Aufgaben erhalten",
+          "Lernpaket vollständig abgeglichen, zwei neue Übungstestvarianten mit Lösungen",
+          "Messfehler, Brücke, Messbereich, Wärme, Formelumstellen und Textgleichung"
+        ],
+        "en": [
+          "Little new material reported by Yanik; received a twelve-task practice sheet",
+          "Study pack checked in full; two new practice variants with solutions",
+          "Measuring errors, bridge, meter range, heat, formula rearrangement and word equation"
+        ]
+      },
+      "naechstes": {
+        "datum": "2026-09-14",
+        "de": "Test bei Moser; Hebel-A4-Abgabe noch nicht bestätigt",
+        "en": "Moser test; lever-law A4 submission not yet confirmed"
+      },
+      "quelle": "Notiz Elektrotechnik und Physik 07.09.2026 · Übungstest von Yanik am 07.09.2026"
+    },
+    {
+      "fach": "atd",
+      "lehrer": "moser",
+      "aktualisiert": "2026-09-07",
+      "aktuell": {
+        "de": "Arbeitsplan — Relais und Schrittschaltung",
+        "en": "Assignment plan — relays and stepping circuit"
+      },
+      "fokus": {
+        "de": [
+          "Auftrag für E1 (6 V) und E2 (230 V), Simulation und Messschaltungen erhalten",
+          "Spulenleistung und Schalterspannung: konkrete Messwerte/Spulendaten fehlen",
+          "Blatt 46 und Fachbuchseite 106 fehlen; Durchführung der Praxisaufgaben nicht bestätigt"
+        ],
+        "en": [
+          "Received assignment for E1 (6 V), E2 (230 V), simulation and measuring circuits",
+          "Coil power and switch voltage: actual measurements/coil data missing",
+          "Sheet 46 and textbook page 106 missing; practical completion not confirmed"
+        ]
+      },
+      "quelle": "Notiz Relais und Schrittschaltung 07.09.2026 · Screenshot Arbeitsplan von Yanik"
     }
   ],
   "erwartet": [
@@ -187,10 +233,10 @@
         "en": "General education — German capitalisation"
       },
       "detail": {
-        "de": "Theorie im Handbuch Kompetenzen S. 120 plus die Arbeitsblätter aus der Lektion. Zählt im Zeugnis zu Sprache und Kommunikation.",
-        "en": "Handbook p. 120 plus the worksheets. Counts towards Language and Communication."
+        "de": "Theorie im Handbuch Kompetenzen S. 120 plus die Arbeitsblätter aus der Lektion. Zählt im Zeugnis zu Sprache und Kommunikation. Am 07.09.2026 abgeschlossen; Note noch unbekannt.",
+        "en": "Handbook p. 120 plus the worksheets. Counts towards Language and Communication. Completed on 7 Sep 2026; grade not yet known."
       },
-      "quelle": "ABU-Unterrichtsplanung 31.08.2026"
+      "quelle": "ABU-Unterrichtsplanung 31.08.2026 · Bestätigung Yanik 07.09.2026, Notiz Elektrotechnik und Physik 07.09.2026"
     },
     {
       "datum": "2026-09-11",
@@ -219,13 +265,43 @@
         "en": "Electrical engineering and physics — test"
       },
       "detail": {
-        "de": "Messbereichserweiterung mit Vorwiderstand und Shunt · Spannungsfehler- und Stromfehlerschaltung · Wärmeenergie und Längenausdehnung · zwei schwierige Formeln umstellen · eine Brückenschaltung berechnen. Der Physik-Arbeitsauftrag zum Hebelgesetz zählt hier 4 Punkte.",
-        "en": "Measuring-range extension, voltage/current error circuits, thermal energy and expansion, formula rearrangement, one bridge circuit. The lever-law assignment counts 4 points here."
+        "de": "Übungstest: 12 Aufgaben zu Messfehlern (inkl. beider U-/I-Anzeigen), Wheatstone-Brücke, Vorwiderstand, Shunt, Längenausdehnung, Boiler mit Wirkungsgrad, Rθ nach α und FA nach l₁ umstellen sowie Textgleichung. Zwei vollständige Probetests A/B im Lernpaket. Einzelpunkte der Vorlage ergeben 25 statt der 20 im Kopf; keine offizielle Bewertung abgeleitet. Hebelgesetz-A4 zählt separat laut Ankündigung 4 Punkte; Abgabe unbestätigt.",
+        "en": "Practice sheet: 12 tasks covering measuring errors (both U/I readings), Wheatstone bridge, series resistor, shunt, expansion, boiler with efficiency, rearranging Rθ for α and FA for l₁, and a word equation. Two complete practice variants A/B in the study pack. Individual points total 25, not the header’s 20; no official grading inferred. Lever-law A4 assignment separately announced as worth 4 points; submission unconfirmed."
       },
-      "quelle": "Blatt Moser W4 31.8.26"
+      "quelle": "Notiz Elektrotechnik und Physik 07.09.2026 · Übungstest von Yanik am 07.09.2026 · Blatt Moser W4 31.8.26"
     }
   ],
   "geschehen": [
+    {
+      "datum": "2026-09-07",
+      "art": "unterricht",
+      "fach": "htog",
+      "lehrer": "moser",
+      "titel": {
+        "de": "Übungstest erhalten — Vorbereitung auf den 14.09.",
+        "en": "Practice sheet received — preparation for 14 Sep"
+      },
+      "detail": {
+        "de": "Laut Yanik wenig neuer Stoff. Vollständiger Übungstest mit zwölf Aufgaben erhalten und mit dem Lernpaket abgeglichen; zwei Varianten mit anderen Zahlen und vollständigen Lösungen ergänzt. Kein Prüfungsresultat.",
+        "en": "Yanik reports little new material. Received the complete twelve-task practice sheet and checked study-pack coverage; added two variants with new numbers and full solutions. Not an exam result."
+      },
+      "quelle": "Notiz Elektrotechnik und Physik 07.09.2026 · Übungstest von Yanik am 07.09.2026"
+    },
+    {
+      "datum": "2026-09-07",
+      "art": "unterricht",
+      "fach": "atd",
+      "lehrer": "moser",
+      "titel": {
+        "de": "Arbeitsplan erhalten — Relais und Schrittschaltung",
+        "en": "Assignment plan received — relays and stepping circuit"
+      },
+      "detail": {
+        "de": "Steuerung für 6-V- und 230-V-Lampe, Simulation, Messschaltungen, Spulenleistung und Schalterspannung; Schrittschaltung mit zwei Tastern. Dies ist der zugesandte Plan, kein Nachweis erledigter Versuche. Blatt 46, Fachbuch S. 106, Spulendaten und Messwerte fehlen.",
+        "en": "Control for 6 V and 230 V lamps, simulation, measuring circuits, coil power and switch voltage; stepping circuit with two push-buttons. This is the supplied plan, not evidence of completed experiments. Sheet 46, textbook p. 106, coil data and measured values are missing."
+      },
+      "quelle": "Notiz Relais und Schrittschaltung 07.09.2026 · Screenshot Arbeitsplan von Yanik"
+    },
     {
       "datum": "2026-09-04",
       "art": "unterricht",
