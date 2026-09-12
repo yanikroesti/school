@@ -45,7 +45,7 @@ typography:
     letterSpacing: "-0.015em"
   body:
     fontFamily: "Archivo, 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif"
-    fontSize: "0.9375rem"
+    fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.55
     letterSpacing: "normal"
@@ -289,12 +289,19 @@ einmal, für den seitlichen Innenabstand von `.wrap`.
   dominanten Klemme (`.term.lead .tt`).
 - **Title** (700, 1.25 rem / `--t-l`): `h3` und Abschnittsüberschriften (`.sect-h h2`).
 - **Subtitle** (700, 1.0625 rem / `--t-m`): `h4`, Tagesüberschriften, Vorspann `.phead .lead`.
-- **Body** (400, 0.9375 rem / `--t-b`, lh 1.55): Fliesstext, Klemmentitel `.term .tt` (600).
+- **Body** (400, 1 rem / `--t-b`, lh 1.55): Fliesstext, Klemmentitel `.term .tt` (600).
   Zeilenlänge gedeckelt auf 68ch (`.panel > .pb > p`, `.topic > .pb > p`, `.phead .lead`).
+  Bei Grobzeiger 1.0625 rem — das ist Apples Vorgabe für die Grundschrift am
+  Telefon (17 pt, `typography.md › Specifications`). Stand bis 12.09.2026 auf
+  0.9375 rem; die Seite wird müde und bei schlechtem Licht gelesen, und die
+  Grundschrift ist der falsche Ort zum Sparen.
 - **Small** (400, 0.8125 rem / `--t-s`): Sekundärzeile `.term .sub`, Tabellen, Listen.
 - **Label** (600–700, 0.75 rem / `--t-xs`): Spaltenköpfe, Zähler, Fusszeilen-Titel.
-- **Micro-Label** (600, 0.6875 rem, +0.05em, Versalien): nur die Trennplatten-Beschriftung
-  (`.part a`) und die kleinen Marken. Die einzige Stelle mit Versalien im System.
+- **Micro-Label** (600, +0.05em, Versalien): die Trennplatten-Beschriftung (`.part a`,
+  seit 12.09.2026 `--t-xs` statt 0.6875 rem — sie ist ein Link, und 11 px war genau
+  Apples Minimum) und die kleinen Marken (0.6875 rem, nicht anklickbar). Die einzige
+  Stelle mit Versalien im System. Die Fussschiene beschriftet ebenfalls auf 0.6875 rem,
+  dort aber ohne Versalien und mit 56 px Zielfläche darunter.
 - **Data** (600, 1.0625 rem / `--t-m`, Azeret Mono, tabular-nums, -0.03em): Messwerte —
   `.term .val`, Kennzahlen, abgeleitete Zeugnisnoten.
 - **Data-Lead** (700, 2.5 rem / `--t-3xl`): der Countdown der nächsten Lektion. Die
@@ -421,8 +428,20 @@ Eine Lektion, eine Prüfung, eine Hausaufgabe. Kein Kärtchen: ein Bauteil mit v
   abgesetzt durch eine linke Linie.
 - **Zustände:** `.live` (grüner Rahmen, grüner Wert), `.soon` (≤ 2 Tage, roter Wert),
   `.warn` (≤ 6 Tage, ockerner Wert), `.done` (55 % Deckkraft, Titel durchgestrichen),
-  `[aria-disabled]` (50 %, keine Zeiger). Interaktive Klemmen (`a.term`, `button.term`)
-  wechseln beim Überfahren Rahmen auf `--rail` und Fläche auf `--plate-2`.
+  `.vorbei` (60 % Deckkraft, **kein Messwert**), `[aria-disabled]` (50 %, keine Zeiger).
+  Interaktive Klemmen (`a.term`, `button.term`) wechseln beim Überfahren Rahmen auf
+  `--rail` und Fläche auf `--plate-2`.
+
+  **Der Countdown läuft nie ins Minus.** Bis zum 12.09.2026 tat er das: acht überfällige
+  Hausaufgaben standen mit „−8 Tage" auf der Schiene, und weil `days <= 2` auch für −8
+  wahr ist, trugen sie alle `.soon` — die dringendste Stufe, die eigentlich der nächsten
+  echten Frist gehört. Jetzt gilt: am **Tag null** fällt die Aufgabe von der Schiene
+  (`index.html`, `plan.html`, dieselbe `daysUntil(...) >= 0`-Regel wie bei den Prüfungen);
+  „heute" steht noch, gestern nicht mehr. Aufgaben **ohne** Fälligkeitsdatum bleiben.
+  `.vorbei` greift nur im Kalender, wo ein vergangener Tag zu Recht zeigt, was an ihm
+  fällig war — dort nennt das Markierungsschild das Datum, und der Messwert schweigt.
+  Erledigt (`.done`) und vorbei (`.vorbei`) sind zwei verschiedene Dinge; nur das eine
+  wird durchgestrichen.
 - **`.lead`:** die dominante Klemme. 6.4 rem hoch, 2-px-Rahmen in `--ink-2`, Titel auf
   1.5 rem, Wert auf 2.5 rem. Genau eine pro Seite — die Anleihe bei der Abfahrtstafel.
 
@@ -478,6 +497,33 @@ links (das Zeichen ist ein Schienenstück mit zwei Klemmen darauf, als 24er-SVG)
 rechts, Werkzeuge ganz rechts. Aktive Seite: `--accent` gefüllt, `--plate` Schrift.
 Auf allen Seiten ausser der Startseite hängt `Shell.mount()` sie nach dem Datenladen ein.
 
+### Fussschiene (`.botnav`) — dieselbe Klemmenleiste, um 90 Grad gekippt
+
+Unter 660 px, dort wo `.nav` verschwindet. Fest an der Unterkante, `--plate`,
+**2 px `--rail` als Oberkante** — das ist die Schiene, und die fünf Seiten hängen
+als Klemmen daran. Fünf gleiche Spalten, je 56 px hoch; bei 375 px sind das
+75 × 56 px pro Ziel. Zeichen 21 px, Beschriftung 11 px / 600.
+
+Die aktive Seite trägt **ihren Fuss unten** (`::after`, 2.1 rem × 3 px, `--accent`)
+und `--ink` statt `--muted` — dasselbe Bauteil wie an der Klemme, nur unten statt
+links. Keine Fachfarbe: die Seiten dieser Site haben keine, genau wie im Verteiler.
+
+**Warum sie existiert.** Bis zum 12.09.2026 war unter 660 px *die gesamte*
+Navigation im Verteiler, hinter einem 30 × 30-Knopf oben rechts. Das ist am
+Telefon die am schwersten erreichbare Ecke, und diese Seite wird einhändig,
+stehend und müde gelesen. Apple nennt als bequemen Bereich „the middle or bottom
+area of the display" (`designing-for-ios.md › Best practices`); die Vorgabe für
+Bedienelemente am Finger ist 44 × 44 pt (`accessibility.md › Controls`).
+
+Der Verteiler bleibt oben und behält, was nicht täglich gebraucht wird:
+Lehrbetrieb, fremde Seiten, Zeitzone. `body` bekommt unter 660 px
+`padding-bottom: calc(56px + env(safe-area-inset-bottom))`, damit die letzte
+Zeile nicht unter der Schiene endet. Im Druck ist sie weg.
+
+Eine Seite ergänzen heisst: eine Zeile in `NAV` und ein Zeichen in `ZEICHEN`
+(beide in `shell.js`). `Shell.mount()` hängt sie überall ein; die Startseite
+baut ihren Kopf selbst und ruft `Shell.bottomnavHTML()` direkt.
+
 ### Segmentschalter (`.langswitch`, `.wk-toggle`)
 
 Zwei Knöpfe in einer Pille, Mono, `--muted`; der gedrückte (`aria-pressed="true"`)
@@ -485,8 +531,9 @@ invertiert auf `--accent`. Das ist die einzige Stelle, an der die Welt rund wird
 
 ### Knöpfe
 
-- **`.iconbtn`:** 30 × 30 px (40 bei Grobzeiger), 3 px Radius, Rahmen `--line-2`,
-  transparente Fläche, 15-px-SVG.
+- **`.iconbtn`:** 30 × 30 px (**44 bei Grobzeiger**), 3 px Radius, Rahmen `--line-2`,
+  transparente Fläche, 15-px-SVG (18 bei Grobzeiger). 30 px reicht am Zeiger —
+  Apples Minimum dort ist 28 × 28 pt; am Finger ist die Vorgabe 44.
 - **`.tinybtn`:** kleiner Textknopf für Sperren, PIN ändern, „ohne PIN weiter". 2 px
   Radius, `--t-xs`, Rahmen `--line-2`.
 - **`.addbtn`:** gestrichelter Rahmen, 56 × 46 px — das einzige gestrichelte Bedienelement,

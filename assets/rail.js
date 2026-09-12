@@ -117,8 +117,25 @@
     var d = iso ? new Date(iso + 'T00:00:00') : null;
     var days = iso ? S.daysUntil(iso) : null;
 
+    /* Vergangenes zaehlt nicht mehr herunter.
+       Zwei Dinge haengen daran, und beide waren falsch:
+
+       1. days <= 2 ist auch fuer -8 wahr. Acht ueberfaellige Aufgaben
+          trugen dadurch die dringendste Stufe (.soon) — genau die
+          Auszeichnung, die der naechsten echten Frist gehoert.
+       2. Der Messwert rechnete weiter ins Negative und zeigte
+          "-8 Tage". Ein Countdown, der unter null laeuft, ist kein
+          Messwert mehr; das Markierungsschild nennt das Datum ohnehin.
+
+       Fuer die Schienen der Startseite und von plan.html sind
+       ueberfaellige Aufgaben ohnehin weggefiltert. Diese Sperre gilt
+       dem Kalender, wo ein vergangener Tag zu Recht zeigt, was an ihm
+       faellig war — nur eben ohne Countdown. */
+    var vorbei = days !== null && days < 0;
+
     var cls = ['term', 's-' + item.subject];
     if (item.done) cls.push('done');
+    else if (vorbei) cls.push('vorbei');
     else if (days !== null && days <= 2) cls.push('soon');
     else if (days !== null && days <= 6) cls.push('warn');
 
@@ -126,7 +143,7 @@
       : days === 0 ? (lang === 'en' ? 'today' : 'heute')
       : days === 1 ? (lang === 'en' ? 'day' : 'Tag')
       : (lang === 'en' ? 'days' : 'Tage');
-    var val = days === null ? ''
+    var val = days === null || vorbei ? ''
       : days === 0
         ? '<span class="val">' + esc(unit) + '</span>'
         : '<span class="val">' + days + ' <u>' + esc(unit) + '</u></span>';

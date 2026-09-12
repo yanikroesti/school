@@ -300,7 +300,12 @@
   /* ---------- Hausaufgaben ---------- */
   function homework() {
     var host = document.getElementById('homework');
+    // Am Tag null faellt die Aufgabe von der Schiene — dieselbe Regel
+    // wie bei den Pruefungen oben. "heute" steht noch, gestern nicht
+    // mehr: ein Countdown, der ins Minus laeuft, ist keine Frist mehr,
+    // sondern ein Vorwurf. Aufgaben ohne Datum bleiben stehen.
     var list = (seed.homework || []).slice()
+      .filter(function (h) { return !h.due || S.daysUntil(h.due) >= 0; })
       .sort(function (a, b) { return (a.due || '').localeCompare(b.due || ''); });
     document.getElementById('hw-n').textContent = list.length;
     host.innerHTML = list.length
@@ -354,6 +359,13 @@
 
   var verthost = document.getElementById('verthost');
   if (verthost && window.Shell) verthost.innerHTML = window.Shell.verteilerHTML('home');
+
+  // Diese Seite baut ihren Kopf im Markup und ruft Shell.mount() nie auf.
+  // Die Fussschiene muss sie deshalb selbst einhaengen — sonst ist die
+  // Startseite die einzige Seite ohne Navigation am Daumen.
+  if (window.Shell && window.Shell.bottomnavHTML) {
+    document.body.insertAdjacentHTML('beforeend', window.Shell.bottomnavHTML('home'));
+  }
 
   // Frisch eingehaengte Bedienelemente nachziehen: aria-label und Titel
   // stehen sonst auf dem Stand des Markups, das es hier noch gar nicht gab.

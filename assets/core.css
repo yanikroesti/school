@@ -72,10 +72,16 @@
   --f-ui:   Archivo, "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
   --f-data: "Azeret Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
 
-  /* Feste Typo-Stufen, Verhaeltnis ~1.15-1.2 */
+  /* Feste Typo-Stufen, Verhaeltnis ~1.15-1.2
+     --t-b stand bis zum 12.09.2026 auf 0.9375rem (15px). Apples Vorgabe
+     fuer die Grundschrift auf dem Telefon ist 17 pt, das Minimum 11 pt
+     (typography.md > Specifications). 15px liegt dazwischen, aber die
+     Seite wird muede, einhaendig und bei schlechtem Licht gelesen — da
+     ist die Grundschrift der falsche Ort zum Sparen. Jetzt 16px, auf
+     groben Zeigern (Finger) 17px. Die Stufen darueber bleiben. */
   --t-xs:  0.75rem;
   --t-s:   0.8125rem;
-  --t-b:   0.9375rem;
+  --t-b:   1rem;
   --t-m:   1.0625rem;
   --t-l:   1.25rem;
   --t-xl:  1.5rem;
@@ -226,7 +232,10 @@ code, kbd {
   letter-spacing: -0.02em; min-height: 24px;
 }
 /* Das Markenzeichen ist ein Schienenstueck mit einer Klemme darauf. */
-.brand .mk { display: block; width: 18px; height: 18px; color: var(--rail); flex: none; }
+/* --rail traegt 2.44:1 gegen --plate. Fuer eine Flaeche reicht das, fuer
+   eine bedeutungstragende Grafik nicht: WCAG 1.4.11 will 3:1. --muted
+   liegt bei 5.68:1 und bleibt trotzdem zurueckgenommen. */
+.brand .mk { display: block; width: 18px; height: 18px; color: var(--muted); flex: none; }
 .brand i {
   font-style: normal; color: var(--muted); font-weight: 500;
   font-size: var(--t-xs); font-family: var(--f-data); letter-spacing: 0;
@@ -241,6 +250,65 @@ code, kbd {
 .nav a:hover { background: var(--plate-2); color: var(--ink); }
 .nav a:active { background: var(--line); }
 .nav a[aria-current="page"] { background: var(--accent); color: var(--plate); }
+
+/* ============================================================
+   Fussschiene — dieselbe Klemmenleiste, an die Daumenkante gelegt
+   ------------------------------------------------------------
+   Bis zum 12.09.2026 verschwand die obere Leiste unter 660 px
+   ersatzlos, und die gesamte Navigation lag im Verteiler hinter
+   einem 30x30-Knopf oben rechts. Das ist auf dem Telefon die am
+   schwersten erreichbare Ecke; designing-for-ios.md > Best
+   practices nennt "the middle or bottom area of the display" als
+   den bequemen Bereich. Die Seite wird genau so gelesen:
+   einhaendig, stehend, muede.
+
+   Statt eine fremde Tab-Leiste zu importieren, kippt hier das
+   eigene Signaturbauteil um 90 Grad: die Schiene liegt als Linie
+   an der Oberkante, fuenf Klemmen haengen daran, die aktive traegt
+   ihren Fuss unten. Gleiches Rastermass, gleiche Farbregel — die
+   Seiten dieser Site haben keine Fachfarbe, darum Akzent statt
+   Klemmenfarbe, wie im Verteiler auch.
+   ============================================================ */
+.botnav {
+  display: none;
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 65;
+  background: var(--plate);
+  border-top: 2px solid var(--rail);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.botnav ul {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; grid-template-columns: repeat(5, 1fr);
+}
+.botnav a {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 0.16rem; min-height: 56px; padding: 0.3rem 0.15rem 0;
+  text-decoration: none; color: var(--muted);
+  position: relative;
+  transition: color 0.14s var(--ease);
+}
+.botnav a svg { width: 21px; height: 21px; flex: none; }
+.botnav a span {
+  font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.01em;
+  line-height: 1.1; text-align: center;
+}
+/* Der Fuss: dasselbe Bauteil wie an der Klemme, nur unten statt links. */
+.botnav a::after {
+  content: ""; position: absolute; left: 50%; bottom: 0;
+  width: 0; height: 3px; background: var(--accent);
+  transform: translateX(-50%);
+  transition: width 0.16s var(--ease);
+}
+.botnav a[aria-current="page"] { color: var(--ink); }
+.botnav a[aria-current="page"]::after { width: 2.1rem; }
+.botnav a:active { background: var(--plate-2); }
+
+@media (max-width: 660px) {
+  .botnav { display: block; }
+  /* Die Schiene liegt ueber dem Inhalt — sonst endet die letzte Zeile
+     jeder Seite darunter. 56 px Leiste plus Geraeterand. */
+  body { padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px)); }
+}
 
 .tools { display: flex; gap: 0.4rem; align-items: center; margin-left: 0.4rem; }
 
@@ -518,6 +586,10 @@ a.term:active, button.term:active { background: var(--line); }
 .term.warn .val { color: var(--warn-ink); }
 .term.done { opacity: 0.55; }
 .term.done .tt { text-decoration: line-through; text-decoration-color: var(--faint); }
+/* Faellig gewesen: nimmt sich zurueck, ohne durchgestrichen zu sein —
+   erledigt ist etwas anderes als vorbei. Trifft nur den Kalender; die
+   Schienen filtern Vergangenes weg. */
+.term.vorbei { opacity: 0.6; }
 .term[aria-disabled="true"] { opacity: 0.5; pointer-events: none; }
 
 /* Die dominante Klemme: die naechste Lektion.
@@ -567,8 +639,10 @@ a.term:active, button.term:active { background: var(--line); }
 .part::after { content: ""; flex: 1; border-top: 1px dashed var(--line-2); }
 .part > span { flex: none; }
 .part a { display: inline-flex; align-items: center; min-height: 24px; }
+/* 0.6875rem (11px) war genau das Minimum aus typography.md; fuer eine
+   anklickbare Grossbuchstaben-Zeile ist das der falsche Ort dafuer. */
 .part a, .part > span > span {
-  font-size: 0.6875rem; font-weight: 600;
+  font-size: var(--t-xs); font-weight: 600;
   letter-spacing: 0.05em; text-transform: uppercase;
   color: var(--muted); text-decoration: none;
 }
@@ -805,14 +879,22 @@ a.term:active, button.term:active { background: var(--line); }
   .foot .wrap { gap: 1.4rem 2rem; }
 }
 
-/* ---------- Touch ---------- */
+/* ---------- Touch ----------
+   Apples Vorgabe fuer Bedienelemente am Finger ist 44x44 pt, das
+   Minimum 28x28 pt (accessibility.md > Controls). Am Zeiger gilt 28x28
+   als Vorgabe — darum stehen die kleinen Masse oben und werden erst
+   hier angehoben. Bis zum 12.09.2026 endete das bei 32-40 px; das ist
+   ueber dem Minimum, aber unter der Vorgabe, und diese Seite wird
+   einhaendig im Treppenhaus bedient. Jetzt durchgehend 44. */
 @media (pointer: coarse) {
+  :root { --t-b: 1.0625rem; }
   .nav a { padding: 0.52rem 0.75rem; font-size: var(--t-b); }
-  .part a { display: inline-flex; align-items: center; min-height: 32px; }
-  .brand { min-height: 34px; }
-  .langswitch button, .wk-toggle button { padding: 0.5rem 0.85rem; font-size: var(--t-s); }
-  .iconbtn { width: 40px; height: 40px; }
-  .foot a { display: inline-block; padding: 0.38rem 0; font-size: var(--t-b); }
+  .part a { display: inline-flex; align-items: center; min-height: 44px; }
+  .brand { min-height: 44px; }
+  .langswitch button, .wk-toggle button { padding: 0.62rem 0.9rem; font-size: var(--t-s); }
+  .iconbtn, .vertbtn { width: 44px; height: 44px; }
+  .iconbtn svg, .vertbtn svg { width: 18px; height: 18px; }
+  .foot a { display: inline-flex; align-items: center; min-height: 44px; font-size: var(--t-b); }
   .logos img { height: 20px; }
 }
 
@@ -821,7 +903,8 @@ a.term:active, button.term:active { background: var(--line); }
 }
 
 @media print {
-  .topbar, .foot, .iconbtn, .langswitch, .wk-toggle { display: none !important; }
+  .topbar, .foot, .iconbtn, .langswitch, .wk-toggle, .botnav { display: none !important; }
+  body { padding-bottom: 0 !important; }
   body { background: #fff; }
   .term, .panel { border-color: #999; break-inside: avoid; }
   .rail::before, .term::before { background: #999; }

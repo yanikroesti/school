@@ -128,6 +128,48 @@
     '</div>';
   }
 
+  /* ---------------- Fussschiene ----------------
+     Unter 660 px war die obere Leiste bisher weg und die ganze
+     Navigation lag im Verteiler, hinter einem kleinen Knopf oben
+     rechts. Auf dem Telefon ist das die schlechteste Ecke: die Seite
+     wird einhaendig gelesen, und der bequeme Bereich liegt unten
+     (designing-for-ios.md > Best practices).
+
+     Darum liegen die fuenf Seiten jetzt unten an der Daumenkante —
+     als dieselbe Schiene, nur um 90 Grad gekippt. Der Verteiler bleibt
+     oben und behaelt, was nicht taeglich gebraucht wird: Lehrbetrieb,
+     fremde Seiten, Zeitzone.
+
+     Ein Strich je Zeile, gleiche Reihenfolge wie oben. Wer hier eine
+     Seite ergaenzt, ergaenzt sie in NAV und gibt ihr unten ein Zeichen. */
+  var ZEICHEN = {
+    home:     '<path d="M2 12h20M6 12V6h5v6M15 12V8h4v4"/>',
+    plan:     '<path d="M4 6.5h16M4 12h16M4 17.5h10"/>',
+    kalender: '<rect x="3.4" y="5" width="17.2" height="15.4" rx="2"/>' +
+              '<path d="M8 3.2v3.6M16 3.2v3.6M3.4 10h17.2"/>',
+    noten:    '<path d="M5 19.5V11M12 19.5V5.5M19 19.5V14"/>',
+    material: '<path d="M12 3.4 20.5 7.6v8.8L12 20.6 3.5 16.4V7.6Z"/><path d="M3.5 7.6 12 11.8l8.5-4.2M12 11.8v8.8"/>'
+  };
+
+  function bottomnav(active) {
+    var b = up();
+    return '' +
+    '<nav class="botnav" aria-label="Hauptnavigation / Main">' +
+      '<ul>' +
+        NAV.map(function (n) {
+          var da = n.key === active;
+          return '<li><a href="' + b + n.href + '"' + (da ? ' aria-current="page"' : '') + '>' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" ' +
+              'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+              (ZEICHEN[n.key] || '') +
+            '</svg>' +
+            '<span lang="de">' + n.de + '</span><span lang="en">' + n.en + '</span>' +
+          '</a></li>';
+        }).join('') +
+      '</ul>' +
+    '</nav>';
+  }
+
   // Das Zeichen ist ein Stueck Hutschiene mit zwei Klemmen darauf.
   var MARK =
     '<svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
@@ -336,9 +378,13 @@
     // Die Startseite baut ihre Kopfleiste selbst im Markup und ruft
     // Shell.mount() nie auf — sie holt sich den Verteiler hierueber.
     verteilerHTML: verteiler,
+    // Die Startseite hat ihren Kopf im Markup und haengt die Fussschiene
+    // selbst ein — sie ruft mount() nie auf.
+    bottomnavHTML: bottomnav,
     mount: synced(function (active, teachers) {
       document.body.insertAdjacentHTML('afterbegin', topbar(active));
       place(footer(teachers));
+      document.body.insertAdjacentHTML('beforeend', bottomnav(active));
     }),
     mountFooter: synced(function (teachers) { place(footer(teachers)); })
   };

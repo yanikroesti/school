@@ -153,7 +153,12 @@
     }).join('')
       : '<div class="rail">' + R.bare({ kind: 'no-tests' }, lang()) + '</div>';
 
-    var hw = seed.homework || [];
+    // Dieselbe Regel wie auf der Startseite und wie bei den Pruefungen:
+    // am Tag null faellt die Aufgabe von der Schiene. Der Zaehler folgt,
+    // sonst nennt er eine Zahl, die unten niemand nachzaehlen kann.
+    var hw = (seed.homework || []).filter(function (h) {
+      return !h.due || S.daysUntil(h.due) >= 0;
+    });
     document.getElementById('hwn').textContent = hw.length;
     document.getElementById('hw').innerHTML = hw.length
       ? hw.map(function (h) { return R.entry(h, 'homework', lang()); }).join('')
