@@ -2,11 +2,11 @@
 name: schule.yanikroesti.ch
 description: Die Klemmenleiste — der Schultag als Hutschiene, jede Lektion eine beschriftete Reihenklemme darauf.
 colors:
-  s-abt: "#b35310"
-  s-htog: "#1d4e89"
-  s-atd: "#2a7049"
-  s-abu: "#66459b"
-  s-sport: "#b23a2c"
+  s-abt: "#9a4a12"
+  s-htog: "#1b4677"
+  s-atd: "#25623f"
+  s-abu: "#5b3e8a"
+  s-sport: "#9c3327"
   ground: "#e8eaee"
   plate: "#f6f7f9"
   plate-2: "#eef0f3"
@@ -14,8 +14,8 @@ colors:
   rail-2: "#b9c1cb"
   ink: "#14181d"
   ink-2: "#39414d"
-  muted: "#596371"
-  faint: "#69727f"
+  muted: "#4e5865"
+  faint: "#5c6674"
   line: "#d2d7de"
   line-2: "#bcc3cd"
   accent: "#14181d"
@@ -189,7 +189,8 @@ Tabellenziffern, und deshalb ist Hell die Vorgabe und Dunkel der zweite Fall.
 
 **Key Characteristics:**
 - Hutschiene als Struktur, nicht als Bild: Bauteile bedeuten Tatsachen.
-- Vollständig flach — null `box-shadow`, null `backdrop-filter`, null Glas.
+- Inhaltsebene vollständig flach — null `box-shadow`, null `backdrop-filter`,
+  null Glas. Einzige Ausnahme ist die schwebende Kopfleiste.
 - Fünf gesättigte Klemmenfarben als Konvention, nie als Schmuck.
 - Kleine Radien (2–3 px), wie Polyamid-Gehäuse.
 - Eine Schriftfamilie (Archivo); Azeret Mono ausschliesslich für Messwerte.
@@ -367,8 +368,9 @@ aus und zeichnet Schiene und Klemmen in Graustufen.
 
 ## Elevation & Depth
 
-**Es gibt keine Schatten.** Null `box-shadow`, null `drop-shadow`, null
-`backdrop-filter` im ganzen Projekt — verifiziert über alle CSS-, HTML- und JS-Dateien.
+**Im Inhalt gibt es keine Schatten.** Null `box-shadow`, null `drop-shadow`,
+null `backdrop-filter` auf Klemmen, Panels und Flächen — ein Verteilkasten
+wirft keine. Die schwebende Kopfleiste ist die eine dokumentierte Ausnahme.
 Ein Verteilkasten wirft keine. Tiefe entsteht ausschliesslich durch drei Mittel:
 
 1. **Linie.** Jedes Objekt hat genau eine sichtbare Kante (`1px solid var(--line-2)`).
@@ -397,7 +399,7 @@ Kleine Radien wie Polyamid-Gehäuse: `--r-s` 2 px für Marken, Eingaben und den 
 nur links (`calc(var(--r) - 1px) 0 0 calc(var(--r) - 1px)`) — innen liegende Ecken sind
 immer um 1 px kleiner als die Aussenkante, damit die Rundungen konzentrisch bleiben.
 
-Pillen (`999px`) gibt es an genau drei Stellen, und alle drei sind echte kleine
+Pillen (`999px`) gibt es an genau **vier** Stellen, und alle vier sind echte kleine
 Bedienelemente: der Sprachschalter, der Wochen-Schalter (`.langswitch`, `.wk-toggle`) und
 die PIN-Punkte. Nichts anderes wird rund.
 
@@ -806,7 +808,7 @@ behandelter Stoff ausgegeben.
 
 ### Don't:
 
-- **Don't** eine Fachfarbe inline ins Markup schreiben (`style="background:#b35310"`) —
+- **Don't** eine Fachfarbe inline ins Markup schreiben (`style="background:#9a4a12"`) —
   der Hellmodus-Wert gewinnt dann gegen den Dunkelmodus.
 - **Don't** nur einen der beiden Farborte ändern. `core.css` ohne `subjects.json`
   färbt die Klemmen richtig und die SVGs falsch.
@@ -828,3 +830,74 @@ behandelter Stoff ausgegeben.
 - **Don't** einen Querbrücker oder eine Trennplatte setzen, ohne dass die Tatsache
   dahinter (gleiche bzw. andere Lehrperson) tatsächlich zutrifft. Die Bauteile bedeuten
   etwas; sobald sie lügen, ist die Welt nur noch Dekoration.
+
+
+---
+
+## Craft-Durchgang 12.09.2026 (zweiter Teil) — Apple HIG
+
+Aufgesetzt auf `6902b14` (Fussschiene, 16-px-Fliesstext, 44-px-Ziele). Die
+Berührungsziele und die Navigation an der Daumenkante waren dort schon
+erledigt; dieser Durchgang ergänzt, was noch fehlte.
+
+### Gemessen, nicht geschätzt
+
+| | vorher | nachher |
+|---|---|---|
+| `--faint` auf `--ground` | **4.04:1** ❌ | 4.83:1 ✅ |
+| `--faint` auf `--plate-2` | **4.26:1** ❌ | 5.09:1 ✅ |
+| `--muted` auf `--plate` | 5.68:1 | 6.74:1 |
+| Weiss auf `--s-abt` | 5.05:1 | 6.25:1 |
+| Weiss auf `--s-htog` | 8.39:1 | 9.59:1 |
+| Weiss auf `--s-atd` | 5.98:1 | 7.25:1 |
+| Weiss auf `--s-abu` | 7.27:1 | 8.40:1 |
+| Weiss auf `--s-sport` | 5.94:1 | 7.20:1 |
+
+> [!bug] «null Kontrastfehler in beiden Themes» stimmte nicht
+> `--faint` war offenbar nur gegen `--plate` geprüft (4.54:1, knapp bestanden).
+> Auf den beiden anderen Flächen, auf denen es tatsächlich steht, lag es
+> darunter — seit dem ersten Bau.
+
+### Glas, an genau einer Stelle
+
+Nur `.topbar`. Apples Modell kennt zwei Ebenen, und Glas gehört in die obere:
+*«Glass on app backgrounds, cards, list rows, or content containers is a
+defect.»* Die Klemmen **sind** Inhalt und bleiben flach und deckend.
+
+Regular-Variante (die Leiste trägt Text): `blur(24px) saturate(1.4)`, Fond
+72 %, Haarlinie, Haarlicht, dazu ein Scroll-Edge-Verlauf. `prefers-reduced-transparency`
+und `prefers-contrast: more` bekommen eine **deckende** Leiste; ohne
+`backdrop-filter`-Unterstützung greift `--plate` über `@supports`.
+
+Die PIN-Sperre bleibt `visibility: hidden` — nie Blur. Ein `filter: blur(9px)`
+löste im Test zu `blur(0px)` auf und hätte die Noten freigegeben. Geprüft:
+Leiste verborgen, `::after` verborgen, null sichtbare Textknoten.
+
+### Rest
+
+- **Zeilenlänge** `--measure: 62ch` auf `.term .sub` — der Prüfungstext lief
+  über die volle Klemmenbreite, auf 1120 px über 110 Zeichen je Zeile.
+- **Abstandsstufen** `--sp-1` … `--sp-6` auf 8-px-Basis; Abschnitte 2.5 → 3 rem.
+- **Druckantwort** 3 %, 90 ms. Grosse Flächen skalieren nicht, sie wechseln die
+  Tonstufe. Verteiler-Knopf dreht 90°, solange offen. Alles aus unter
+  `prefers-reduced-motion`.
+- **Hell/Dunkel zeigt den Zustand**: im Hellen der Mond, im Dunkeln die Sonne.
+  Vorher in beiden Modi dieselbe Sonne.
+- **Zeichen** ist die gefüllte Silhouette derselben Reihenklemme wie das
+  App-Symbol, einfarbig. Steht in `shell.js` (`MARK`) **und** `index.html`.
+- **Knopf** rund, 44 px.
+- **Symbol**: `icon.svg` (Reiter, von Hand gesetzt — der Raster zerfällt bei
+  16 px), `apple-touch-icon.png` 180, `icon-192/512.png`, `site.webmanifest`.
+  Rasterentwurf mit Higgsfield, drei Varianten, gewählt wurde die mit
+  durchlaufender Schiene.
+
+> [!warning] Fremde Logos werden nicht erzeugt
+> EIT.swiss, ESTI und SBFI fehlen weiterhin und dürfen nicht erfunden werden:
+> ein nachgebautes Logo einer echten Organisation ist eine Fälschung ihrer
+> Identität, und diese Seite geht an den Lehrbetrieb. Neue kommen als
+> offizielle Datei oder gar nicht — eine Zeile in `LOGOS` in `shell.js`.
+
+### Farben stehen an DREI Orten
+
+`assets/core.css`, `data/subjects.json` **und** das Frontmatter dieser Datei.
+Die alte Zwei-Orte-Regel übersah das Frontmatter. Alle drei gleich halten.

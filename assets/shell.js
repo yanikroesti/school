@@ -172,9 +172,7 @@
 
   // Das Zeichen ist ein Stueck Hutschiene mit zwei Klemmen darauf.
   var MARK =
-    '<svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
-    'stroke-width="2" stroke-linecap="square" aria-hidden="true">' +
-    '<path d="M2 12h20M6 12V6h5v6M15 12V8h4v4"/></svg>';
+    '<svg class="mk" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M0 10.7h7.4v2.6H0zm16.6 0H24v2.6h-7.4z" opacity=".55"/><path d="M9.6 2.6h1.7v1.6h1.4V2.6h1.7a1.6 1.6 0 0 1 1.6 1.6v15.6a1.6 1.6 0 0 1-1.6 1.6h-1.7v-1.6h-1.4v1.6H9.6A1.6 1.6 0 0 1 8 19.8V4.2a1.6 1.6 0 0 1 1.6-1.6z"/></svg>';
 
   function topbar(active) {
     var b = up();
@@ -195,10 +193,7 @@
         '</div>' +
         '<button class="iconbtn" type="button" data-theme-toggle ' +
           'data-de-label="Hell/Dunkel umschalten" data-en-label="Toggle light/dark">' +
-          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" ' +
-          'stroke-linecap="round" aria-hidden="true">' +
-          '<path d="M12 3.5v1.6M12 18.9v1.6M5 5l1.15 1.15M17.85 17.85 19 19M3.5 12h1.6M18.9 12h1.6' +
-          'M5 19l1.15-1.15M17.85 6.15 19 5"/><circle cx="12" cy="12" r="3.6"/></svg>' +
+          '<svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M12 3.5v1.6M12 18.9v1.6M5 5l1.15 1.15M17.85 17.85 19 19M3.5 12h1.6M18.9 12h1.6M5 19l1.15-1.15M17.85 6.15 19 5"/><circle cx="12" cy="12" r="3.6"/></svg><svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13.4A8.4 8.4 0 0 1 10.6 4a8.4 8.4 0 1 0 9.4 9.4z"/></svg>' +
         '</button>' +
       '</div>' +
     '</div></header>';

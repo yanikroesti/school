@@ -26,11 +26,11 @@
      Angelehnt an die Konvention echter Reihenklemmen, wo die Farbe
      die Funktion nennt: orange = abgesichert/trennbar, blau = Neutral,
      gruen = Schutz, violett = Sonderfunktion, rot = geschaltet.      */
-  --s-abt:   #b35310;   /* orange  — hier laufen alle Pruefungen */
-  --s-htog:  #1d4e89;   /* blau    — das Arbeitspferd */
-  --s-atd:   #2a7049;   /* gruen   — Dokumentation und Telekom */
-  --s-abu:   #66459b;   /* violett — Allgemeinbildung */
-  --s-sport: #b23a2c;   /* rot     — Sport */
+  --s-abt:   #9a4a12;   /* orange  — hier laufen alle Pruefungen */
+  --s-htog:  #1b4677;   /* blau    — das Arbeitspferd */
+  --s-atd:   #25623f;   /* gruen   — Dokumentation und Telekom */
+  --s-abu:   #5b3e8a;   /* violett — Allgemeinbildung */
+  --s-sport: #9c3327;   /* rot     — Sport */
 
   /* ---- Grundflaechen: Innenraum eines Verteilkastens ----
      Kuehles Hellgrau statt warmem Papier. Das ist eine bewusste
@@ -44,8 +44,11 @@
 
   --ink:      #14181d;
   --ink-2:    #39414d;
-  --muted:    #596371;
-  --faint:    #69727f;
+  /* Gemessen: --faint stand auf #69727f und trug auf --ground nur
+     4.04:1, auf --plate-2 4.26:1 — beides unter 4.5:1. Geprueft war
+     es offenbar nur gegen --plate (4.54:1). Jetzt 5.43 / 4.83 / 5.09. */
+  --muted:    #4e5865;   /* 6.74 auf --plate, 6.00 auf --ground */
+  --faint:    #5c6674;   /* 5.43 auf --plate, 4.83 auf --ground */
   --line:     #d2d7de;
   --line-2:   #bcc3cd;
 
@@ -88,6 +91,24 @@
   --t-2xl: 1.875rem;
   --t-3xl: 2.5rem;
 
+  /* 8px-Basis, damit senkrechter Rhythmus entsteht statt Zufall. */
+  --sp-1: 0.5rem;  --sp-2: 0.75rem; --sp-3: 1rem;
+  --sp-4: 1.5rem;  --sp-5: 2rem;    --sp-6: 3rem;
+
+  /* Der Pruefungstext lief ueber die volle Klemmenbreite — auf
+     1120px sind das ueber 110 Zeichen je Zeile. */
+  --measure: 62ch;
+
+  /* Liquid Glass, ausschliesslich fuer die Kopfleiste. Apples Modell
+     kennt zwei Ebenen; Glas gehoert nur in die schwebende obere:
+     "Don't use Liquid Glass in the content layer" (Materials).
+     Die Klemmen sind Inhalt und bleiben flach und deckend. */
+  --glass-blur: 24px;
+  --glass-sat:  1.4;
+  --glass-bg:   rgba(246, 247, 249, 0.72);
+  --glass-line: rgba(20, 24, 29, 0.10);
+  --glass-hi:   rgba(255, 255, 255, 0.65);
+
   --wrap: 1120px;
   color-scheme: light;
 }
@@ -120,6 +141,11 @@
     --s-atd:   #4aa872;
     --s-abu:   #9b7ad0;
     --s-sport: #dd6355;
+    /* Glas bei Nacht. Muss in BEIDEN Dunkelbloecken stehen, sonst
+       traegt die Leiste im System-Dunkelmodus den hellen Fond. */
+    --glass-bg:   rgba(24, 28, 36, 0.72);
+    --glass-line: rgba(231, 234, 239, 0.12);
+    --glass-hi:   rgba(231, 234, 239, 0.10);
     color-scheme: dark;
   }
 }
@@ -147,6 +173,11 @@
   --s-atd:   #4aa872;
   --s-abu:   #9b7ad0;
   --s-sport: #dd6355;
+  /* Glas bei Nacht. Muss in BEIDEN Dunkelbloecken stehen, sonst
+     traegt die Leiste im System-Dunkelmodus den hellen Fond. */
+  --glass-bg:   rgba(24, 28, 36, 0.72);
+  --glass-line: rgba(231, 234, 239, 0.12);
+  --glass-hi:   rgba(231, 234, 239, 0.10);
   color-scheme: dark;
 }
 
@@ -224,6 +255,37 @@ code, kbd {
   background: var(--plate);
   border-bottom: 1px solid var(--line-2);
 }
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .topbar {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+    border-bottom: 1px solid var(--glass-line);
+    box-shadow: inset 0 1px 0 var(--glass-hi);
+  }
+}
+/* Scroll-Edge: der Inhalt verlaeuft unter der Leiste, statt anzustossen. */
+.topbar::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 100%;
+  height: 18px; pointer-events: none;
+  background: linear-gradient(to bottom,
+    color-mix(in srgb, var(--ground) 72%, transparent), transparent);
+}
+@media (prefers-reduced-transparency: reduce) {
+  .topbar { background: var(--plate); -webkit-backdrop-filter: none;
+            backdrop-filter: none; border-bottom-color: var(--line-2); box-shadow: none; }
+  .topbar::after { display: none; }
+}
+@media (prefers-contrast: more) {
+  .topbar { background: var(--plate); -webkit-backdrop-filter: none;
+            backdrop-filter: none; border-bottom: 1px solid var(--ink-2); box-shadow: none; }
+  .topbar::after { display: none; }
+}
+/* Aufteilung wie bei Apple: Zeichen links, Navigation mittig, Werkzeuge
+   rechts. Gilt nur oben — unter 660px traegt .botnav die Navigation. */
+.topbar .brand { flex: 1 1 0; }
+.topbar .tools { flex: 1 1 0; justify-content: flex-end; margin-left: 0; }
+.topbar .nav   { margin: 0 auto; gap: 0.15rem; }
 .topbar .wrap { display: flex; align-items: center; gap: 1rem; min-height: 54px; }
 
 .brand {
@@ -360,7 +422,21 @@ code, kbd {
 }
 .iconbtn:hover { color: var(--ink); border-color: var(--line-2); background: var(--plate-2); }
 .iconbtn:active { background: var(--line); }
-.iconbtn svg { width: 15px; height: 15px; }
+.iconbtn svg { width: 16px; height: 16px; }
+
+/* Der Knopf zeigt, wohin er schaltet, nicht wo man steht: im Hellen
+   den Mond, im Dunkeln die Sonne. Vorher stand in beiden Zustaenden
+   dieselbe Sonne — ein Schalter, der seinen Zustand verschweigt. */
+.iconbtn .ico-sun  { display: none; }
+.iconbtn .ico-moon { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .iconbtn .ico-sun  { display: block; }
+  :root:not([data-theme="light"]) .iconbtn .ico-moon { display: none; }
+}
+:root[data-theme="dark"]  .iconbtn .ico-sun  { display: block; }
+:root[data-theme="dark"]  .iconbtn .ico-moon { display: none; }
+:root[data-theme="light"] .iconbtn .ico-sun  { display: none; }
+:root[data-theme="light"] .iconbtn .ico-moon { display: block; }
 
 /* ---- Verteiler ----
    Von dieser Schiene gehen die anderen ab. Das ist kein Menue im
@@ -555,8 +631,13 @@ code, kbd {
   overflow-wrap: break-word;
   hyphens: auto;
 }
-.term .tt { font-weight: 600; font-size: var(--t-b); letter-spacing: -0.01em; }
-.term .sub { font-size: var(--t-s); color: var(--muted); }
+.term .tt { font-weight: 600; font-size: var(--t-b); letter-spacing: -0.01em; line-height: 1.35; }
+/* Die Nebenzeile traegt bei Pruefungen den ganzen Stoff — auf 1120px
+   waren das ueber 110 Zeichen in einer Zeile. */
+.term .sub {
+  font-size: var(--t-s); color: var(--muted);
+  max-width: var(--measure); line-height: 1.5; margin-top: 0.15rem;
+}
 .term .sub b { color: var(--ink-2); font-weight: 500; }
 
 .term > .aside {
@@ -669,10 +750,12 @@ a.term:active, button.term:active { background: var(--line); }
 /* ============================================================
    Abschnitte
    ============================================================ */
-.sect { margin: 2.5rem 0; }
+/* Luft zwischen den Abschnitten. Die Dichte *innerhalb* einer Schiene
+   bleibt — sie ist das Werkzeug. */
+.sect { margin: var(--sp-6) 0; }
 .sect-h {
   display: flex; align-items: baseline; gap: 0.7rem;
-  margin-bottom: 1rem; padding-bottom: 0.5rem;
+  margin-bottom: var(--sp-4); padding-bottom: var(--sp-2);
   border-bottom: 1px solid var(--line);
 }
 .sect-h h2 { font-size: var(--t-l); }
@@ -898,8 +981,37 @@ a.term:active, button.term:active { background: var(--line); }
   .logos img { height: 20px; }
 }
 
+/* ---- Druckantwort ----
+   Jedes Bedienelement gibt beim Druecken nach: 3 %, 90 ms, eine Achse.
+   Grosse Flaechen skalieren NICHT — eine 3 rem hohe Klemme, die
+   schrumpft, sieht aus wie ein Fehler; sie wechselt die Tonstufe. */
+:root { --press: 0.97; --press-t: 90ms; }
+
+.nav a, .botnav a, .iconbtn, .vertbtn, .langswitch button, .wk-toggle button,
+.tinybtn, .knopf, .index a, .term[href], .vertliste a, .tier {
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--press-t) var(--ease),
+              background 0.14s var(--ease), color 0.14s var(--ease),
+              border-color 0.14s var(--ease);
+}
+.nav a:active, .botnav a:active, .iconbtn:active, .vertbtn:active,
+.langswitch button:active, .wk-toggle button:active,
+.tinybtn:active, .knopf:active, .vertliste a:active {
+  transform: scale(var(--press));
+}
+.index a:active, .term[href]:active { transform: none; background: var(--plate-2); }
+
+/* Der Verteiler dreht seine Leitungen, solange er offen ist — die eine
+   orchestrierte Bewegung der Seite, und sie sagt etwas. */
+.vertbtn svg { transition: transform 0.18s var(--ease); }
+.vertbtn[aria-expanded="true"] svg { transform: rotate(90deg); }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .nav a:active, .botnav a:active, .iconbtn:active, .vertbtn:active,
+  .langswitch button:active, .wk-toggle button:active,
+  .tinybtn:active, .knopf:active, .vertliste a:active { transform: none; }
+  .vertbtn[aria-expanded="true"] svg { transform: none; }
 }
 
 @media print {
