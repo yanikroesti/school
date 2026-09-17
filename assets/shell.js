@@ -56,7 +56,13 @@
       de: 'Lernpakete, Notizen, Abstellkammer', en: 'Study packs, notes, junk drawer' },
     { href: 'https://schule.yanikroesti.ch', kuerzel: 'ELI', farbe: 's-abt',
       titel: 'schule.yanikroesti.ch',
-      de: 'Stundenplan, Noten, Kalender', en: 'Timetable, grades, calendar' }
+      de: 'Stundenplan, Noten, Kalender', en: 'Timetable, grades, calendar' },
+    /* Gruen wie ATD: dort steht die Technische Dokumentation, und die
+       Lerndokumentationen sind genau das — die Farbe nennt die Funktion,
+       nicht die naechste freie Stelle in der Palette. */
+    { href: 'https://lerndokus.vercel.app', kuerzel: 'LERN', farbe: 's-atd',
+      titel: 'lerndokus.vercel.app',
+      de: 'Lerndokumentationen, 4 Lehrjahre', en: 'Learning documentation, 4 years' }
   ];
 
   /** Ist das die Seite, auf der wir gerade stehen?
