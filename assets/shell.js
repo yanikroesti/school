@@ -60,8 +60,8 @@
     /* Gruen wie ATD: dort steht die Technische Dokumentation, und die
        Lerndokumentationen sind genau das — die Farbe nennt die Funktion,
        nicht die naechste freie Stelle in der Palette. */
-    { href: 'https://lerndokus.vercel.app', kuerzel: 'LERN', farbe: 's-atd',
-      titel: 'lerndokus.vercel.app',
+    { href: 'https://lerndoku.swisslock.net', kuerzel: 'LERN', farbe: 's-atd',
+      titel: 'lerndoku.swisslock.net',
       de: 'Lerndokumentationen, 4 Lehrjahre', en: 'Learning documentation, 4 years' }
   ];
 
