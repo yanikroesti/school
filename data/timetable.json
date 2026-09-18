@@ -31,9 +31,9 @@
     { "day": 5, "start": "09:40", "end": "11:10", "subject": "htog", "teacher": "berisha", "room": "2.12", "week": "all",
       "topic": { "de": "NIN", "en": "NIN" } },
     { "day": 5, "start": "11:15", "end": "12:00", "subject": "atd", "teacher": "aeschlimann", "room": "2.12", "week": "all",
-      "topic": { "de": "Telekommunikation", "en": "Telecommunications" } },
-    { "day": 5, "start": "12:45", "end": "13:30", "subject": "atd", "teacher": "aeschlimann", "room": "2.12", "week": "all",
       "topic": { "de": "Apparatekunde", "en": "Equipment studies" } },
+    { "day": 5, "start": "12:45", "end": "13:30", "subject": "atd", "teacher": "aeschlimann", "room": "2.12", "week": "all",
+      "topic": { "de": "Telekommunikation", "en": "Telecommunications" } },
     { "day": 5, "start": "13:40", "end": "15:10", "subject": "htog", "teacher": "berisha", "room": "2.12", "week": "all",
       "topic": { "de": "Arbeitssicherheit / Chemie", "en": "Workplace safety / chemistry" } }
   ]
