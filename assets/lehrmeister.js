@@ -267,7 +267,9 @@
       } else status = '';
 
       var naechstes = '';
-      if (x.naechstes && x.naechstes.datum) {
+      // Nur was noch kommt. Ohne diese Pruefung stand im Bericht eine
+      // Woche lang «Als Nächstes: 11.09.» — ein Termin, der schon vorbei war.
+      if (x.naechstes && x.naechstes.datum && S.daysUntil(x.naechstes.datum) >= 0) {
         var was = x.naechstes[lang()] || x.naechstes.de || x.naechstes.en || '';
         naechstes = '<div class="fachkommend"><b>' +
           (lang() === 'en' ? 'Next:' : 'Als Nächstes:') + '</b><span>' +

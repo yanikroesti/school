@@ -116,6 +116,22 @@
         "en": "Practice sheet: 12 tasks covering measuring errors (both U/I readings), Wheatstone bridge, series resistor, shunt, expansion, boiler with efficiency, rearranging Rθ for α and FA for l₁, and a word equation. Two complete practice variants A/B in the study pack. Individual points total 25, not the header’s 20; no official grading inferred. Lever-law A4 assignment separately announced as worth 4 points; submission unconfirmed."
       },
       "source": "Notiz Elektrotechnik und Physik 07.09.2026 · Übungstest von Yanik am 07.09.2026 · Blatt Moser W4 31.8.26"
+    },
+    {
+      "id": "atd-telekom-2026-10-16",
+      "kind": "test",
+      "teacher": "aeschlimann",
+      "subject": "atd",
+      "date": "2026-10-16",
+      "title": {
+        "de": "Test Telekommunikation",
+        "en": "Test — telecommunications"
+      },
+      "detail": {
+        "de": "Erste Telekom-Lektion nach den Herbstferien (Fr 16.10., 12:45). Umfang laut Notiz vom 18.09.: «die ersten zwei Kapitel». Offen: Kapitel 1 und 2 wurden schon am 04.09. geprüft — ob es eine Wiederholung ist oder Kapitel 3 und 4 gemeint sind, ist noch zu klären.",
+        "en": "First telecoms lesson after the autumn holidays (Fri 16 Oct, 12:45). Scope per the note of 18 Sep: “the first two chapters”. Open: chapters 1 and 2 were already tested on 4 Sep — whether this is a retake or chapters 3 and 4 are meant is still to be confirmed."
+      },
+      "source": "Notiz Telekommunikation 18.09.2026 · Datum abgeleitet: erste Aeschlimann-Lektion nach den Herbstferien (Ferienplan BZI, Stundenplan)"
     }
   ],
   "homework": [

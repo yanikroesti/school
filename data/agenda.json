@@ -5,55 +5,51 @@
   "fachstand": [
     {
       "fach": "abu",
-      "aktualisiert": "2026-08-30",
-      "geplant": "2026-08-31",
+      "aktualisiert": "2026-09-14",
       "lehrer": "laedrach",
       "aktuell": {
-        "de": "Risiko und Sicherheit — Sozialversicherungen",
-        "en": "Risk and safety — social insurance"
+        "de": "Risiko und Sicherheit — Semesterarbeit im Team",
+        "en": "Risk and safety — team semester project"
       },
       "fokus": {
         "de": [
-          "Das Schweizer Vorsorgeprinzip: 3-Säulen-Modell",
-          "Sach- und Haftpflichtversicherung wiederholen",
-          "Plakat zu einer Sozialversicherung; Start der Projektarbeit zu einem sozialen Risiko",
-          "Test Gross-/Kleinschreibung am 07.09. abgeschlossen; Note noch unbekannt. Kein weiterer neuer ABU-Stoff gemeldet."
+          "Projektarbeit zu einem Risiko in der Schweiz, als erste Vorbereitung auf das QV ABU",
+          "Arbeitsthema: Fachkräftemangel in der Elektrobranche",
+          "Bewertet werden die Dokumentation (max. 26 Punkte) und eine Präsentation von 10 Minuten pro Gruppe (max. 29 Punkte, Note Sprache und Kommunikation)",
+          "Abgabe- und Präsentationstermin noch nicht bekannt",
+          "Test Gross-/Kleinschreibung am 07.09. abgeschlossen; Note noch unbekannt."
         ],
         "en": [
-          "The Swiss three-pillar pension model",
-          "Review of property and liability insurance",
-          "Poster about one social insurance; project on a Swiss social risk begins",
-          "Capitalisation test completed on 7 Sep; grade not yet known. No further new general-education content reported."
+          "Project on a Swiss social risk, as first preparation for the general-education final exam",
+          "Working topic: skills shortage in the electrical trade",
+          "Assessed: the documentation (max. 26 points) and a 10-minute presentation per group (max. 29 points, language and communication grade)",
+          "Submission and presentation date not yet known",
+          "Capitalisation test completed on 7 Sep; grade not yet known."
         ]
       },
-      "quelle": "ABU-Plan 31.08.2026 · Notiz Sozialversicherungen 31.08.2026 · Bestätigung Yanik 07.09.2026, Notiz Elektrotechnik und Physik 07.09.2026"
+      "quelle": "Projektauftrag «Projektarbeit Risiko und Sicherheit CH» · Korrekturvorlagen Dokumentation und Präsentation · Entwurf «Projektarbeit Fachkräftemangel Elektrobranche» vom 14.09.2026"
     },
     {
       "fach": "abt",
-      "aktualisiert": "2026-09-04",
+      "aktualisiert": "2026-09-18",
       "lehrer": "waefler",
       "aktuell": {
-        "de": "NIN — Wirkung des elektrischen Stroms auf den Körper; Apparatekunde — Induktionskochfeld und Schaltstufen",
-        "en": "Electrical installations — effects of electric current on the body; appliance technology — induction hobs and switch stages"
+        "de": "Werkstoffkunde — Nichteisenmetalle; NIN — Niederspannungs-Installationsverordnung (NIV)",
+        "en": "Materials science — non-ferrous metals; electrical installations — Low-Voltage Installation Ordinance (NIV)"
       },
       "fokus": {
         "de": [
-          "Thermische, chemische und muskelreizende Wirkung von Strom",
-          "Gefährdungsfaktoren: Stromstärke, Einwirkdauer, Strombahn, Frequenz und Körperimpedanz",
-          "Induktionskochfeld: Grundlagen; 7-Stufen-Schaltung reguliert feiner als 5-Stufen-Schaltung"
+          "Nichteisenmetalle als Leiter-, Kontakt- und Widerstandswerkstoffe; Messing (Kupfer + Zink) und Bronze (Kupfer + Zinn) als Prüfungsstoff markiert",
+          "NIV: Bewilligungspflicht, Fachkundigkeit, Pflichten des Eigentümers, Erstprüfung und Schlusskontrolle",
+          "Resultat des Tests vom 11.09. steht noch aus — noch nicht alle haben ihn geschrieben"
         ],
         "en": [
-          "Thermal, chemical and muscle-stimulating effects of electric current",
-          "Risk factors: current, exposure duration, current path, frequency and body impedance",
-          "Induction hob basics; seven-stage switching gives finer control than five-stage switching"
+          "Non-ferrous metals as conductor, contact and resistance materials; brass (copper + zinc) and bronze (copper + tin) marked as exam content",
+          "NIV: licensing, competence, owner’s duties, initial verification and final inspection",
+          "Result of the 11 Sep test still pending — not everyone has sat it yet"
         ]
       },
-      "naechstes": {
-        "datum": "2026-09-11",
-        "de": "Grosser Test Nr. 1 und wieder ein Kurztest",
-        "en": "Major test no. 1 and another short test"
-      },
-      "quelle": "Notiz NIN 04.09.2026 · Notiz Apparatekunde 04.09.2026"
+      "quelle": "Notiz Werkstoffkunde 18.09.2026 · Notiz NIN 18.09.2026"
     },
     {
       "fach": "atd",
@@ -75,26 +71,31 @@
           "Latency, jitter, packet loss and QoS affect call quality"
         ]
       },
-      "quelle": "Notiz Telekommunikation 04.09.2026"
+      "quelle": "Notiz Telekommunikation 04.09.2026 · Notiz Telekommunikation 18.09.2026",
+      "naechstes": {
+        "datum": "2026-10-16",
+        "de": "Test nach den Herbstferien — Umfang noch zu klären",
+        "en": "Test after the autumn holidays — scope to be confirmed"
+      }
     },
     {
       "fach": "htog",
-      "aktualisiert": "2026-09-04",
+      "aktualisiert": "2026-09-18",
       "lehrer": "berisha",
       "aktuell": {
-        "de": "NIN — Wirkung des elektrischen Stroms auf den Körper",
-        "en": "Electrical installations — effects of electric current on the body"
+        "de": "NIN — Niederspannungs-Installationsverordnung (NIV)",
+        "en": "Electrical installations — Low-Voltage Installation Ordinance (NIV)"
       },
       "fokus": {
         "de": [
-          "Thermische, chemische und muskelreizende Wirkung von Strom",
-          "Stromstärke, Einwirkdauer, Strombahn, Frequenz und Körperimpedanz als Gefährdungsfaktoren",
-          "Ohmsches Gesetz: Bei 230 V und 1000 Ω fliessen rechnerisch 230 mA"
+          "Grundlegende Anforderungen an Sicherheit und Störungsfreiheit (Art. 3–4)",
+          "Pflichten des Eigentümers; Bewilligungspflicht und Fachkundigkeit (Art. 5–10a)",
+          "Baubegleitende Erstprüfung und Schlusskontrolle vor der Übergabe (Art. 24)"
         ],
         "en": [
-          "Thermal, chemical and muscle-stimulating effects of electric current",
-          "Current, exposure duration, current path, frequency and body impedance as risk factors",
-          "Ohm’s law: at 230 V and 1000 Ω, the calculated current is 230 mA"
+          "Basic safety and interference requirements (art. 3–4)",
+          "Owner’s duties; licensing and competence (art. 5–10a)",
+          "Initial verification during construction and final inspection before handover (art. 24)"
         ]
       },
       "naechstes": {
@@ -102,7 +103,7 @@
         "de": "Grosser Test Nr. 1 — NIN, dazu wieder ein Kurztest",
         "en": "Major test no. 1 — NIN, plus another short test"
       },
-      "quelle": "Notiz NIN 04.09.2026 · Unterrichtsblatt NIN (Berisha) vom 04.09.2026"
+      "quelle": "Notiz NIN 18.09.2026"
     },
     {
       "fach": "htog",
@@ -269,9 +270,69 @@
         "en": "Practice sheet: 12 tasks covering measuring errors (both U/I readings), Wheatstone bridge, series resistor, shunt, expansion, boiler with efficiency, rearranging Rθ for α and FA for l₁, and a word equation. Two complete practice variants A/B in the study pack. Individual points total 25, not the header’s 20; no official grading inferred. Lever-law A4 assignment separately announced as worth 4 points; submission unconfirmed."
       },
       "quelle": "Notiz Elektrotechnik und Physik 07.09.2026 · Übungstest von Yanik am 07.09.2026 · Blatt Moser W4 31.8.26"
+    },
+    {
+      "datum": "2026-10-16",
+      "art": "test",
+      "fach": "atd",
+      "lehrer": "aeschlimann",
+      "titel": {
+        "de": "Telekommunikation — Test nach den Herbstferien",
+        "en": "Telecommunications — test after the autumn holidays"
+      },
+      "detail": {
+        "de": "Erste Telekom-Lektion nach den Herbstferien (Fr 16.10., 12:45). Umfang laut Notiz vom 18.09.: «die ersten zwei Kapitel». Offen: Kapitel 1 und 2 wurden schon am 04.09. geprüft — ob es eine Wiederholung ist oder Kapitel 3 und 4 gemeint sind, ist noch zu klären.",
+        "en": "First telecoms lesson after the autumn holidays (Fri 16 Oct, 12:45). Scope per the note of 18 Sep: “the first two chapters”. Open: chapters 1 and 2 were already tested on 4 Sep — whether this is a retake or chapters 3 and 4 are meant is still to be confirmed."
+      },
+      "quelle": "Notiz Telekommunikation 18.09.2026 · Datum: erste Telekom-Lektion nach den Herbstferien laut Ferienplan und Stundenplan"
     }
   ],
   "geschehen": [
+    {
+      "datum": "2026-09-18",
+      "art": "unterricht",
+      "fach": "abt",
+      "lehrer": "waefler",
+      "titel": {
+        "de": "Werkstoffkunde — Nichteisenmetalle",
+        "en": "Materials science — non-ferrous metals"
+      },
+      "detail": {
+        "de": "Im Anschluss an die Stahlherstellung: Nichteisenmetalle als Leiter-, Kontakt- und Widerstandswerkstoffe, Kupfer und Aluminium im Detail. Als Prüfungsstoff markiert: Messing (Kupfer + Zink) und Bronze (Kupfer + Zinn). Den Test der Vorwoche gibt es noch nicht zurück, weil ihn noch nicht alle geschrieben haben.",
+        "en": "Following on from steelmaking: non-ferrous metals as conductor, contact and resistance materials, with copper and aluminium in detail. Marked as exam content: brass (copper + zinc) and bronze (copper + tin). Last week’s test is not back yet because not everyone has sat it."
+      },
+      "quelle": "Notiz Werkstoffkunde 18.09.2026"
+    },
+    {
+      "datum": "2026-09-18",
+      "art": "unterricht",
+      "fach": "htog",
+      "lehrer": "berisha",
+      "titel": {
+        "de": "NIN — Niederspannungs-Installationsverordnung (NIV)",
+        "en": "Electrical installations — Low-Voltage Installation Ordinance (NIV)"
+      },
+      "detail": {
+        "de": "Mit Stellvertretung. NIV Art. 3 bis 10a: grundlegende Anforderungen an Sicherheit und Störungsfreiheit, Pflichten des Eigentümers, Bewilligungspflicht und Fachkundigkeit, Betriebsorganisation. Dazu Art. 24: baubegleitende Erstprüfung und betriebsinterne Schlusskontrolle vor der Übergabe.",
+        "en": "With a substitute teacher. NIV articles 3 to 10a: basic safety and interference requirements, owner’s duties, licensing and competence, company organisation. Plus article 24: initial verification during construction and in-house final inspection before handover."
+      },
+      "quelle": "Notiz NIN 18.09.2026"
+    },
+    {
+      "datum": "2026-09-14",
+      "art": "unterricht",
+      "fach": "atd",
+      "lehrer": "moser",
+      "titel": {
+        "de": "Arbeitsauftrag Schrittschaltung und Minuterie",
+        "en": "Assignment — impulse relay and staircase timer"
+      },
+      "detail": {
+        "de": "Neuer Arbeitsauftrag zur Schrittschaltung mit Stromstossschalter und zur Minuterie (Treppenhausautomat).",
+        "en": "New assignment on impulse-relay switching and the staircase timer circuit."
+      },
+      "quelle": "Notiz Elektrotechnik und Physik 14.09.2026"
+    },
     {
       "datum": "2026-09-07",
       "art": "unterricht",

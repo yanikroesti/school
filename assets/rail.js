@@ -235,11 +235,19 @@
   /* ---------------- Datumshelfer ---------------- */
 
   // Nächstes Vorkommen eines Wochentags (1 = Mo … 5 = Fr), heute eingeschlossen.
+  // Naechster Schultag an diesem Wochentag — Ferien und Feiertage zaehlen
+  // nicht. Vorher kam einfach der naechste Freitag: am ersten Tag der
+  // Herbstferien 2026 stand im Kontrollzentrum ein NIN-Kurztest fuer den
+  // 25.09., mitten in den Ferien. plan.html prueft freeDay schon selbst;
+  // index.html und teacher.js verlassen sich auf diese Funktion.
+  // 70 Tage Vorlauf, weil die Sommerferien sechs Wochen dauern.
   function nextWeekday(dow) {
     var d = new Date(); d.setHours(0, 0, 0, 0);
-    for (var i = 0; i < 14; i++) {
+    for (var i = 0; i < 70; i++) {
       var x = new Date(d); x.setDate(x.getDate() + i);
-      if (x.getDay() === dow) return x;
+      if (x.getDay() !== dow) continue;
+      if (S && S.freeDay && S.freeDay(x)) continue;
+      return x;
     }
     return d;
   }
