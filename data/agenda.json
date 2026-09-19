@@ -53,29 +53,31 @@
     },
     {
       "fach": "atd",
-      "aktualisiert": "2026-09-04",
+      "aktualisiert": "2026-09-18",
       "lehrer": "aeschlimann",
       "aktuell": {
-        "de": "Telekommunikation — Kapitel 3: Internettelefonie (VoIP)",
-        "en": "Telecommunications — chapter 3: internet telephony (VoIP)"
+        "de": "Telekommunikation — Kapitel 4: Internetzugang",
+        "en": "Telecommunications — chapter 4: internet access"
       },
       "fokus": {
         "de": [
-          "Analoges Sprachsignal digitalisieren, codieren und als IP-Pakete übertragen",
-          "SIP baut ein Gespräch auf; RTP/SRTP transportiert die Sprachdaten",
-          "Latenz, Jitter, Paketverlust und QoS beeinflussen die Gesprächsqualität"
+          "Breitband-Internetzugang, ISP und die Zugangsvarianten mit ihren Download-Geschwindigkeiten",
+          "ADSL (asymmetrisch, Download und Upload) und die Nachfolger VDSL2 und G.fast",
+          "Umrüstung auf All IP: Anschlussvarianten der Internet Box 2, Mikrofilter und Splitter",
+          "Zugang über Koaxial- und Glasfaserkabel; kabellose Varianten und PWLAN"
         ],
         "en": [
-          "Digitising and coding an analogue voice signal before sending it as IP packets",
-          "SIP sets up a call; RTP/SRTP carries the voice data",
-          "Latency, jitter, packet loss and QoS affect call quality"
+          "Broadband internet access, ISPs and access variants with their download speeds",
+          "ADSL (asymmetric download and upload) and its successors VDSL2 and G.fast",
+          "Switching to All IP: Internet Box 2 connection variants, microfilters and splitters",
+          "Access via coaxial and fibre cable; wireless variants and public WLAN"
         ]
       },
-      "quelle": "Notiz Telekommunikation 04.09.2026 · Notiz Telekommunikation 18.09.2026",
+      "quelle": "Unterrichtsplanung Kommunikation 18.09.2026 · Notiz Telekommunikation 18.09.2026",
       "naechstes": {
         "datum": "2026-10-16",
-        "de": "Test nach den Herbstferien — Umfang noch zu klären",
-        "en": "Test after the autumn holidays — scope to be confirmed"
+        "de": "Test Kapitel 3 (VoIP) und Kapitel 4 (Internetzugang), ohne ISDN",
+        "en": "Test on chapter 3 (VoIP) and chapter 4 (internet access), without ISDN"
       }
     },
     {
@@ -108,21 +110,19 @@
     {
       "fach": "htog",
       "lehrer": "moser",
-      "aktualisiert": "2026-09-07",
+      "aktualisiert": "2026-09-14",
       "aktuell": {
-        "de": "Elektrotechnik und Physik — vollständiger Übungstest für den 14.09.",
-        "en": "Electrical engineering and physics — complete practice sheet for 14 Sep"
+        "de": "Elektrotechnik und Physik — Test am 14.09. geschrieben",
+        "en": "Electrical engineering and physics — test sat on 14 Sep"
       },
       "fokus": {
         "de": [
-          "Laut Yanik wenig neuer Stoff; Übungstest mit zwölf Aufgaben erhalten",
-          "Lernpaket vollständig abgeglichen, zwei neue Übungstestvarianten mit Lösungen",
-          "Messfehler, Brücke, Messbereich, Wärme, Formelumstellen und Textgleichung"
+          "Test am 14.09. geschrieben; die Note folgt nach den Herbstferien",
+          "Stoff: Messfehler, Brücke, Messbereich, Wärme, Formelumstellen und Textgleichung"
         ],
         "en": [
-          "Little new material reported by Yanik; received a twelve-task practice sheet",
-          "Study pack checked in full; two new practice variants with solutions",
-          "Measuring errors, bridge, meter range, heat, formula rearrangement and word equation"
+          "Test sat on 14 Sep; the grade follows after the autumn holidays",
+          "Content: measuring errors, bridge circuit, measuring range, heat, rearranging formulas and a word equation"
         ]
       },
       "naechstes": {
@@ -130,29 +130,38 @@
         "de": "Test bei Moser; Hebel-A4-Abgabe noch nicht bestätigt",
         "en": "Moser test; lever-law A4 submission not yet confirmed"
       },
-      "quelle": "Notiz Elektrotechnik und Physik 07.09.2026 · Übungstest von Yanik am 07.09.2026"
+      "quelle": "Notiz Elektrotechnik und Physik 07.09.2026 · Übungstest von Yanik am 07.09.2026 · Bestätigung Yanik 19.09.2026"
     },
     {
       "fach": "atd",
       "lehrer": "moser",
-      "aktualisiert": "2026-09-07",
+      "aktualisiert": "2026-09-14",
       "aktuell": {
-        "de": "Arbeitsplan — Relais und Schrittschaltung",
-        "en": "Assignment plan — relays and stepping circuit"
+        "de": "Schrittschaltung und Minuterie — Arbeitsauftrag bis 19.10.",
+        "en": "Impulse relay and staircase timer — assignment due 19 Oct"
       },
       "fokus": {
         "de": [
-          "Auftrag für E1 (6 V) und E2 (230 V), Simulation und Messschaltungen erhalten",
-          "Spulenleistung und Schalterspannung: konkrete Messwerte/Spulendaten fehlen",
-          "Blatt 46 und Fachbuchseite 106 fehlen; Durchführung der Praxisaufgaben nicht bestätigt"
+          "Beide Schaltungen in der Praxis analysieren, im 2er-Team",
+          "Je Installationsplan, Stromlaufschema und Wirkschaltschema von Hand",
+          "Datenblatt-Analyse der Geräte und Zeitablaufdiagramm",
+          "Bewertung: fünf Kriterien zu je 4 Punkten; spätere Abgabe gibt Punktabzug",
+          "Aus dem Relais-Arbeitsplan vom 07.09. fehlen weiterhin Blatt 46 und Fachbuchseite 106"
         ],
         "en": [
-          "Received assignment for E1 (6 V), E2 (230 V), simulation and measuring circuits",
-          "Coil power and switch voltage: actual measurements/coil data missing",
-          "Sheet 46 and textbook page 106 missing; practical completion not confirmed"
+          "Analyse both circuits in practice, in pairs",
+          "Installation plan, circuit diagram and wiring diagram by hand for each",
+          "Datasheet analysis of the devices and a timing diagram",
+          "Assessment: five criteria, 4 points each; late submissions lose points",
+          "From the relay work plan of 7 Sep, sheet 46 and textbook page 106 are still missing"
         ]
       },
-      "quelle": "Notiz Relais und Schrittschaltung 07.09.2026 · Screenshot Arbeitsplan von Yanik"
+      "quelle": "Arbeitsauftrag Schrittschalter & Minuterie (Blatt vom 14.09.2026) · Notiz Elektrotechnik und Physik 14.09.2026 · Notiz Technische Dokumentation 07.09.2026",
+      "naechstes": {
+        "datum": "2026-10-19",
+        "de": "Abgabe des Arbeitsauftrags in Papierform",
+        "en": "Hand in the assignment on paper"
+      }
     }
   ],
   "erwartet": [
@@ -277,14 +286,29 @@
       "fach": "atd",
       "lehrer": "aeschlimann",
       "titel": {
-        "de": "Telekommunikation — Test nach den Herbstferien",
-        "en": "Telecommunications — test after the autumn holidays"
+        "de": "Telekommunikation — Test Kapitel 3 und 4",
+        "en": "Telecommunications — test on chapters 3 and 4"
       },
       "detail": {
-        "de": "Erste Telekom-Lektion nach den Herbstferien (Fr 16.10., 12:45). Umfang laut Notiz vom 18.09.: «die ersten zwei Kapitel». Offen: Kapitel 1 und 2 wurden schon am 04.09. geprüft — ob es eine Wiederholung ist oder Kapitel 3 und 4 gemeint sind, ist noch zu klären.",
-        "en": "First telecoms lesson after the autumn holidays (Fri 16 Oct, 12:45). Scope per the note of 18 Sep: “the first two chapters”. Open: chapters 1 and 2 were already tested on 4 Sep — whether this is a retake or chapters 3 and 4 are meant is still to be confirmed."
+        "de": "Kapitel 3: Internettelefonie (VoIP) und Kapitel 4: Internetzugang. ISDN wird nicht geprüft. Zum Üben: Übungsblätter A3.1 (13 Übungen) und A4.1 (15 Übungen) sowie die Repetitionsaufgaben.",
+        "en": "Chapter 3: internet telephony (VoIP) and chapter 4: internet access. ISDN is not tested. For practice: worksheets A3.1 (13 exercises) and A4.1 (15 exercises) plus the revision tasks."
       },
-      "quelle": "Notiz Telekommunikation 18.09.2026 · Datum: erste Telekom-Lektion nach den Herbstferien laut Ferienplan und Stundenplan"
+      "quelle": "Unterrichtsplanung Kommunikation 18.09.2026 · Notiz Telekommunikation 18.09.2026 · Bestätigung Yanik 19.09.2026"
+    },
+    {
+      "datum": "2026-10-19",
+      "art": "termin",
+      "fach": "atd",
+      "lehrer": "moser",
+      "titel": {
+        "de": "Abgabe Arbeitsauftrag Schrittschalter & Minuterie",
+        "en": "Due: impulse relay & staircase timer assignment"
+      },
+      "detail": {
+        "de": "Im 2er-Team beide Schaltungen in der Praxis analysieren — auf der Baustelle oder zu Hause: Fotos der Betriebsmittel, je Installationsplan, Stromlaufschema und Wirkschaltschema von Hand, Datenblatt-Analyse der Geräte und ein Zeitablaufdiagramm. Abgabe in Papierform mit Deckblatt; spätere Abgabe gibt Punktabzug. Bewertet mit fünf Kriterien zu je 4 Punkten.",
+        "en": "In pairs, analyse both circuits in practice — on site or at home: photos of the devices, an installation plan, circuit diagram and wiring diagram by hand for each, a datasheet analysis and a timing diagram. Hand in on paper with a cover sheet; late submissions lose points. Assessed on five criteria, 4 points each."
+      },
+      "quelle": "Arbeitsauftrag Schrittschalter & Minuterie (Blatt vom 14.09.2026)"
     }
   ],
   "geschehen": [
@@ -319,19 +343,34 @@
       "quelle": "Notiz NIN 18.09.2026"
     },
     {
+      "datum": "2026-09-18",
+      "art": "unterricht",
+      "fach": "atd",
+      "lehrer": "aeschlimann",
+      "titel": {
+        "de": "Telekommunikation — Kapitel 4: Internetzugang",
+        "en": "Telecommunications — chapter 4: internet access"
+      },
+      "detail": {
+        "de": "Lösungen zum Arbeitsauftrag besprochen; Arbeitsblätter zur Umrüstung auf All IP und zu Starlink; Repetitionsaufgaben zu Kapitel 3 und 4 für den Test vom 16.10.",
+        "en": "Discussed the assignment solutions; worksheets on the switch to All IP and on Starlink; revision tasks on chapters 3 and 4 for the test on 16 Oct."
+      },
+      "quelle": "Unterrichtsplanung Kommunikation 18.09.2026"
+    },
+    {
       "datum": "2026-09-14",
       "art": "unterricht",
       "fach": "atd",
       "lehrer": "moser",
       "titel": {
-        "de": "Arbeitsauftrag Schrittschaltung und Minuterie",
-        "en": "Assignment — impulse relay and staircase timer"
+        "de": "Arbeitsauftrag Schrittschalter & Minuterie",
+        "en": "Assignment — impulse relay & staircase timer"
       },
       "detail": {
-        "de": "Neuer Arbeitsauftrag zur Schrittschaltung mit Stromstossschalter und zur Minuterie (Treppenhausautomat).",
-        "en": "New assignment on impulse-relay switching and the staircase timer circuit."
+        "de": "Neuer Arbeitsauftrag im 2er-Team: Schrittschaltung und Minuterie (Treppenhausautomat) auf der Baustelle oder zu Hause analysieren, zeichnen und dokumentieren. Abgabe am 19.10.2026.",
+        "en": "New pair assignment: analyse, draw and document an impulse-relay circuit and a staircase timer on site or at home. Due 19 Oct 2026."
       },
-      "quelle": "Notiz Elektrotechnik und Physik 14.09.2026"
+      "quelle": "Notiz Elektrotechnik und Physik 14.09.2026 · Arbeitsauftrag Schrittschalter & Minuterie (Blatt vom 14.09.2026)"
     },
     {
       "datum": "2026-09-07",

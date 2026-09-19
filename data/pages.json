@@ -385,47 +385,127 @@
           "en": "Telecommunications"
         },
         "desc": {
-          "de": "Freitag 11:15–12:00. Anknüpfung an Schwachstromanlagen bei Beni Moser.",
-          "en": "Friday 11:15–12:00. Connects to low-current installations with Beni Moser."
+          "de": "Freitag 12:45–13:30. Anknüpfung an Schwachstromanlagen bei Beni Moser.",
+          "en": "Friday 12:45–13:30. Connects to low-current installations with Beni Moser."
         },
         "bullets": [],
         "goals": {
           "title": {
-            "de": "Lernziele zur Prüfung — ich kann …",
-            "en": "Exam objectives — I can …"
+            "de": "Lernziele zum Test vom 16.10. — Kapitel 3 (VoIP) und 4 (Internetzugang), ohne ISDN — ich kann …",
+            "en": "Objectives for the test on 16 Oct — chapters 3 (VoIP) and 4 (internet access), without ISDN — I can …"
           },
           "items": [
             {
-              "de": "die Zusammenhänge zwischen Energiesystem und Signalsystem erklären",
-              "en": "explain how the energy system and the signal system relate"
+              "de": "erklären, wofür die Abkürzung VoIP steht",
+              "en": "explain what VoIP stands for"
             },
             {
-              "de": "das Signalsystem anhand einer Telefonverbindung erklären",
-              "en": "explain the signal system using a telephone connection"
+              "de": "die Internettelefonie mittels Skizze erklären",
+              "en": "explain internet telephony with a sketch"
             },
             {
-              "de": "die verschiedenen Signalarten nennen, ihre Merkmale angeben und passende Beispiele nennen",
-              "en": "name the signal types, state their characteristics and give examples"
+              "de": "einen wesentlichen Unterschied zwischen herkömmlicher Telefonie und VoIP beschreiben",
+              "en": "describe one key difference between conventional telephony and VoIP"
             },
             {
-              "de": "die verschiedenen Übertragungsmedien der Telekommunikationstechnik erklären",
-              "en": "explain the transmission media used in telecommunications"
+              "de": "drei Hauptprobleme von VoIP nennen und erklären",
+              "en": "name and explain three main problems of VoIP"
             },
             {
-              "de": "passende Praxisbeispiele für die verschiedenen Übertragungsmedien nennen",
-              "en": "give practical examples for each transmission medium"
+              "de": "die theoretisch minimal nötige Upload-Geschwindigkeit eines xDSL-Abos für VoIP nennen",
+              "en": "state the minimum upload speed an xDSL plan needs for VoIP"
             },
             {
-              "de": "die Abkürzungen WAN und LAN erklären und den Zusammenhang im IT-System beschreiben",
-              "en": "explain WAN and LAN and describe how they fit together in an IT system"
+              "de": "erklären, wofür QoS steht, und seine Wichtigkeit beschreiben",
+              "en": "explain what QoS stands for and why it matters"
             },
             {
-              "de": "verschiedene Beispiele von Systemkopplungen skizzieren",
-              "en": "sketch examples of system couplings"
+              "de": "den Verbindungsaufbau mit SIP in einfacher Form beschreiben",
+              "en": "describe call setup with SIP in simple terms"
             },
             {
-              "de": "die Zusammenhänge in der heutigen Internettelefonie erklären",
-              "en": "explain how today's internet telephony works"
+              "de": "Vorteile von VoIP gegenüber der herkömmlichen Telefonie nennen",
+              "en": "name advantages of VoIP over conventional telephony"
+            },
+            {
+              "de": "erklären, wofür die Verschlüsselung von VoIP-Daten wichtig ist",
+              "en": "explain why VoIP data should be encrypted"
+            },
+            {
+              "de": "verschiedene Instant-Messenger-Programme aufzählen",
+              "en": "list several instant-messenger programs"
+            },
+            {
+              "de": "einen zentralen Nachteil von Instant-Messengern wie WhatsApp gegenüber dem SIP-Standard nennen",
+              "en": "name a key drawback of messengers such as WhatsApp compared with SIP"
+            },
+            {
+              "de": "erklären, wofür die Anschlussbuchsen der Internet Box 2 sind",
+              "en": "explain what each port on the Internet Box 2 is for"
+            },
+            {
+              "de": "verschiedene Endgeräte an einem IP-Router skizzieren",
+              "en": "sketch several devices connected to an IP router"
+            },
+            {
+              "de": "erklären, wie man auf einen IP-Router wie die Internet Box 2 zugreift",
+              "en": "explain how to access an IP router such as the Internet Box 2"
+            },
+            {
+              "de": "erklären, was ein ISP ist",
+              "en": "explain what an ISP is"
+            },
+            {
+              "de": "den Begriff Breitband-Internetzugang umschreiben",
+              "en": "describe the term broadband internet access"
+            },
+            {
+              "de": "Breitband-Zugangsvarianten aufzählen und ihre Download-Geschwindigkeiten angeben",
+              "en": "list broadband access types and their download speeds"
+            },
+            {
+              "de": "erklären, wofür ADSL steht und was daran asymmetrisch ist",
+              "en": "explain what ADSL stands for and what is asymmetric about it"
+            },
+            {
+              "de": "die Begriffe Download und Upload beschreiben",
+              "en": "describe download and upload"
+            },
+            {
+              "de": "Nachfolgetechnologien von ADSL nennen",
+              "en": "name successor technologies to ADSL"
+            },
+            {
+              "de": "erklären, wovon die effektive Übertragungsgeschwindigkeit abhängt",
+              "en": "explain what the effective transmission speed depends on"
+            },
+            {
+              "de": "die Swisscom-Bezeichnung «All IP» umschreiben",
+              "en": "explain Swisscom’s term “All IP”"
+            },
+            {
+              "de": "die Bezeichnungen «ADSL over POTS» und «ADSL over ISDN» beschreiben",
+              "en": "describe “ADSL over POTS” and “ADSL over ISDN”"
+            },
+            {
+              "de": "erläutern, wofür Mikrofilter und Splitter eingesetzt wurden",
+              "en": "explain what microfilters and splitters were used for"
+            },
+            {
+              "de": "die Anschlussvarianten der Internet Box 2 bei der Umrüstung auf All IP aufzählen und skizzieren",
+              "en": "list and sketch the Internet Box 2 connection options when switching to All IP"
+            },
+            {
+              "de": "die Zugangsvarianten über Koaxial- und Glasfaserkabel in einfacher Form erklären",
+              "en": "explain access via coaxial and fibre cable in simple terms"
+            },
+            {
+              "de": "drei kabellose Internetzugangsvarianten aufzählen",
+              "en": "list three wireless internet access types"
+            },
+            {
+              "de": "in einfacher Form beschreiben, was ein PWLAN ist",
+              "en": "describe in simple terms what a public WLAN is"
             }
           ]
         }

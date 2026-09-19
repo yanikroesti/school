@@ -124,14 +124,14 @@
       "subject": "atd",
       "date": "2026-10-16",
       "title": {
-        "de": "Test Telekommunikation",
-        "en": "Test — telecommunications"
+        "de": "Test Telekommunikation — Kapitel 3 und 4",
+        "en": "Test — telecoms, chapters 3 and 4"
       },
       "detail": {
-        "de": "Erste Telekom-Lektion nach den Herbstferien (Fr 16.10., 12:45). Umfang laut Notiz vom 18.09.: «die ersten zwei Kapitel». Offen: Kapitel 1 und 2 wurden schon am 04.09. geprüft — ob es eine Wiederholung ist oder Kapitel 3 und 4 gemeint sind, ist noch zu klären.",
-        "en": "First telecoms lesson after the autumn holidays (Fri 16 Oct, 12:45). Scope per the note of 18 Sep: “the first two chapters”. Open: chapters 1 and 2 were already tested on 4 Sep — whether this is a retake or chapters 3 and 4 are meant is still to be confirmed."
+        "de": "Kapitel 3: Internettelefonie (VoIP) und Kapitel 4: Internetzugang. ISDN wird nicht geprüft. Zum Üben: Übungsblätter A3.1 (13 Übungen) und A4.1 (15 Übungen) sowie die Repetitionsaufgaben.",
+        "en": "Chapter 3: internet telephony (VoIP) and chapter 4: internet access. ISDN is not tested. For practice: worksheets A3.1 (13 exercises) and A4.1 (15 exercises) plus the revision tasks."
       },
-      "source": "Notiz Telekommunikation 18.09.2026 · Datum abgeleitet: erste Aeschlimann-Lektion nach den Herbstferien (Ferienplan BZI, Stundenplan)"
+      "source": "Unterrichtsplanung Kommunikation 18.09.2026 · Notiz Telekommunikation 18.09.2026 · Bestätigung Yanik 19.09.2026"
     }
   ],
   "homework": [
@@ -283,6 +283,21 @@
       "detail": {
         "de": "Repetieren; am 11.09. gibt es wieder einen Kurztest und zugleich den Grossen Test Nr. 1.",
         "en": "Repetieren; am 11.09. gibt es wieder einen Kurztest und zugleich den Grossen Test Nr. 1."
+      }
+    },
+    {
+      "id": "ha-schrittschaltung-minuterie-2026-10-19",
+      "subject": "atd",
+      "teacher": "moser",
+      "due": "2026-10-19",
+      "done": false,
+      "title": {
+        "de": "Arbeitsauftrag Schrittschalter & Minuterie abgeben",
+        "en": "Hand in the impulse relay & staircase timer assignment"
+      },
+      "detail": {
+        "de": "Im 2er-Team beide Schaltungen in der Praxis analysieren — auf der Baustelle oder zu Hause: Fotos der Betriebsmittel, je Installationsplan, Stromlaufschema und Wirkschaltschema von Hand, Datenblatt-Analyse der Geräte und ein Zeitablaufdiagramm. Abgabe in Papierform mit Deckblatt; spätere Abgabe gibt Punktabzug. Bewertet mit fünf Kriterien zu je 4 Punkten.",
+        "en": "In pairs, analyse both circuits in practice — on site or at home: photos of the devices, an installation plan, circuit diagram and wiring diagram by hand for each, a datasheet analysis and a timing diagram. Hand in on paper with a cover sheet; late submissions lose points. Assessed on five criteria, 4 points each."
       }
     }
   ]

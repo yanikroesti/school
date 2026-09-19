@@ -5,6 +5,25 @@
 
   "pruefungen": [
     {
+      "id": "2026-09-04-abt-apparatekunde-grosstest",
+      "datum": "2026-09-04",
+      "semester": 3,
+      "fach": "abt",
+      "bereich": "tg",
+      "lehrer": "waefler",
+      "art": "test",
+      "titel": {
+        "de": "Grosstest Apparatekunde",
+        "en": "Major test — appliance technology"
+      },
+      "themen": [
+        "Wärmeformel Q = m · c · ΔT",
+        "Wärmeausdehnung",
+        "Kochstellen"
+      ],
+      "note": 5.1
+    },
+    {
       "id": "2026-08-28-abt-nin-kurztest-5plus5",
       "datum": "2026-08-28",
       "semester": 3,
