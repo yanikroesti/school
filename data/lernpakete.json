@@ -270,6 +270,22 @@
         "Probetest",
         "Lernplan"
       ]
+    },
+    {
+      "id": "arbeitsauftrag-schrittschalter",
+      "file": "arbeitsauftrag_schrittschalter_minuterie_beispiel.html",
+      "subject": "atd",
+      "teacher": "moser",
+      "status": "aktiv",
+      "archiveAfter": "2026-10-19",
+      "title": {
+        "de": "Arbeitsauftrag Schrittschalter & Minuterie — Beispiel",
+        "en": "Impulse relay & staircase timer assignment — worked example"
+      },
+      "detail": {
+        "de": "Wie die fertige Arbeit aussehen kann: Deckblatt, Vorgehen, Anforderungen an die Fotos, sechs Zeichenvorlagen für Installationsplan, Stromlaufschema und Wirkschaltschema, Datenblatt-Analyse, beide Zeitablaufdiagramme, Bewertungsraster und Abgabe-Checkliste · 16 Seiten A4, druckfertig · Fotos und Handzeichnungen bleiben Eigenarbeit · zur Abgabe vom 19.10.",
+        "en": "What the finished assignment can look like: cover sheet, procedure, photo requirements, six drawing templates for the installation plan, circuit diagram and wiring diagram, datasheet analysis, both timing diagrams, the marking grid and a submission checklist · 16 A4 pages, print-ready · photos and hand drawings remain your own work · for the 19 Oct deadline"
+      }
     }
   ]
 }
