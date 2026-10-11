@@ -243,6 +243,33 @@
         "Quiz",
         "Lernplan"
       ]
+    },
+    {
+      "id": "telekom-kap3-4",
+      "file": "telekom_kap3_4_lernpaket.html",
+      "subject": "atd",
+      "teacher": "aeschlimann",
+      "status": "aktiv",
+      "forTest": "atd-telekom-2026-10-16",
+      "archiveAfter": "2026-10-16",
+      "title": {
+        "de": "Telekommunikation — Kapitel 3 und 4",
+        "en": "Telecommunications — chapters 3 and 4"
+      },
+      "detail": {
+        "de": "Internettelefonie VoIP und Internetzugang · alle 28 Übungen der Blätter A3.1 und A4.1 mit Lösungen · vier Skizzen, 30 Karteikarten, 18 Quizfragen und ein Probetest mit 20 Aufgaben · ohne ISDN · zum Test vom 16.10.",
+        "en": "Internet telephony (VoIP) and internet access · all 28 exercises from worksheets A3.1 and A4.1 with solutions · four diagrams, 30 flashcards, 18 quiz questions and a 20-task practice test · ISDN excluded · for the 16 Oct test"
+      },
+      "tabs": [
+        "Theorie",
+        "Visuals",
+        "Übungen",
+        "Begriffe",
+        "Karteikarten",
+        "Quiz",
+        "Probetest",
+        "Lernplan"
+      ]
     }
   ]
 }
