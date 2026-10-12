@@ -110,27 +110,28 @@
     {
       "fach": "htog",
       "lehrer": "moser",
-      "aktualisiert": "2026-09-14",
+      "aktualisiert": "2026-10-12",
       "aktuell": {
-        "de": "Elektrotechnik und Physik — Test am 14.09. geschrieben",
-        "en": "Electrical engineering and physics — test sat on 14 Sep"
+        "de": "Leistungsmessung mit dem Zähler — Test vom 14.09. zurück: Note 5.2",
+        "en": "Power measurement with the meter — 14 Sep test returned: grade 5.2"
       },
       "fokus": {
         "de": [
-          "Test am 14.09. geschrieben; die Note folgt nach den Herbstferien",
-          "Stoff: Messfehler, Brücke, Messbereich, Wärme, Formelumstellen und Textgleichung"
+          "Test vom 14.09. (Messschaltungen, Wärmelehre, Algebra): Note 5.2, 13 von 15.5 Punkten",
+          "Indirekte Leistungsbestimmung über Zählerkonstante und Impulse, elektrische Arbeit (3.15–3.17)",
+          "Einstieg: Boiler-Abnahme — Leistung aus dem Smart-Meter, Nutzwärme, zugeführte Energie mit Wirkungsgrad und Aufheizzeit",
+          "Aufträge: 3.17a sechs Aufgaben und Aufgabe 11 · 3.7 Aufgaben 170–178, davon 12",
+          "Als Nächstes: Umstellen schwieriger Formeln (3.7)"
         ],
         "en": [
-          "Test sat on 14 Sep; the grade follows after the autumn holidays",
-          "Content: measuring errors, bridge circuit, measuring range, heat, rearranging formulas and a word equation"
+          "14 Sep test (measuring circuits, heat, algebra): grade 5.2, 13 of 15.5 points",
+          "Indirect power measurement via meter constant and pulses, electrical energy (3.15–3.17)",
+          "Warm-up: water heater acceptance — power from the smart meter, useful heat, energy supplied with efficiency and heating time",
+          "Tasks: 3.17a six exercises plus exercise 11 · 3.7 exercises 170–178, twelve of them",
+          "Next: rearranging difficult formulas (3.7)"
         ]
       },
-      "naechstes": {
-        "datum": "2026-09-14",
-        "de": "Test bei Moser; Hebel-A4-Abgabe noch nicht bestätigt",
-        "en": "Moser test; lever-law A4 submission not yet confirmed"
-      },
-      "quelle": "Notiz Elektrotechnik und Physik 07.09.2026 · Übungstest von Yanik am 07.09.2026 · Bestätigung Yanik 19.09.2026"
+      "quelle": "Notiz Elektrotechnik und Physik 12.10.2026 · korrigierter Test vom 14.09.2026 · Unterrichtsplanung Moser 12.10.2026"
     },
     {
       "fach": "atd",
@@ -312,6 +313,21 @@
     }
   ],
   "geschehen": [
+    {
+      "datum": "2026-10-12",
+      "art": "unterricht",
+      "fach": "htog",
+      "lehrer": "moser",
+      "titel": {
+        "de": "Leistungsmessung mit dem Zähler; Test zurück",
+        "en": "Power measurement with the meter; test returned"
+      },
+      "detail": {
+        "de": "Erster Schultag nach den Herbstferien. Einstieg mit einer Boiler-Abnahme: Leistungsaufnahme aus Zählerkonstante und Lichtimpulsen (4,8 kW), Nutzwärme, zugeführte Energie mit Wirkungsgrad und Aufheizzeit. Dann indirekte Leistungsbestimmung und elektrische Arbeit (3.15–3.17). Der Test vom 14.09. kam zurück: Note 5.2. Als Nächstes: Umstellen schwieriger Formeln.",
+        "en": "First school day after the autumn break. Warm-up with a water heater acceptance check: power from the meter constant and light pulses (4.8 kW), useful heat, energy supplied with efficiency and heating time. Then indirect power measurement and electrical energy (3.15–3.17). The 14 Sep test came back: grade 5.2. Next: rearranging difficult formulas."
+      },
+      "quelle": "Notiz Elektrotechnik und Physik 12.10.2026 · Unterrichtsplanung Moser 12.10.2026"
+    },
     {
       "datum": "2026-09-18",
       "art": "unterricht",

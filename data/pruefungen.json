@@ -5,6 +5,30 @@
 
   "pruefungen": [
     {
+      "id": "2026-09-14-htog-moser-messschaltungen",
+      "datum": "2026-09-14",
+      "semester": 3,
+      "fach": "htog",
+      "bereich": "tg",
+      "lehrer": "moser",
+      "art": "test",
+      "titel": {
+        "de": "Test Messschaltungen, Wärmelehre und Algebra",
+        "en": "Test — measuring circuits, heat and algebra"
+      },
+      "themen": [
+        "Indirekte Widerstandsbestimmung (Stromfehlerschaltung)",
+        "Mess- und Schaltungstechnik, richtig oder falsch",
+        "Messbereichserweiterung mit Shunt",
+        "Wärmemenge und Aufheizzeit eines Boilers",
+        "Längenausdehnung",
+        "Formelumstellung"
+      ],
+      "note": 5.2,
+      "punkte": 13,
+      "maxPunkte": 15.5
+    },
+    {
       "id": "2026-09-04-abt-apparatekunde-grosstest",
       "datum": "2026-09-04",
       "semester": 3,
