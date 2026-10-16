@@ -20,6 +20,39 @@
       ]
     },
     {
+      "id": "2026-10-30-abt-nin-grosstest-niv",
+      "datum": "2026-10-30",
+      "semester": 3,
+      "fach": "abt",
+      "bereich": "tg",
+      "lehrer": "waefler",
+      "art": "test",
+      "titel": {
+        "de": "Grosser Test — NIN, nur NIV",
+        "en": "Major test — NIN, NIV only"
+      },
+      "themen": [
+        "Niederspannungs-Installationsverordnung (NIV)"
+      ]
+    },
+    {
+      "id": "2026-10-23-abt-apparatekunde-grosstest-2",
+      "datum": "2026-10-23",
+      "semester": 3,
+      "fach": "abt",
+      "bereich": "tg",
+      "lehrer": "waefler",
+      "art": "test",
+      "titel": {
+        "de": "Grosstest Apparatekunde — Backofen, Steamer, Mikrowelle",
+        "en": "Major test — appliances: oven, steamer, microwave"
+      },
+      "themen": [
+        "Kapitel 5.7–5.11",
+        "Aufbau von Backofen, Steamer und Mikrowelle"
+      ]
+    },
+    {
       "id": "2026-10-19-atd-auftrag-schrittschaltung-minuterie",
       "datum": "2026-10-19",
       "semester": 3,
@@ -62,8 +95,8 @@
       "lehrer": "waefler",
       "art": "kurztest",
       "titel": {
-        "de": "NIN-Kurztest",
-        "en": "NIN short test"
+        "de": "NIN-Kurztest Nr. 5",
+        "en": "NIN short test no. 5"
       }
     },
     {

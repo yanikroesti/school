@@ -132,6 +132,38 @@
         "en": "Chapter 3: internet telephony (VoIP) and chapter 4: internet access. ISDN is not tested. For practice: worksheets A3.1 (13 exercises) and A4.1 (15 exercises) plus the revision tasks."
       },
       "source": "Unterrichtsplanung Kommunikation 18.09.2026 · Notiz Telekommunikation 18.09.2026 · Bestätigung Yanik 19.09.2026"
+    },
+    {
+      "id": "abt-apparatekunde-2026-10-23",
+      "kind": "test",
+      "teacher": "waefler",
+      "subject": "abt",
+      "date": "2026-10-23",
+      "title": {
+        "de": "Grosstest Apparatekunde — Backofen, Steamer, Mikrowelle",
+        "en": "Major test — appliances: oven, steamer, microwave"
+      },
+      "detail": {
+        "de": "Kapitel 5.7–5.11, Aufgaben 7–11: Backofen, Steamer und Mikrowelle — den Aufbau der Geräte kennen.",
+        "en": "Chapters 5.7–5.11, exercises 7–11: oven, steamer and microwave — know how the appliances are built."
+      },
+      "source": "Unterrichtsplanung Apparatekunde 16.10.2026 («Grosser Test am 23.10.2026, Kapitel 5.7–5.11») · Notiz Apparatekunde 16.10.2026"
+    },
+    {
+      "id": "abt-nin-grosstest-2026-10-30",
+      "kind": "test",
+      "teacher": "waefler",
+      "subject": "abt",
+      "date": "2026-10-30",
+      "title": {
+        "de": "Grosser Test — NIN, nur NIV",
+        "en": "Major test — NIN, NIV only"
+      },
+      "detail": {
+        "de": "Nur über die Niederspannungs-Installationsverordnung (NIV). Verschoben, neu am 30.10.",
+        "en": "Only on the Low-Voltage Installation Ordinance (NIV). Postponed, now on 30 Oct."
+      },
+      "source": "Unterrichtsplanung NIN 16.10.2026 («VERSCHOBEN: Neu, am 30.10.2026 grosser Test nur über NIV»)"
     }
   ],
   "homework": [

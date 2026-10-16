@@ -262,7 +262,35 @@
           "de": "Wird am Freitag zusätzlich bei Simon Aeschlimann behandelt, geprüft aber hier.",
           "en": "Also covered by Simon Aeschlimann on Friday, but examined here."
         },
-        "bullets": []
+        "bullets": [],
+        "goals": {
+          "title": {
+            "de": "Zum Grosstest vom 23.10. — Kapitel 5.7–5.11 — ich kann …",
+            "en": "For the major test on 23 Oct — chapters 5.7–5.11 — I can …"
+          },
+          "items": [
+            {
+              "de": "den Aufbau von Backofen, Steamer und Mikrowelle erklären",
+              "en": "explain how ovens, steamers and microwaves are built"
+            },
+            {
+              "de": "die Beheizungsarten des Backofens unterscheiden: Ober- und Unterhitze (Strahlung), Umluft (Konvektion), Wärmeleitung übers Blech",
+              "en": "tell the oven’s heating modes apart: top and bottom heat (radiation), fan (convection), conduction through the tray"
+            },
+            {
+              "de": "ein Typenschild lesen: Modell, Produkt- und Seriennummer, Schutzart, Anschlusswerte",
+              "en": "read a rating plate: model, product and serial number, protection rating, ratings"
+            },
+            {
+              "de": "den Strom von Küchengeräten am Drehstromnetz berechnen (I = P ÷ (√3 · 400 V) = P ÷ 693 V) und die Vorsicherung bestimmen",
+              "en": "calculate the current of kitchen appliances on three-phase supply (I = P ÷ (√3 · 400 V) = P ÷ 693 V) and choose the fuse"
+            },
+            {
+              "de": "eine Küchen-Installation selbständig bestimmen: Leitungen, Leiterzahl und Querschnitt",
+              "en": "plan a kitchen installation on my own: cables, number of conductors and cross-section"
+            }
+          ]
+        }
       },
       {
         "id": "werkstoffkunde",
@@ -391,121 +419,81 @@
         "bullets": [],
         "goals": {
           "title": {
-            "de": "Lernziele zum Test vom 16.10. — Kapitel 3 (VoIP) und 4 (Internetzugang), ohne ISDN — ich kann …",
-            "en": "Objectives for the test on 16 Oct — chapters 3 (VoIP) and 4 (internet access), without ISDN — I can …"
+            "de": "Lernziele Kapitel 5 — UKV und Datennetzwerke — ich kann …",
+            "en": "Objectives, chapter 5 — structured cabling and data networks — I can …"
           },
           "items": [
             {
-              "de": "erklären, wofür die Abkürzung VoIP steht",
-              "en": "explain what VoIP stands for"
+              "de": "angeben, wofür die Abkürzung UKV steht, und Sinn und Zweck einer UKV-Installation erklären",
+              "en": "say what UKV (structured cabling) stands for and explain its purpose"
             },
             {
-              "de": "die Internettelefonie mittels Skizze erklären",
-              "en": "explain internet telephony with a sketch"
+              "de": "die Verkabelungsstrecken einer UKV mit ihren Längen aufzählen und die Verteiler nennen",
+              "en": "list the cabling sections of a structured cabling system with their lengths and name the distributors"
             },
             {
-              "de": "einen wesentlichen Unterschied zwischen herkömmlicher Telefonie und VoIP beschreiben",
-              "en": "describe one key difference between conventional telephony and VoIP"
+              "de": "den Aufbau von asymmetrischen und symmetrischen Kabeln beschreiben",
+              "en": "describe how unbalanced and balanced cables are built"
             },
             {
-              "de": "drei Hauptprobleme von VoIP nennen und erklären",
-              "en": "name and explain three main problems of VoIP"
+              "de": "bei symmetrischen Kabeln angeben, um welche Art es sich handelt (z. B. S-STP)",
+              "en": "identify the type of a balanced cable (e.g. S-STP)"
             },
             {
-              "de": "die theoretisch minimal nötige Upload-Geschwindigkeit eines xDSL-Abos für VoIP nennen",
-              "en": "state the minimum upload speed an xDSL plan needs for VoIP"
+              "de": "für ein U72 5x4 den Farbcode nennen",
+              "en": "give the colour code of a U72 5x4 cable"
             },
             {
-              "de": "erklären, wofür QoS steht, und seine Wichtigkeit beschreiben",
-              "en": "explain what QoS stands for and why it matters"
+              "de": "angeben, wie bei einem RJ45-Stecksystem die Pins anzuschliessen sind",
+              "en": "state how the pins of an RJ45 connector are wired"
             },
             {
-              "de": "den Verbindungsaufbau mit SIP in einfacher Form beschreiben",
-              "en": "describe call setup with SIP in simple terms"
+              "de": "zwei Stecksysteme für hohe Übertragungsgeschwindigkeiten aufzählen",
+              "en": "name two connector systems built for high transmission speeds"
             },
             {
-              "de": "Vorteile von VoIP gegenüber der herkömmlichen Telefonie nennen",
-              "en": "name advantages of VoIP over conventional telephony"
+              "de": "Multimedia-Stecksysteme beschreiben und Anwendungsbeispiele nennen",
+              "en": "describe multimedia connector systems and give examples of their use"
             },
             {
-              "de": "erklären, wofür die Verschlüsselung von VoIP-Daten wichtig ist",
-              "en": "explain why VoIP data should be encrypted"
+              "de": "die Begriffe Kategorie und Link-Klasse beschreiben",
+              "en": "describe the terms category and link class"
             },
             {
-              "de": "verschiedene Instant-Messenger-Programme aufzählen",
-              "en": "list several instant-messenger programs"
+              "de": "Dämpfung, Nebensprechdämpfung NEXT, ACR und Powersum NEXT erklären",
+              "en": "explain attenuation, near-end crosstalk (NEXT), ACR and power-sum NEXT"
             },
             {
-              "de": "einen zentralen Nachteil von Instant-Messengern wie WhatsApp gegenüber dem SIP-Standard nennen",
-              "en": "name a key drawback of messengers such as WhatsApp compared with SIP"
+              "de": "die Grafik mit Dämpfungs- und NEXT-Verläufen verschiedener Kabelkategorien über der Frequenz erklären",
+              "en": "explain the chart of attenuation and NEXT against frequency for different cable categories"
             },
             {
-              "de": "erklären, wofür die Anschlussbuchsen der Internet Box 2 sind",
-              "en": "explain what each port on the Internet Box 2 is for"
+              "de": "den Unterschied zwischen Permanent-Link- und Channel-Link-Messung erläutern",
+              "en": "explain the difference between permanent-link and channel-link measurements"
             },
             {
-              "de": "verschiedene Endgeräte an einem IP-Router skizzieren",
-              "en": "sketch several devices connected to an IP router"
+              "de": "mindestens sechs Punkte aufzählen, die bei der Montage von UKV-Kabeln wichtig sind",
+              "en": "list at least six points that matter when installing structured cabling"
             },
             {
-              "de": "erklären, wie man auf einen IP-Router wie die Internet Box 2 zugreift",
-              "en": "explain how to access an IP router such as the Internet Box 2"
+              "de": "die Abkürzungen LAN und WAN erklären und Beispiele nennen",
+              "en": "explain LAN and WAN and give examples"
             },
             {
-              "de": "erklären, was ein ISP ist",
-              "en": "explain what an ISP is"
+              "de": "mindestens sechs Netzwerkkomponenten nennen und ihre Funktion beschreiben",
+              "en": "name at least six network components and describe what they do"
             },
             {
-              "de": "den Begriff Breitband-Internetzugang umschreiben",
-              "en": "describe the term broadband internet access"
+              "de": "die Netzwerktopologien skizzieren und ihre Vor- und Nachteile nennen",
+              "en": "sketch the network topologies and give their pros and cons"
             },
             {
-              "de": "Breitband-Zugangsvarianten aufzählen und ihre Download-Geschwindigkeiten angeben",
-              "en": "list broadband access types and their download speeds"
+              "de": "erklären, worum es bei PoE geht, und Anwendungsbeispiele nennen",
+              "en": "explain what PoE is about and give examples of its use"
             },
             {
-              "de": "erklären, wofür ADSL steht und was daran asymmetrisch ist",
-              "en": "explain what ADSL stands for and what is asymmetric about it"
-            },
-            {
-              "de": "die Begriffe Download und Upload beschreiben",
-              "en": "describe download and upload"
-            },
-            {
-              "de": "Nachfolgetechnologien von ADSL nennen",
-              "en": "name successor technologies to ADSL"
-            },
-            {
-              "de": "erklären, wovon die effektive Übertragungsgeschwindigkeit abhängt",
-              "en": "explain what the effective transmission speed depends on"
-            },
-            {
-              "de": "die Swisscom-Bezeichnung «All IP» umschreiben",
-              "en": "explain Swisscom’s term “All IP”"
-            },
-            {
-              "de": "die Bezeichnungen «ADSL over POTS» und «ADSL over ISDN» beschreiben",
-              "en": "describe “ADSL over POTS” and “ADSL over ISDN”"
-            },
-            {
-              "de": "erläutern, wofür Mikrofilter und Splitter eingesetzt wurden",
-              "en": "explain what microfilters and splitters were used for"
-            },
-            {
-              "de": "die Anschlussvarianten der Internet Box 2 bei der Umrüstung auf All IP aufzählen und skizzieren",
-              "en": "list and sketch the Internet Box 2 connection options when switching to All IP"
-            },
-            {
-              "de": "die Zugangsvarianten über Koaxial- und Glasfaserkabel in einfacher Form erklären",
-              "en": "explain access via coaxial and fibre cable in simple terms"
-            },
-            {
-              "de": "drei kabellose Internetzugangsvarianten aufzählen",
-              "en": "list three wireless internet access types"
-            },
-            {
-              "de": "in einfacher Form beschreiben, was ein PWLAN ist",
-              "en": "describe in simple terms what a public WLAN is"
+              "de": "den Unterschied zwischen Outdoor- und Indoor-Systemen bei der PLC-Technik beschreiben",
+              "en": "describe the difference between outdoor and indoor powerline (PLC) systems"
             }
           ]
         }
@@ -518,8 +506,8 @@
           "en": "Equipment studies"
         },
         "desc": {
-          "de": "Freitag 12:45–13:30. Geprüft wird bei Stefan Wäfler.",
-          "en": "Friday 12:45–13:30. Examined by Stefan Wäfler."
+          "de": "Freitag 11:15–12:00. Geprüft wird bei Stefan Wäfler.",
+          "en": "Friday 11:15–12:00. Examined by Stefan Wäfler."
         },
         "bullets": []
       }
