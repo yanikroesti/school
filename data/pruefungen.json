@@ -67,6 +67,19 @@
       }
     },
     {
+      "id": "2026-10-12-abu-plakat",
+      "datum": "2026-10-12",
+      "semester": 3,
+      "fach": "abu",
+      "lehrer": "laedrach",
+      "art": "auftrag",
+      "titel": {
+        "de": "Plakat",
+        "en": "Poster"
+      },
+      "note": 5.4
+    },
+    {
       "id": "2026-09-14-htog-moser-messschaltungen",
       "datum": "2026-09-14",
       "semester": 3,
@@ -126,6 +139,28 @@
         "zählt wie ein Kurztest"
       ],
       "maxPunkte": 25
+    },
+    {
+      "id": "2026-09-11-abt-nin-grosstest-1",
+      "datum": "2026-09-11",
+      "semester": 3,
+      "fach": "abt",
+      "bereich": "tg",
+      "lehrer": "waefler",
+      "art": "test",
+      "titel": {
+        "de": "Grosser Test Nr. 1 — NIN",
+        "en": "Major test no. 1 — NIN"
+      },
+      "themen": [
+        "Kapitelaufbau N1–N8",
+        "5+5 lebenswichtige Regeln",
+        "Arbeitsmethoden, AuS 1 und AuS 2",
+        "PSA und Schutzstufen",
+        "Gefahren und Wirkung des Stroms, Körperimpedanz",
+        "ESTI"
+      ],
+      "note": 5.6
     },
     {
       "id": "2026-09-07-abu-gross-kleinschreibung",

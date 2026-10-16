@@ -40,12 +40,14 @@
       "fokus": {
         "de": [
           "Werkstoffkunde-Test vom 11.09. zurück: Note 5.4 (42 von 48 Punkten)",
+          "NIN-Grosstest Nr. 1 vom 11.09.: Note 5.6 · Kurztest vom 16.10.: Note folgt nächste Woche",
           "Metalle im Überblick: Stahl, Kupfer, Aluminium, Edelmetalle, Wolfram, Zinn, Blei",
           "Asbest: Eigenschaften, frühere Verwendung, Asbestose, Prävention und das Vorgehen bei Asbestverdacht auf der Baustelle",
           "NIV: Bewilligungspflicht, Fachkundigkeit, Pflichten des Eigentümers, Erstprüfung und Schlusskontrolle"
         ],
         "en": [
           "Materials science test of 11 Sep returned: grade 5.4 (42 of 48 points)",
+          "NIN major test no. 1 of 11 Sep: grade 5.6 · short test of 16 Oct: grade due next week",
           "Metals overview: steel, copper, aluminium, precious metals, tungsten, tin, lead",
           "Asbestos: properties, former uses, asbestosis, prevention and what to do on site if asbestos is suspected",
           "NIV: licensing, competence, owner’s duties, initial verification and final inspection"
@@ -101,11 +103,6 @@
           "Owner’s duties; licensing and competence (art. 5–10a)",
           "Initial verification during construction and final inspection before handover (art. 24)"
         ]
-      },
-      "naechstes": {
-        "datum": "2026-09-11",
-        "de": "Grosser Test Nr. 1 — NIN, dazu wieder ein Kurztest",
-        "en": "Major test no. 1 — NIN, plus another short test"
       },
       "quelle": "Notiz NIN 18.09.2026"
     },

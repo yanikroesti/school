@@ -663,22 +663,11 @@
   function schnitt(liste) {
     var noten = [], kurz = {};
     liste.filter(benotet).forEach(function (p) {
-      if (p.art === 'kurztest') (kurz[p.fach] = kurz[p.fach] || []).push(p);
-      else noten.push({ note: p.note, bereich: p.bereich });
+      if (p.art === 'kurztest') (kurz[p.fach] = kurz[p.fach] || []).push(p.note);
+      else noten.push(p.note);
     });
-    Object.keys(kurz).forEach(function (f) {
-      var k = kurz[f];
-      noten.push({
-        note: k.reduce(function (a, p) { return a + p.note; }, 0) / k.length,
-        bereich: k[0].bereich
-      });
-    });
-    var pro = {};
-    noten.forEach(function (x) {
-      if (x.bereich) (pro[x.bereich] = pro[x.bereich] || []).push(x.note);
-    });
-    return { gesamt: mw(noten.map(function (x) { return x.note; })),
-             anzahl: noten.length, pro: pro };
+    Object.keys(kurz).forEach(function (f) { noten.push(mw(kurz[f])); });
+    return { gesamt: mw(noten), anzahl: noten.length };
   }
 
   function mw(v) {
@@ -708,44 +697,74 @@
     $('p-h-sem').textContent = en ? 'semester ' + semNr : semNr + '. Semester';
     $('p-zahl').textContent = liste.filter(benotet).length + ' / ' + liste.length;
 
-    // Karten: der Schnitt insgesamt, dann pro Zeugnisbereich, soweit belegt
-    function karte(titel, w, unten) {
-      return '<div><span class="titel">' + esc(titel) + '</span>' +
-        '<span class="wert ' + farbe(w) + '">' + fmt(w, 2) + '</span>' +
-        '<span class="unten">' + esc(unten) + '</span></div>';
-    }
-    function nNoten(n) {
-      return en ? n + (n === 1 ? ' grade' : ' grades') : n + (n === 1 ? ' Note' : ' Noten');
-    }
-    var karten = [];
-    if (sch.gesamt != null) {
-      karten.push(karte(en ? 'Average so far' : 'Schnitt bisher', sch.gesamt,
-        nNoten(sch.anzahl) + (en ? ' · unweighted' : ' · ungewichtet')));
-    }
-    ROWS.forEach(function (r) {
-      var v = r.unter && sch.pro[r.k];
-      if (v) karten.push(karte(tx(r), mw(v), nNoten(v.length)));
-    });
-    $('pkpi').innerHTML = karten.join('');
-    $('pkpi').hidden = !karten.length;
+    $('p-intro').hidden = sch.gesamt == null;
+    $('p-intro').innerHTML = sch.gesamt == null ? '' : (en
+      ? 'Average so far <b>' + fmt(sch.gesamt, 2) + '</b> from ' + sch.anzahl + ' grades — ' +
+        'unweighted, because the school’s weighting is not known. All short tests of a ' +
+        'subject count together as one grade.'
+      : 'Schnitt bisher <b>' + fmt(sch.gesamt, 2) + '</b> aus ' + sch.anzahl + ' Noten — ' +
+        'ungewichtet, weil die Gewichtung der Schule nicht bekannt ist. Alle Kurztests ' +
+        'eines Fachs zählen zusammen als eine Note.');
 
-    // Tabelle: chronologisch, Arbeiten ohne Termin am Schluss
-    liste = liste.slice().sort(function (a, b) {
-      if (!a.datum) return 1;
+    // Ein Kasten pro Fach, in der Reihenfolge der Schuldaten — nur Fächer
+    // mit Arbeiten. Ein Fach, das in subjects.json fehlt, kommt hinten dran.
+    var reihe = Object.keys(D.subjects).filter(function (f) {
+      return liste.some(function (p) { return p.fach === f; });
+    });
+    liste.forEach(function (p) { if (reihe.indexOf(p.fach) < 0) reihe.push(p.fach); });
+
+    $('pfach').innerHTML = reihe.map(function (f) {
+      return fachKasten(f, liste.filter(function (p) { return p.fach === f; }), D, en);
+    }).join('');
+  }
+
+  function fachKasten(f, arbeiten, D, en) {
+    var fach = D.subjects[f] || {};
+    var h = heuteIso();
+    arbeiten = arbeiten.slice().sort(function (a, b) {
+      if (!a.datum) return 1;                 // ohne Termin ans Ende
       if (!b.datum) return -1;
       return a.datum.localeCompare(b.datum);
     });
 
-    var kopf = '<thead><tr>' +
-      '<th>' + (en ? 'Date' : 'Datum') + '</th>' +
-      '<th>' + (en ? 'Subject' : 'Fach') + '</th>' +
-      '<th>' + (en ? 'Assessment' : 'Arbeit') + '</th>' +
-      '<th>' + (en ? 'Grade' : 'Note') + '</th></tr></thead>';
+    var sch = schnitt(arbeiten);
+    var mit = arbeiten.filter(benotet).length;
 
-    var zeilen = liste.map(function (p) {
-      var fach = D.subjects[p.fach] || {};
-      var lehr = p.lehrer ? D.teacherById[p.lehrer] : null;
-      var unter = [tx(ARTEN[p.art] || {}), lehr && lehr.name].filter(Boolean).join(' · ');
+    // Lehrpersonen, in der Reihenfolge ihres ersten Auftritts
+    var lehr = [];
+    arbeiten.forEach(function (p) {
+      var t = p.lehrer && D.teacherById[p.lehrer];
+      if (t && lehr.indexOf(t.name) < 0) lehr.push(t.name);
+    });
+
+    // Der Stand in einem Satz: benotet, was noch zurückkommt, was als Nächstes kommt
+    var folgt = arbeiten.filter(function (p) {
+      return !benotet(p) && p.datum && p.datum <= h;
+    }).length;
+    var naechste = arbeiten.filter(function (p) { return p.datum && p.datum > h; })[0];
+    var offenTermin = arbeiten.filter(function (p) { return !p.datum; })[0];
+    var satz = [en ? mit + ' of ' + arbeiten.length + ' graded'
+                   : mit + ' von ' + arbeiten.length + ' benotet'];
+    if (folgt) {
+      satz.push(en ? folgt + (folgt > 1 ? ' grades' : ' grade') + ' to follow'
+                   : folgt + (folgt > 1 ? ' Noten folgen' : ' Note folgt'));
+    }
+    if (naechste) {
+      satz.push((en ? 'next: ' : 'als Nächstes: ') + '<b>' + esc(tx(naechste.titel)) +
+        '</b>, ' + esc(wann(naechste.datum)));
+    } else if (offenTermin) {
+      satz.push((en ? 'date open: ' : 'Termin offen: ') + '<b>' + esc(tx(offenTermin.titel)) + '</b>');
+    }
+
+    var wert = sch.gesamt != null
+      ? '<span class="wert ' + farbe(sch.gesamt) + '">' + fmt(sch.gesamt, 2) + '</span>'
+      : '<span class="wert leer">' + (en ? 'no grade yet' : 'noch keine Note') + '</span>';
+
+    var zeilen = arbeiten.map(function (p) {
+      var t = p.lehrer ? D.teacherById[p.lehrer] : null;
+      // Die Lehrperson nur nennen, wenn im Fach mehrere unterrichten
+      var unter = [tx(ARTEN[p.art] || {}), lehr.length > 1 && t ? t.name : '']
+        .filter(Boolean).join(' · ');
       var rechts = benotet(p)
         ? '<span class="note ' + farbe(p.note) + '">' + fmt(p.note) + '</span>' +
           (typeof p.punkte === 'number' && typeof p.maxPunkte === 'number'
@@ -753,15 +772,23 @@
         : '<span class="folgt">' + esc(stand(p)) + '</span>';
       return '<tr' + (benotet(p) ? '' : ' class="offen"') + '>' +
         '<td class="zahl">' + (p.datum ? datumKurz(p.datum) : '') + '</td>' +
-        '<td><span class="fpunkt" style="--c:' + fachFarbe(p.fach) + '"></span>' +
-          esc(fach.code || FACHCODES[p.fach] || '') + '</td>' +
         '<td><span class="pt">' + esc(tx(p.titel)) + '</span>' +
           (unter ? '<span class="pu">' + esc(unter) + '</span>' : '') + '</td>' +
         '<td class="zahl">' + rechts + '</td>' +
       '</tr>';
     }).join('');
 
-    $('ptab').innerHTML = kopf + '<tbody>' + zeilen + '</tbody>';
+    return '<article class="pf" style="--c:' + fachFarbe(f) + '">' +
+      '<div class="pf-kopf">' +
+        '<div class="pf-name"><span class="pf-code">' + esc(fach.code || FACHCODES[f] || f) + '</span>' +
+          (lehr.length ? '<span class="pf-lehr">' + esc(lehr.join(' · ')) + '</span>' : '') +
+        '</div>' +
+        '<div class="pf-schnitt"><span class="titel">' + (en ? 'Average' : 'Schnitt') + '</span>' +
+          wert + '</div>' +
+      '</div>' +
+      '<p class="pf-stand">' + satz.join(' · ') + '</p>' +
+      '<table class="tab ptab"><tbody>' + zeilen + '</tbody></table>' +
+    '</article>';
   }
 
   /* ---------------- Alles zeichnen ---------------- */

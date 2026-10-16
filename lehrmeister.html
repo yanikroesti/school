@@ -215,18 +215,41 @@
   font-family: var(--f-data); font-size: var(--t-xs); font-weight: 500;
   color: var(--muted); margin-left: 0.4rem;
 }
-.pkpi { margin-bottom: 1rem; }
-.ptab-wrap { overflow-x: auto; }
-.ptab th, .ptab td { text-align: left; vertical-align: top; }
-.ptab th:last-child, .ptab td:last-child { text-align: right; }
-.ptab td:first-child { white-space: nowrap; color: var(--ink-2); }
-.ptab td:nth-child(2) { white-space: nowrap; font-family: var(--f-data); font-size: var(--t-xs); }
-.ptab .fpunkt {
-  display: inline-block; width: 0.5rem; height: 0.5rem; border-radius: 50%;
-  background: var(--c, var(--rail)); margin-right: 0.4rem; vertical-align: 0.05rem;
+.p-intro { font-size: var(--t-s); color: var(--ink-2); margin: 0 0 0.9rem; line-height: 1.5; }
+.p-intro b { color: var(--ink); font-family: var(--f-data); }
+
+/* Ein Kasten pro Fach: Kopf mit Schnitt und Stand, darunter die Arbeiten */
+.pfach { display: grid; gap: 0.9rem; }
+.pf {
+  border: 1px solid var(--line-2); border-left: 3px solid var(--c, var(--rail));
+  border-radius: var(--r-s); background: var(--plate);
+  padding: 0.8rem 0.95rem 0.35rem;
 }
+.pf-kopf { display: flex; align-items: flex-start; gap: 0.75rem; }
+.pf-name { min-width: 0; }
+.pf-code { font-family: var(--f-data); font-weight: 700; font-size: var(--t-m); color: var(--ink); }
+.pf-lehr { display: block; font-size: var(--t-xs); color: var(--muted); margin-top: 0.1rem; }
+.pf-schnitt { margin-left: auto; text-align: right; flex: none; }
+.pf-schnitt .wert {
+  display: block; font-family: var(--f-data); font-size: var(--t-xl); font-weight: 600;
+  line-height: 1.05; font-variant-numeric: tabular-nums;
+}
+.pf-schnitt .wert.leer { font-size: var(--t-xs); font-weight: 500; color: var(--muted); padding-top: 0.3rem; }
+.pf-schnitt .titel {
+  display: block; font-size: 0.625rem; color: var(--muted); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.pf-stand { font-size: var(--t-xs); color: var(--ink-2); margin: 0.35rem 0 0.2rem; line-height: 1.5; }
+.pf-stand b { color: var(--ink); }
+
+.ptab { margin-top: 0.2rem; }
+.ptab tr:last-child td { border-bottom: 0; }
+.ptab td { text-align: left; vertical-align: top; }
+.ptab td:last-child { text-align: right; }
+.ptab td:first-child { white-space: nowrap; color: var(--ink-2); padding-left: 0; }
+.ptab td:last-child { padding-right: 0; }
 .ptab .pt { display: block; color: var(--ink); font-weight: 600; }
-.ptab td:nth-child(3) { hyphens: auto; overflow-wrap: break-word; }
+.ptab td:nth-child(2) { hyphens: auto; overflow-wrap: break-word; }
 .ptab .pu { display: block; font-size: var(--t-xs); color: var(--muted); margin-top: 0.1rem; }
 .ptab .note {
   font-family: var(--f-data); font-size: var(--t-b); font-weight: 600;
@@ -238,8 +261,8 @@
 .ptab .folgt { font-size: var(--t-xs); color: var(--muted); }
 .ptab tr.offen .pt { font-weight: 500; color: var(--ink-2); }
 @media (max-width: 560px) {
-  .ptab th, .ptab td { padding: 0.5rem 0.35rem; }
-  .ptab .fpunkt { display: none; }
+  .pf { padding: 0.7rem 0.75rem 0.3rem; }
+  .ptab td { padding: 0.5rem 0.35rem; }
 }
 
 .verlauf svg { display: block; width: 100%; height: auto; }
@@ -346,8 +369,8 @@
         <span class="count" id="p-zahl" title="benotet / insgesamt"></span>
         <span class="spacer"></span>
       </div>
-      <div class="kpi pkpi" id="pkpi" hidden></div>
-      <div class="ptab-wrap"><table class="tab ptab" id="ptab"></table></div>
+      <p class="p-intro" id="p-intro"></p>
+      <div class="pfach" id="pfach"></div>
     </section>
 
     <section class="sect" aria-labelledby="g-h" id="s-geschehen" hidden>
