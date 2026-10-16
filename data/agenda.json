@@ -31,25 +31,27 @@
     },
     {
       "fach": "abt",
-      "aktualisiert": "2026-09-18",
+      "aktualisiert": "2026-10-16",
       "lehrer": "waefler",
       "aktuell": {
-        "de": "Werkstoffkunde — Nichteisenmetalle; NIN — Niederspannungs-Installationsverordnung (NIV)",
-        "en": "Materials science — non-ferrous metals; electrical installations — Low-Voltage Installation Ordinance (NIV)"
+        "de": "Werkstoffkunde — Metalle repetiert, Asbest; NIN — Niederspannungs-Installationsverordnung (NIV)",
+        "en": "Materials science — metals revised, asbestos; electrical installations — Low-Voltage Installation Ordinance (NIV)"
       },
       "fokus": {
         "de": [
-          "Nichteisenmetalle als Leiter-, Kontakt- und Widerstandswerkstoffe; Messing (Kupfer + Zink) und Bronze (Kupfer + Zinn) als Prüfungsstoff markiert",
-          "NIV: Bewilligungspflicht, Fachkundigkeit, Pflichten des Eigentümers, Erstprüfung und Schlusskontrolle",
-          "Resultat des Tests vom 11.09. steht noch aus — noch nicht alle haben ihn geschrieben"
+          "Werkstoffkunde-Test vom 11.09. zurück: Note 5.4 (42 von 48 Punkten)",
+          "Metalle im Überblick: Stahl, Kupfer, Aluminium, Edelmetalle, Wolfram, Zinn, Blei",
+          "Asbest: Eigenschaften, frühere Verwendung, Asbestose, Prävention und das Vorgehen bei Asbestverdacht auf der Baustelle",
+          "NIV: Bewilligungspflicht, Fachkundigkeit, Pflichten des Eigentümers, Erstprüfung und Schlusskontrolle"
         ],
         "en": [
-          "Non-ferrous metals as conductor, contact and resistance materials; brass (copper + zinc) and bronze (copper + tin) marked as exam content",
-          "NIV: licensing, competence, owner’s duties, initial verification and final inspection",
-          "Result of the 11 Sep test still pending — not everyone has sat it yet"
+          "Materials science test of 11 Sep returned: grade 5.4 (42 of 48 points)",
+          "Metals overview: steel, copper, aluminium, precious metals, tungsten, tin, lead",
+          "Asbestos: properties, former uses, asbestosis, prevention and what to do on site if asbestos is suspected",
+          "NIV: licensing, competence, owner’s duties, initial verification and final inspection"
         ]
       },
-      "quelle": "Notiz Werkstoffkunde 18.09.2026 · Notiz NIN 18.09.2026"
+      "quelle": "Notiz Werkstoffkunde 16.10.2026 · Notiz Werkstoffkunde 18.09.2026 · Notiz NIN 18.09.2026"
     },
     {
       "fach": "atd",
@@ -313,6 +315,21 @@
     }
   ],
   "geschehen": [
+    {
+      "datum": "2026-10-16",
+      "art": "unterricht",
+      "fach": "abt",
+      "lehrer": "waefler",
+      "titel": {
+        "de": "Werkstoffkunde — Metalle und Asbest",
+        "en": "Materials science — metals and asbestos"
+      },
+      "detail": {
+        "de": "Rückblick auf die Metalle vom 18.09., dann Asbest: warum er technisch ein guter Werkstoff war, wo er verbaut wurde, wie die Fasern die Lunge schädigen (Asbestose) und wie man bei Asbestverdacht auf der Arbeit vorgeht. Der Test vom 11.09. kam zurück: Note 5.4.",
+        "en": "Review of the metals from 18 Sep, then asbestos: why it was technically a good material, where it was used, how the fibres damage the lungs (asbestosis) and what to do on the job if asbestos is suspected. The 11 Sep test came back: grade 5.4."
+      },
+      "quelle": "Notiz Werkstoffkunde 16.10.2026"
+    },
     {
       "datum": "2026-10-12",
       "art": "unterricht",

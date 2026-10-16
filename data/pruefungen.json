@@ -1,9 +1,71 @@
 {
-  "_hinweis": "Einzelne Prüfungsergebnisse. Das Semesterzeugnis steht in noten-local.json und ist etwas anderes: dort stehen die Fachnoten am Semesterende, hier die einzelnen Arbeiten, aus denen sie entstehen.",
+  "_hinweis": "Alle bewerteten Arbeiten des Semesters — Prüfungen, Kurztests und benotete Aufträge. Steht keine Note da (note fehlt), ist die Arbeit angekündigt oder noch nicht zurück; der Bericht für den Lehrbetrieb zeigt sie dann als «Note folgt». Das Semesterzeugnis steht in noten-local.json und ist etwas anderes: dort stehen die Fachnoten am Semesterende, hier die einzelnen Arbeiten, aus denen sie entstehen.",
   "_bereiche": "ges = Gesellschaft · sk = Sprache und Kommunikation · tg = Technologische Grundlagen · td = Technische Dokumentation · sport = Sport. Dieselben Schlüssel wie im Zeugnis, damit sich beides zusammenrechnen lässt.",
   "_öffentlich": "Diese Datei liegt im Repo und ist damit öffentlich — dieselbe Entscheidung wie bei den Zeugnisnoten am 20.08.2026.",
 
   "pruefungen": [
+    {
+      "id": "2026-abu-semesterarbeit-fachkraeftemangel",
+      "semester": 3,
+      "fach": "abu",
+      "lehrer": "laedrach",
+      "art": "auftrag",
+      "titel": {
+        "de": "Semesterarbeit «Fachkräftemangel in der Elektrobranche»",
+        "en": "Semester project — skills shortage in the electrical trade"
+      },
+      "themen": [
+        "Dokumentation, max. 26 Punkte",
+        "Präsentation 10 Minuten, max. 29 Punkte"
+      ]
+    },
+    {
+      "id": "2026-10-19-atd-auftrag-schrittschaltung-minuterie",
+      "datum": "2026-10-19",
+      "semester": 3,
+      "fach": "atd",
+      "bereich": "td",
+      "lehrer": "moser",
+      "art": "auftrag",
+      "titel": {
+        "de": "Arbeitsauftrag Schrittschaltung und Minuterie",
+        "en": "Assignment — impulse relay and staircase timer"
+      },
+      "themen": [
+        "im 2er-Team",
+        "Abgabe auf Papier"
+      ],
+      "maxPunkte": 20
+    },
+    {
+      "id": "2026-10-16-atd-telekom-kap3-4",
+      "datum": "2026-10-16",
+      "semester": 3,
+      "fach": "atd",
+      "lehrer": "aeschlimann",
+      "art": "test",
+      "titel": {
+        "de": "Test Telekommunikation — Kapitel 3 und 4",
+        "en": "Test — telecoms, chapters 3 and 4"
+      },
+      "themen": [
+        "Internettelefonie VoIP",
+        "Internetzugang"
+      ]
+    },
+    {
+      "id": "2026-10-16-abt-nin-kurztest",
+      "datum": "2026-10-16",
+      "semester": 3,
+      "fach": "abt",
+      "bereich": "tg",
+      "lehrer": "waefler",
+      "art": "kurztest",
+      "titel": {
+        "de": "NIN-Kurztest",
+        "en": "NIN short test"
+      }
+    },
     {
       "id": "2026-09-14-htog-moser-messschaltungen",
       "datum": "2026-09-14",
@@ -29,6 +91,60 @@
       "maxPunkte": 15.5
     },
     {
+      "id": "2026-09-11-abt-werkstoffkunde-test",
+      "datum": "2026-09-11",
+      "semester": 3,
+      "fach": "abt",
+      "bereich": "tg",
+      "lehrer": "waefler",
+      "art": "test",
+      "titel": {
+        "de": "Test Werkstoffkunde",
+        "en": "Test — materials science"
+      },
+      "themen": [
+        "Einteilung der Werkstoffe und ihre Eigenschaften",
+        "Korrosion und Oxidation"
+      ],
+      "note": 5.4,
+      "punkte": 42,
+      "maxPunkte": 48
+    },
+    {
+      "id": "2026-09-11-atd-telekom-auftrag-internetzugang",
+      "datum": "2026-09-11",
+      "semester": 3,
+      "fach": "atd",
+      "lehrer": "aeschlimann",
+      "art": "auftrag",
+      "titel": {
+        "de": "Arbeitsauftrag Internetzugang (Gruppenarbeit)",
+        "en": "Assignment — internet access (group work)"
+      },
+      "themen": [
+        "Kapitel 4 Internetzugang",
+        "zählt wie ein Kurztest"
+      ],
+      "maxPunkte": 25
+    },
+    {
+      "id": "2026-09-07-abu-gross-kleinschreibung",
+      "datum": "2026-09-07",
+      "semester": 3,
+      "fach": "abu",
+      "bereich": "sk",
+      "lehrer": "laedrach",
+      "art": "test",
+      "titel": {
+        "de": "Test Gross- und Kleinschreibung",
+        "en": "Test — German capitalisation"
+      },
+      "themen": [
+        "Handbuch Kompetenzen S. 120",
+        "Arbeitsblätter aus der Lektion"
+      ]
+    },
+    {
       "id": "2026-09-04-abt-apparatekunde-grosstest",
       "datum": "2026-09-04",
       "semester": 3,
@@ -48,6 +164,22 @@
       "note": 5.1
     },
     {
+      "id": "2026-09-04-atd-telekom-kap1-2",
+      "datum": "2026-09-04",
+      "semester": 3,
+      "fach": "atd",
+      "lehrer": "aeschlimann",
+      "art": "test",
+      "titel": {
+        "de": "Test Telekommunikation — Kapitel 1 und 2",
+        "en": "Test — telecoms, chapters 1 and 2"
+      },
+      "themen": [
+        "Systemübersicht",
+        "Grundlagen der Telekommunikation"
+      ]
+    },
+    {
       "id": "2026-08-28-abt-nin-kurztest-5plus5",
       "datum": "2026-08-28",
       "semester": 3,
@@ -59,7 +191,10 @@
         "de": "NIN-Kurztest — 5+5 lebenswichtige Regeln",
         "en": "NIN short test — 5+5 life-saving rules"
       },
-      "themen": ["5 technische Sicherheitsregeln", "5 organisatorische Regeln"],
+      "themen": [
+        "5 technische Sicherheitsregeln",
+        "5 organisatorische Regeln"
+      ],
       "note": 6
     },
     {
@@ -74,7 +209,12 @@
         "de": "Krankenkasse und Unfallversicherung (Suva)",
         "en": "Health and accident insurance (Suva)"
       },
-      "themen": ["Grundleistungen", "Franchise", "Selbstbehalt", "Suva"],
+      "themen": [
+        "Grundleistungen",
+        "Franchise",
+        "Selbstbehalt",
+        "Suva"
+      ],
       "note": 4.9,
       "punkte": 10.5,
       "maxPunkte": 14

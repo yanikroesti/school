@@ -49,7 +49,8 @@
     kurztest:   { de: 'Kurztest',  en: 'Short test' },
     note:       { de: 'Note',      en: 'Grade' },
     unterricht: { de: 'Unterricht', en: 'Lesson' },
-    termin:     { de: 'Termin',    en: 'Event' }
+    termin:     { de: 'Termin',    en: 'Event' },
+    auftrag:    { de: 'Auftrag',   en: 'Assignment' }
   };
 
   var FACHCODES = { abu: 'ABU', abt: 'ABT', atd: 'ATD', htog: 'HTOG' };
@@ -201,16 +202,32 @@
       }
     }
 
-    // Die jüngste einzelne Arbeit
-    var p = (daten.pruefungen || []).slice().sort(function (a, b) {
+    // Die jüngste einzelne Arbeit — die jüngste mit Note, nicht die jüngste
+    // angekündigte: pruefungen.json enthält auch, was noch zurückkommt.
+    var p = (daten.pruefungen || []).filter(benotet).sort(function (a, b) {
       return (b.datum || '').localeCompare(a.datum || '');
     })[0];
-    if (p && p.note != null) {
+    if (p) {
       teile.push(en
         ? '<p>Most recent piece of work: <b>' + esc(tx(p.titel)) + '</b> — grade <b>' +
           fmt(p.note) + '</b>, ' + wann(p.datum) + '.</p>'
         : '<p>Jüngste Arbeit: <b>' + esc(tx(p.titel)) + '</b> — Note <b>' +
           fmt(p.note) + '</b>, ' + wann(p.datum) + '.</p>');
+    }
+
+    // Der laufende Schnitt des Semesters
+    var ps = semesterArbeiten();
+    var sch = schnitt(ps);
+    if (sch.gesamt != null) {
+      var rest = ps.filter(function (x) { return !benotet(x); }).length;
+      var semNr = ps[0].semester;
+      teile.push(en
+        ? '<p>Semester ' + semNr + ' so far: average <b>' + fmt(sch.gesamt, 2) + '</b> from ' +
+          sch.anzahl + ' grade' + (sch.anzahl === 1 ? '' : 's') + ', unweighted' +
+          (rest ? ' · ' + rest + ' more still to come' : '') + '.</p>'
+        : '<p>' + semNr + '. Semester bisher: Schnitt <b>' + fmt(sch.gesamt, 2) + '</b> aus ' +
+          sch.anzahl + (sch.anzahl === 1 ? ' Note' : ' Noten') + ', ungewichtet' +
+          (rest ? ' · ' + rest + ' weitere Arbeiten stehen noch aus' : '') + '.</p>');
     }
 
     // Was als Nächstes kommt
@@ -379,7 +396,9 @@
     var h = heuteIso();
     var liste = [];
 
-    (daten.pruefungen || []).forEach(function (p) {
+    // Nur was eine Note hat. Angekündigtes steht über agenda.kommend
+    // schon im Strom; ohne diesen Filter käme es doppelt.
+    (daten.pruefungen || []).filter(benotet).forEach(function (p) {
       liste.push({
         datum: p.datum, art: 'note', fach: p.fach, lehrer: p.lehrer,
         titel: p.titel, note: p.note, punkte: p.punkte, maxPunkte: p.maxPunkte,
@@ -623,10 +642,132 @@
         'des BZI Interlaken. Abschnitte ohne Daten werden nicht angezeigt.';
   }
 
+  /* ---------------- Prüfungen des Semesters ----------------
+     Alle bewerteten Arbeiten des laufenden Semesters an einem Ort: was
+     schon eine Note hat, was noch zurückkommt, was angekündigt ist.
+
+     Der Schnitt darüber ist ausdrücklich ungewichtet — wie die Schule
+     Prüfungen, Kurztests und Aufträge gewichtet, ist nicht bekannt.
+     Eine Regel ist bekannt und wird eingehalten: alle Kurztests eines
+     Fachs zusammen ergeben eine Note. Darum fliesst ihr Mittel einmal
+     ein und nicht jeder Kurztest einzeln.                              */
+
+  function benotet(p) { return typeof p.note === 'number'; }
+
+  function semesterArbeiten() {
+    var alle = daten.pruefungen || [];
+    var sem = alle.reduce(function (m, p) { return Math.max(m, p.semester || 0); }, 0);
+    return alle.filter(function (p) { return p.semester === sem; });
+  }
+
+  function schnitt(liste) {
+    var noten = [], kurz = {};
+    liste.filter(benotet).forEach(function (p) {
+      if (p.art === 'kurztest') (kurz[p.fach] = kurz[p.fach] || []).push(p);
+      else noten.push({ note: p.note, bereich: p.bereich });
+    });
+    Object.keys(kurz).forEach(function (f) {
+      var k = kurz[f];
+      noten.push({
+        note: k.reduce(function (a, p) { return a + p.note; }, 0) / k.length,
+        bereich: k[0].bereich
+      });
+    });
+    var pro = {};
+    noten.forEach(function (x) {
+      if (x.bereich) (pro[x.bereich] = pro[x.bereich] || []).push(x.note);
+    });
+    return { gesamt: mw(noten.map(function (x) { return x.note; })),
+             anzahl: noten.length, pro: pro };
+  }
+
+  function mw(v) {
+    return v.length ? v.reduce(function (a, b) { return a + b; }, 0) / v.length : null;
+  }
+
+  /** Was statt einer Note dasteht, solange es keine gibt. */
+  function stand(p) {
+    var en = lang() === 'en';
+    if (!p.datum) return en ? 'date to follow' : 'Termin folgt';
+    var d = tage(p.datum, heuteIso());
+    if (d > 0) return wann(p.datum);
+    if (d === 0) return en ? 'today' : 'heute';
+    return en ? 'grade to follow' : 'Note folgt';
+  }
+
+  function pruefungsliste() {
+    var liste = semesterArbeiten();
+    if (!liste.length) { $('s-pruefungen').hidden = true; return; }
+    $('s-pruefungen').hidden = false;
+
+    var en = lang() === 'en';
+    var D = S.data();
+    var sch = schnitt(liste);
+    var semNr = liste[0].semester;
+
+    $('p-h-sem').textContent = en ? 'semester ' + semNr : semNr + '. Semester';
+    $('p-zahl').textContent = liste.filter(benotet).length + ' / ' + liste.length;
+
+    // Karten: der Schnitt insgesamt, dann pro Zeugnisbereich, soweit belegt
+    function karte(titel, w, unten) {
+      return '<div><span class="titel">' + esc(titel) + '</span>' +
+        '<span class="wert ' + farbe(w) + '">' + fmt(w, 2) + '</span>' +
+        '<span class="unten">' + esc(unten) + '</span></div>';
+    }
+    function nNoten(n) {
+      return en ? n + (n === 1 ? ' grade' : ' grades') : n + (n === 1 ? ' Note' : ' Noten');
+    }
+    var karten = [];
+    if (sch.gesamt != null) {
+      karten.push(karte(en ? 'Average so far' : 'Schnitt bisher', sch.gesamt,
+        nNoten(sch.anzahl) + (en ? ' · unweighted' : ' · ungewichtet')));
+    }
+    ROWS.forEach(function (r) {
+      var v = r.unter && sch.pro[r.k];
+      if (v) karten.push(karte(tx(r), mw(v), nNoten(v.length)));
+    });
+    $('pkpi').innerHTML = karten.join('');
+    $('pkpi').hidden = !karten.length;
+
+    // Tabelle: chronologisch, Arbeiten ohne Termin am Schluss
+    liste = liste.slice().sort(function (a, b) {
+      if (!a.datum) return 1;
+      if (!b.datum) return -1;
+      return a.datum.localeCompare(b.datum);
+    });
+
+    var kopf = '<thead><tr>' +
+      '<th>' + (en ? 'Date' : 'Datum') + '</th>' +
+      '<th>' + (en ? 'Subject' : 'Fach') + '</th>' +
+      '<th>' + (en ? 'Assessment' : 'Arbeit') + '</th>' +
+      '<th>' + (en ? 'Grade' : 'Note') + '</th></tr></thead>';
+
+    var zeilen = liste.map(function (p) {
+      var fach = D.subjects[p.fach] || {};
+      var lehr = p.lehrer ? D.teacherById[p.lehrer] : null;
+      var unter = [tx(ARTEN[p.art] || {}), lehr && lehr.name].filter(Boolean).join(' · ');
+      var rechts = benotet(p)
+        ? '<span class="note ' + farbe(p.note) + '">' + fmt(p.note) + '</span>' +
+          (typeof p.punkte === 'number' && typeof p.maxPunkte === 'number'
+            ? '<span class="pkt">' + p.punkte + '/' + p.maxPunkte + '</span>' : '')
+        : '<span class="folgt">' + esc(stand(p)) + '</span>';
+      return '<tr' + (benotet(p) ? '' : ' class="offen"') + '>' +
+        '<td class="zahl">' + (p.datum ? datumKurz(p.datum) : '') + '</td>' +
+        '<td><span class="fpunkt" style="--c:' + fachFarbe(p.fach) + '"></span>' +
+          esc(fach.code || FACHCODES[p.fach] || '') + '</td>' +
+        '<td><span class="pt">' + esc(tx(p.titel)) + '</span>' +
+          (unter ? '<span class="pu">' + esc(unter) + '</span>' : '') + '</td>' +
+        '<td class="zahl">' + rechts + '</td>' +
+      '</tr>';
+    }).join('');
+
+    $('ptab').innerHTML = kopf + '<tbody>' + zeilen + '</tbody>';
+  }
+
   /* ---------------- Alles zeichnen ---------------- */
 
   function zeichne() {
-    kopf(); lage(); fachstand(); warten(); kommend(); geschehen();
+    kopf(); lage(); fachstand(); warten(); kommend(); pruefungsliste(); geschehen();
     kennzahlen(); steuerung(); verlauf(); zeugnis(); fussnote();
   }
 
