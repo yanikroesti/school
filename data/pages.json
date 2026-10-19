@@ -85,12 +85,13 @@
         "id": "G03",
         "de": "Risiko und Sicherheit",
         "en": "Risk and safety",
-        "current": true
+        "done": true
       },
       {
         "id": "G04",
         "de": "Demokratie und Mitgestaltung",
-        "en": "Democracy and participation"
+        "en": "Democracy and participation",
+        "current": true
       },
       {
         "id": "G05",
@@ -129,6 +130,63 @@
       }
     ],
     "topics": [
+      {
+        "id": "demokratie",
+        "subject": "abu",
+        "title": {
+          "de": "Demokratie und Mitgestaltung",
+          "en": "Democracy and participation"
+        },
+        "desc": {
+          "de": "G04 · ab 19.10. Einstieg «Kennen Sie die Schweiz», Staats- und Regierungsformen, Gewaltenteilung, «Der Bund kurz erklärt».",
+          "en": "G04 · from 19 Oct. Intro quiz on Switzerland, forms of state and government, separation of powers, “The Swiss Confederation – a brief guide”."
+        },
+        "bullets": [],
+        "goals": {
+          "title": {
+            "de": "Lernziele G04 · ich kann …",
+            "en": "Objectives G04 · I can …"
+          },
+          "items": [
+            {
+              "de": "das Prinzip der Gewaltenteilung erklären und eine Demokratie von anderen Regierungsformen (Monarchie, Diktatur) unterscheiden",
+              "en": "explain the separation of powers and tell a democracy apart from other forms of government (monarchy, dictatorship)"
+            },
+            {
+              "de": "den Schweizer Föderalismus erklären: Bund, Kanton, Gemeinde",
+              "en": "explain Swiss federalism: federation, canton, municipality"
+            },
+            {
+              "de": "die eidgenössischen Behörden und ihre Aufgaben nennen: Parlament (Nationalrat, Ständerat), Bundesrat, Bundesgericht",
+              "en": "name the federal authorities and their tasks: parliament (National Council, Council of States), Federal Council, Federal Supreme Court"
+            },
+            {
+              "de": "Wahl- und Stimmrecht sowie Petitions-, Referendums- und Initiativrecht unterscheiden und erklären",
+              "en": "distinguish and explain the right to vote and elect, petition, referendum and popular initiative"
+            },
+            {
+              "de": "eine Abstimmungsvorlage verstehen und meine Meinung mit Argumenten begründen",
+              "en": "understand a ballot proposal and back my opinion with arguments"
+            },
+            {
+              "de": "Parteien, Verbände, Gewerkschaften und NGOs nennen, ihre Aufgaben erklären und ihren Einfluss beurteilen",
+              "en": "name parties, associations, unions and NGOs, explain their role and judge their influence"
+            },
+            {
+              "de": "politische Grundhaltungen unterscheiden und mit meinen eigenen Werten vergleichen (Smartspider)",
+              "en": "tell political positions apart and compare them with my own values (smartspider)"
+            },
+            {
+              "de": "Majorz- und Proporzwahl erklären, kumulieren und panaschieren",
+              "en": "explain majority and proportional elections, cumulating and splitting votes"
+            },
+            {
+              "de": "den Einfluss der Medien an einem aktuellen Ereignis erkennen (4. Gewalt)",
+              "en": "recognise the influence of the media in a current event (fourth estate)"
+            }
+          ]
+        }
+      },
       {
         "id": "kk-unfall",
         "subject": "abu",

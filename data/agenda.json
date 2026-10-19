@@ -5,29 +5,25 @@
   "fachstand": [
     {
       "fach": "abu",
-      "aktualisiert": "2026-09-14",
+      "aktualisiert": "2026-10-19",
       "lehrer": "laedrach",
       "aktuell": {
-        "de": "Risiko und Sicherheit — Semesterarbeit im Team",
-        "en": "Risk and safety — team semester project"
+        "de": "G04 Demokratie und Mitgestaltung",
+        "en": "G04 Democracy and participation"
       },
       "fokus": {
         "de": [
-          "Projektarbeit zu einem Risiko in der Schweiz, als erste Vorbereitung auf das QV ABU",
-          "Arbeitsthema: Fachkräftemangel in der Elektrobranche",
-          "Bewertet werden die Dokumentation (max. 26 Punkte) und eine Präsentation von 10 Minuten pro Gruppe (max. 29 Punkte, Note Sprache und Kommunikation)",
-          "Abgabe- und Präsentationstermin noch nicht bekannt",
-          "Test Gross-/Kleinschreibung am 07.09. abgeschlossen; Note noch unbekannt."
+          "Neues Thema ab 19.10.: politisches System der Schweiz, Gewaltenteilung, Staats- und Regierungsformen",
+          "Danach Föderalismus, Bundesbehörden, Volksrechte, Parteien, Wahlen und Abstimmungen",
+          "Semesterarbeit «Fachkräftemangel in der Elektrobranche» läuft weiter; Abgabe- und Präsentationstermin noch nicht bekannt"
         ],
         "en": [
-          "Project on a Swiss social risk, as first preparation for the general-education final exam",
-          "Working topic: skills shortage in the electrical trade",
-          "Assessed: the documentation (max. 26 points) and a 10-minute presentation per group (max. 29 points, language and communication grade)",
-          "Submission and presentation date not yet known",
-          "Capitalisation test completed on 7 Sep; grade not yet known."
+          "New topic from 19 Oct: the Swiss political system, separation of powers, forms of state and government",
+          "Then federalism, federal authorities, popular rights, parties, elections and votes",
+          "Semester project on the skills shortage in the electrical trade continues; dates not yet known"
         ]
       },
-      "quelle": "Projektauftrag «Projektarbeit Risiko und Sicherheit CH» · Korrekturvorlagen Dokumentation und Präsentation · Entwurf «Projektarbeit Fachkräftemangel Elektrobranche» vom 14.09.2026"
+      "quelle": "Schullehrplan G04 · Lernziele und Stoffübersicht Thema 4 (Material Lädrach, 19.10.2026)"
     },
     {
       "fach": "abt",
