@@ -53,6 +53,27 @@
       ]
     },
     {
+      "id": "2026-10-19-abu-sach-haftpflicht-sozialversicherungen",
+      "datum": "2026-10-19",
+      "semester": 3,
+      "fach": "abu",
+      "bereich": "ges",
+      "lehrer": "laedrach",
+      "art": "test",
+      "titel": {
+        "de": "Sach-, Haftpflicht- und Sozialversicherungen",
+        "en": "Property, liability and social insurance"
+      },
+      "themen": [
+        "Sach- und Haftpflicht",
+        "Unterversicherung",
+        "Bonus-Malus",
+        "Regress",
+        "Drei-Säulen-Konzept",
+        "Sozialversicherungen"
+      ]
+    },
+    {
       "id": "2026-10-19-atd-auftrag-schrittschaltung-minuterie",
       "datum": "2026-10-19",
       "semester": 3,

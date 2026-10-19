@@ -322,6 +322,21 @@
       "quelle": "Arbeitsauftrag Schrittschalter & Minuterie (Blatt vom 14.09.2026)"
     },
     {
+      "datum": "2026-10-19",
+      "art": "test",
+      "fach": "abu",
+      "lehrer": "laedrach",
+      "titel": {
+        "de": "Test Sach-, Haftpflicht- und Sozialversicherungen",
+        "en": "Test — property, liability and social insurance"
+      },
+      "detail": {
+        "de": "Sach- und Haftpflichtversicherungen (Neuwert/Zeitwert, Unterversicherung, Bonus-Malus, Regress) und Sozialversicherungen mit dem Drei-Säulen-Konzept.",
+        "en": "Property and liability insurance (replacement vs. current value, underinsurance, bonus-malus, recourse) and social insurance with the three-pillar system."
+      },
+      "quelle": "Yanik 19.10.2026 · Ordner 05 + 06"
+    },
+    {
       "datum": "2026-10-23",
       "art": "test",
       "fach": "abt",

@@ -134,6 +134,22 @@
       "source": "Unterrichtsplanung Kommunikation 18.09.2026 · Notiz Telekommunikation 18.09.2026 · Bestätigung Yanik 19.09.2026"
     },
     {
+      "id": "abu-versicherungen-2026-10-19",
+      "kind": "test",
+      "teacher": "laedrach",
+      "subject": "abu",
+      "date": "2026-10-19",
+      "title": {
+        "de": "Test Sach-, Haftpflicht- und Sozialversicherungen",
+        "en": "Test — property, liability and social insurance"
+      },
+      "detail": {
+        "de": "G03 Risiko und Sicherheit · Ordner 05 Sach- und Haftpflichtversicherungen und 06 Sozialversicherungen: Neuwert/Zeitwert, Unterversicherung, Bonus-Malus, Regress, Kausalhaftung, Drei-Säulen-Konzept, AHV/IV/EL/EO/ALV/BVG",
+        "en": "G03 Risk and safety · folders 05 property and liability insurance and 06 social insurance: replacement vs. current value, underinsurance, bonus-malus, recourse, strict liability, three-pillar system, AHV/IV/EL/EO/ALV/BVG"
+      },
+      "source": "Yanik 19.10.2026 · OneDrive-Ordner 05 + 06 von Lädrach"
+    },
+    {
       "id": "abt-apparatekunde-2026-10-23",
       "kind": "test",
       "teacher": "waefler",
