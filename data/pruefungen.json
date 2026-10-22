@@ -192,7 +192,9 @@
         "Kapitel 4 Internetzugang",
         "zählt wie ein Kurztest"
       ],
-      "maxPunkte": 25
+      "maxPunkte": 25,
+      "note": 5.6,
+      "punkte": 23
     },
     {
       "id": "2026-09-11-abt-nin-grosstest-1",

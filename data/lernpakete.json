@@ -312,6 +312,34 @@
         "Probetest",
         "Lernplan"
       ]
+    },
+    {
+      "id": "apparatekunde-5-7-5-11",
+      "file": "apparatekunde_backofen_steamer_mikrowelle_lernpaket.html",
+      "subject": "abt",
+      "teacher": "waefler",
+      "status": "aktiv",
+      "forTest": "abt-apparatekunde-2026-10-23",
+      "archiveAfter": "2026-10-23",
+      "title": {
+        "de": "Backofen, Steamer, Mikrowelle",
+        "en": "Oven, steamer, microwave"
+      },
+      "detail": {
+        "de": "Lehrmittel-Seiten 5.7–5.11 · Aufbau der Geräte mit Schnittbild Mikrowelle und Bauteil-Trainer, Energieregler-Simulator, alle Übungen mit Musterlösung, Küchenplan-Rechner, 68 Karteikarten, 37 Quizfragen, Probetest · zum Grosstest vom 23.10.",
+        "en": "Textbook pages 5.7–5.11 · how the appliances are built, with a microwave cutaway and parts trainer, power-regulator simulator, all exercises with model answers, kitchen-plan calculator, 68 flashcards, 37 quiz questions, practice test · for the 23 Oct test"
+      },
+      "tabs": [
+        "Theorie",
+        "Aufbau",
+        "Übungen",
+        "Küchenplan",
+        "Begriffe",
+        "Karteikarten",
+        "Quiz",
+        "Probetest",
+        "Lernplan"
+      ]
     }
   ]
 }
